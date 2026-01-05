@@ -100,9 +100,9 @@
 </head>
 <body>
 
-    <!-- 🎵 BACKGROUND SONG -->
-    <audio autoplay loop>
-        <source src="birthday.mp3" type="audio/mpeg">
+    <!-- 🎵 SONG ADDED HERE -->
+    <audio id="bgMusic" loop>
+        <source src="newsong.mp3" type="audio/mpeg">
     </audio>
 
     <div class="doll-container">👦🏻</div>
@@ -115,6 +115,17 @@
     <div class="grid" id="shayariGrid"></div>
 
     <script>
+        const music = document.getElementById("bgMusic");
+
+        function forcePlayMusic() {
+            if (music.paused) {
+                music.play().catch(()=>{});
+            }
+        }
+
+        document.addEventListener("click", forcePlayMusic);
+        document.addEventListener("touchstart", forcePlayMusic);
+
         const shayaris = [
             "Zindagi ke safar mein tera sath chahiye, tanhaiyon mein tera hath chahiye.",
             "Phoolon ki mehak bhi fiki lagti hai, jab Nisha teri muskurahat dikhti hai.",
@@ -139,23 +150,19 @@
             "SivaSingh ki taraf se dosti ka uphar, hamesha rahe tumse pyaar aur dular."
         ];
 
-        const emojis = ["🌟", "✨", "🔥", "💎", "🌸", "🦋", "🎈", "🍫"];
-        const grid = document.getElementById('shayariGrid');
+        const emojis = ["🌟","✨","🔥","💎","🌸","🦋","🎈","🍫"];
+        const grid = document.getElementById("shayariGrid");
 
-        shayaris.forEach((text) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            card.innerHTML = `<div class="cover">${randomEmoji}</div><div class="content">${text}</div>`;
-
-            card.onclick = function(event) {
-                const cover = this.querySelector('.cover');
-                const content = this.querySelector('.content');
-                if (content.style.display !== 'block') {
-                    cover.style.display = 'none';
-                    content.style.display = 'block';
-                    content.classList.add('blast');
-                }
+        shayaris.forEach(text => {
+            const card = document.createElement("div");
+            card.className = "card";
+            const emoji = emojis[Math.floor(Math.random()*emojis.length)];
+            card.innerHTML = `<div class="cover">${emoji}</div><div class="content">${text}</div>`;
+            card.onclick = e => {
+                card.querySelector(".cover").style.display="none";
+                const c = card.querySelector(".content");
+                c.style.display="block";
+                c.classList.add("blast");
             };
             grid.appendChild(card);
         });
