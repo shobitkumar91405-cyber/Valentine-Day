@@ -12,7 +12,6 @@
 --text:#e0e0e0;
 --accent:#ff4757;
 }
-
 body{
 background:var(--bg);
 color:var(--text);
@@ -27,26 +26,23 @@ overflow-x:hidden;
 
 /* 🌧️ RAIN */
 .rain{
-position:fixed;
-inset:0;
-pointer-events:none;
+position:fixed;inset:0;
 background-image:linear-gradient(transparent 85%,rgba(255,255,255,.4));
 background-size:2px 20px;
 animation:rain .25s linear infinite;
-opacity:.5;
+pointer-events:none;
 z-index:9996;
 }
 @keyframes rain{to{background-position:0 20px}}
 
 /* ⚡ LIGHTNING */
 .lightning{
-position:fixed;
-inset:0;
+position:fixed;inset:0;
 background:white;
 opacity:0;
+animation:flash .3s;
 pointer-events:none;
 z-index:9999;
-animation:flash .3s ease;
 }
 @keyframes flash{
 0%{opacity:0}
@@ -54,56 +50,54 @@ animation:flash .3s ease;
 100%{opacity:0}
 }
 
-/* 💡 BULB LIGHT */
-.bulb{
-position:fixed;
-width:15px;
-height:15px;
-border-radius:50%;
-box-shadow:0 0 20px currentColor;
-animation:bulbFlash .8s forwards;
-pointer-events:none;
-z-index:9997;
-}
-@keyframes bulbFlash{
-0%{opacity:0;transform:scale(.5)}
-40%{opacity:1;transform:scale(1.4)}
-100%{opacity:0;transform:scale(.5)}
-}
-
-/* ❤️ HEART */
+/* ❤️ HEARTS */
 .heart{
 position:fixed;
 font-size:20px;
-animation:heartFly 1.5s forwards;
+animation:heart 1.5s forwards;
 pointer-events:none;
 z-index:9998;
 }
-@keyframes heartFly{
-0%{transform:translateY(0) scale(1);opacity:1}
-100%{transform:translateY(-150px) scale(1.8);opacity:0}
+@keyframes heart{
+0%{opacity:1}
+100%{opacity:0;transform:translateY(-150px) scale(2)}
 }
 
-/* UI */
-header{text-align:center;margin-bottom:20px}
+/* 💡 BULBS */
+.bulb{
+position:fixed;
+width:15px;height:15px;
+border-radius:50%;
+box-shadow:0 0 20px currentColor;
+animation:bulb .8s forwards;
+pointer-events:none;
+z-index:9997;
+}
+@keyframes bulb{
+0%{opacity:0}
+50%{opacity:1}
+100%{opacity:0}
+}
+
+header{text-align:center}
 .doll-container{font-size:80px;animation:bounce 2s infinite}
 @keyframes bounce{
 0%,100%{transform:translateY(0)}
 50%{transform:translateY(-20px)}
 }
-
 h1{color:var(--accent)}
 .made-by{opacity:.8;font-style:italic}
 
-.photo-box{margin:20px;cursor:pointer;text-align:center}
+/* PHOTO */
+.photo-box{margin:20px;text-align:center;cursor:pointer}
 .photo-box img{
 width:90%;max-width:320px;
 border-radius:20px;
 border:3px solid var(--accent);
-box-shadow:0 0 20px rgba(255,71,87,.5);
-transition:.3s;
+box-shadow:0 0 20px rgba(255,71,87,.6);
 }
 
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
@@ -112,20 +106,21 @@ width:100%;
 max-width:900px;
 }
 
+/* CARD */
 .card{
 background:var(--card);
 border:2px solid #333;
 border-radius:15px;
-height:120px;
+height:140px;
 display:flex;
 align-items:center;
 justify-content:center;
 cursor:pointer;
 padding:10px;
-transition:.3s;
+text-align:center;
 overflow:hidden;
+transition:.3s;
 }
-
 .card:hover{transform:scale(1.05);border-color:var(--accent)}
 .cover{font-size:40px}
 .content{display:none;font-size:14px;font-weight:bold}
@@ -136,12 +131,14 @@ overflow:hidden;
 60%{transform:scale(1.2)}
 100%{transform:scale(1);opacity:1}
 }
+
+video{width:100%;border-radius:12px}
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 MUSIC -->
+<!-- 🎵 SONG -->
 <audio id="bgMusic" loop>
 <source src="newsong.mp3" type="audio/mpeg">
 </audio>
@@ -151,63 +148,40 @@ overflow:hidden;
 <header>
 <h1>For Pallavi 😍</h1>
 <p class="made-by">Made with ❤️ by SivaSingh</p>
-<p>Click photo & cards 🎁</p>
+<p>Photo = Song 🎵 | ❤️ Card = Video 🎥</p>
 </header>
 
 <!-- 📸 PHOTO -->
-<div class="photo-box" onclick="nextPhoto();">
+<div class="photo-box" onclick="photoClick(event)">
 <img id="photo" src="photo1.jpg">
-<p>Click photo 📸</p>
+<p>Tap photo 📸</p>
 </div>
 
-<!-- 💌 CARDS -->
-<div class="grid" id="shayariGrid"></div>
+<div class="grid" id="grid"></div>
 
 <script>
-/* 🎵 MUSIC */
 const music=document.getElementById("bgMusic");
-document.addEventListener("click",()=>music.play().catch(()=>{}));
 
-/* 📸 PHOTO */
-let p=1;
-function nextPhoto(){
-p++; if(p>10) p=1;
-document.getElementById("photo").src=`photo${p}.jpg`;
-}
-
-/* 🌧️⚡ RAIN + LIGHTNING */
-function rainLightning(){
+/* EFFECTS */
+function effects(e){
 const r=document.createElement("div");
-r.className="rain";
-document.body.appendChild(r);
-
-setTimeout(()=>{
-const l=document.createElement("div");
-l.className="lightning";
-document.body.appendChild(l);
-setTimeout(()=>l.remove(),300);
-},200);
-
+r.className="rain";document.body.appendChild(r);
 setTimeout(()=>r.remove(),1200);
-}
 
-/* ❤️ HEART BLAST */
-function heartBlast(x,y){
-for(let i=0;i<20;i++){
+const l=document.createElement("div");
+l.className="lightning";document.body.appendChild(l);
+setTimeout(()=>l.remove(),300);
+
+for(let i=0;i<30;i++){
 const h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=x+"px";
-h.style.top=y+"px";
-h.style.fontSize=15+Math.random()*25+"px";
+h.className="heart";h.innerHTML="❤️";
+h.style.left=e.clientX+"px";
+h.style.top=e.clientY+"px";
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),1500);
 }
-}
 
-/* 💡 BULB LIGHTS */
-function bulbLights(){
-for(let i=0;i<30;i++){
+for(let i=0;i<25;i++){
 const b=document.createElement("div");
 b.className="bulb";
 b.style.left=Math.random()*100+"vw";
@@ -218,7 +192,38 @@ setTimeout(()=>b.remove(),800);
 }
 }
 
-/* SHAYARIS – UNCHANGED */
+/* PHOTO SYSTEM */
+let p=1;
+function photoClick(e){
+music.play().catch(()=>{});
+p++; if(p>10) p=1;
+photo.src=`photo${p}.jpg`;
+effects(e);
+}
+
+/* ❤️ VIDEO CARD */
+const grid=document.getElementById("grid");
+const videoCard=document.createElement("div");
+videoCard.className="card";
+videoCard.innerHTML=`
+<div class="cover">❤️</div>
+<div class="content">
+<video controls>
+<source src="video1.mp4" type="video/mp4">
+</video>
+</div>`;
+videoCard.onclick=e=>{
+music.pause();
+effects(e);
+videoCard.querySelector(".cover").style.display="none";
+const c=videoCard.querySelector(".content");
+c.style.display="block";
+c.classList.add("blast");
+c.querySelector("video").play();
+};
+grid.appendChild(videoCard);
+
+/* 💌 ALL SHAYARI – FULL */
 const shayaris=[
 "Zindagi ke safar mein tera sath chahiye, tanhaiyon mein tera hath chahiye.",
 "Phoolon ki mehak bhi fiki lagti hai, jab Pallavi teri muskurahat dikhti hai.",
@@ -244,17 +249,14 @@ const shayaris=[
 ];
 
 const emojis=["🌟","✨","🔥","💎","🌸","🦋","🎈","🍫"];
-const grid=document.getElementById("shayariGrid");
 
 shayaris.forEach(t=>{
 const c=document.createElement("div");
 c.className="card";
-c.innerHTML=`<div class="cover">${emojis[Math.floor(Math.random()*emojis.length)]}</div>
+c.innerHTML=`<div class="cover">${emojis[Math.random()*emojis.length|0]}</div>
 <div class="content">${t}</div>`;
 c.onclick=e=>{
-rainLightning();
-heartBlast(e.clientX,e.clientY);
-bulbLights();
+effects(e);
 c.querySelector(".cover").style.display="none";
 const ct=c.querySelector(".content");
 ct.style.display="block";
