@@ -11,9 +11,11 @@ margin:0;
 background:#0b0e14;
 color:#fff;
 font-family:'Segoe UI',sans-serif;
-overflow-x:hidden;
 text-align:center;
+overflow-x:hidden;
 }
+
+section{padding:25px 15px}
 
 /* INTRO */
 #intro{
@@ -23,53 +25,46 @@ background:#000;
 display:flex;
 align-items:center;
 justify-content:center;
-z-index:9999;
 flex-direction:column;
+z-index:999;
 animation:fadeout 1s forwards;
 animation-delay:4s;
 }
-
-#intro h1{
-font-size:40px;
-color:#ff4757;
-animation:pulse 1.5s infinite;
-}
-
-@keyframes fadeout{
-to{opacity:0;visibility:hidden}
-}
-@keyframes pulse{
-50%{transform:scale(1.1)}
-}
+#intro h1{color:#ff4757;font-size:38px}
+@keyframes fadeout{to{opacity:0;visibility:hidden}}
 
 /* HEARTS */
 .heart{
 position:fixed;
 color:red;
-font-size:20px;
+font-size:18px;
 animation:float 3s linear forwards;
 }
 @keyframes float{
 to{transform:translateY(-200px);opacity:0}
 }
 
-/* SECTIONS */
-section{padding:30px 15px}
-
 /* VIDEO CARDS */
 .videos{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
 gap:15px;
-max-width:800px;
+max-width:900px;
 margin:auto;
 }
 .vcard{
 background:#1a1f29;
 border-radius:20px;
-padding:20px;
-cursor:pointer;
+padding:10px;
+}
+.vcard video{
+width:100%;
+border-radius:15px;
+display:none;
+}
+.vcard .play{
 font-size:40px;
+cursor:pointer;
 }
 
 /* PHOTO */
@@ -91,23 +86,11 @@ margin:auto;
 .card{
 background:#1a1f29;
 border-radius:15px;
-padding:20px;
+padding:15px;
 cursor:pointer;
 }
 .cover{font-size:30px}
 .content{display:none;font-size:14px}
-
-/* VIDEO POPUP */
-.popup{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.8);
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:999;
-}
-video{max-width:90%;border-radius:20px}
 </style>
 </head>
 
@@ -124,12 +107,29 @@ video{max-width:90%;border-radius:20px}
 
 <!-- VIDEOS -->
 <section>
-<h2>❤️ Special Moments</h2>
+<h2>❤️ Special Videos</h2>
 <div class="videos">
-<div class="vcard" onclick="playVideo(1)">❤️</div>
-<div class="vcard" onclick="playVideo(2)">❤️</div>
-<div class="vcard" onclick="playVideo(3)">❤️</div>
-<div class="vcard" onclick="playVideo(4)">❤️</div>
+
+<div class="vcard">
+<div class="play" onclick="toggleVideo(this,1)">❤️</div>
+<video src="video1.mp4" playsinline></video>
+</div>
+
+<div class="vcard">
+<div class="play" onclick="toggleVideo(this,2)">❤️</div>
+<video src="video2.mp4" playsinline></video>
+</div>
+
+<div class="vcard">
+<div class="play" onclick="toggleVideo(this,3)">❤️</div>
+<video src="video3.mp4" playsinline></video>
+</div>
+
+<div class="vcard">
+<div class="play" onclick="toggleVideo(this,4)">❤️</div>
+<video src="video4.mp4" playsinline></video>
+</div>
+
 </div>
 </section>
 
@@ -141,7 +141,7 @@ video{max-width:90%;border-radius:20px}
 
 <!-- SHAYARI -->
 <section>
-<h2>💌 Shayari For You</h2>
+<h2>💌 Shayari</h2>
 <div class="grid" id="shayariGrid"></div>
 </section>
 
@@ -150,7 +150,7 @@ const music=document.getElementById("bgMusic");
 
 /* HEART EFFECT */
 function hearts(){
-for(let i=0;i<15;i++){
+for(let i=0;i<12;i++){
 let h=document.createElement("div");
 h.className="heart";
 h.innerHTML="❤️";
@@ -160,27 +160,32 @@ document.body.appendChild(h);
 setTimeout(()=>h.remove(),3000);
 }
 }
-setInterval(hearts,800);
+setInterval(hearts,900);
 
-/* VIDEO */
-function playVideo(n){
+/* VIDEO PLAY INSIDE CARD */
+function toggleVideo(el,n){
 music.pause();
-const p=document.createElement("div");
-p.className="popup";
-p.innerHTML=`<video src="video${n}.mp4" controls autoplay></video>`;
-p.onclick=()=>p.remove();
-document.body.appendChild(p);
+const card=el.parentElement;
+const video=card.querySelector("video");
+
+document.querySelectorAll("video").forEach(v=>{
+if(v!==video){v.pause();v.style.display="none";}
+});
+
+el.style.display="none";
+video.style.display="block";
+video.play();
 }
 
 /* PHOTO */
-let pno=1;
+let p=1;
 function nextPhoto(){
-pno++; if(pno>10)pno=1;
-document.getElementById("photo").src=`photo${pno}.jpg`;
+p++; if(p>10)p=1;
+document.getElementById("photo").src=`photo${p}.jpg`;
 hearts();
 }
 
-/* SHAYARI – SAME AS BEFORE */
+/* SHAYARI */
 const shayaris=[
 "Zindagi ke safar mein tera sath chahiye, tanhaiyon mein tera hath chahiye.",
 "Phoolon ki mehak bhi fiki lagti hai, jab Pallavi teri muskurahat dikhti hai.",
@@ -192,9 +197,7 @@ const shayaris=[
 "Dil se likhi hai baat, hamesha rahe Pallavi tera saath.",
 "Teri dosti ka nasha hai, har dard ki yahi dawa hai.",
 "Suraj ki pehli kiran ho tum, mere liye sabse khas ho tum.",
-"Bas tum haste raho, yahi dua hai meri har pal.",
-"Duniya ki har khushi Pallavi ke naam ho.",
-"SivaSingh ki taraf se dosti ka uphar ❤️"
+"SivaSingh ki taraf se pyaar ❤️"
 ];
 
 const grid=document.getElementById("shayariGrid");
