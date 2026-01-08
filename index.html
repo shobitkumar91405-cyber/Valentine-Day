@@ -1,321 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aarvi & SivaSingh | Broken Heart</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Chapter - Heartbreak</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap');
 
-<style>
-:root{
---bg:#0b0e14;
---accent:#ff2d55;
---text:#e0e0e0;
-}
+        :root {
+            --bg-dark: #0b0e14;
+            --heart-red: #ff4d6d;
+            --heart-dark: #800f2f;
+            --text-gray: #a0a0a0;
+            --accent-red: #c9184a;
+        }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',serif}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
 
-body{
-background:var(--bg);
-color:var(--text);
-overflow-x:hidden;
-}
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
 
-/* 🌧 RAIN */
-#rain-container{position:fixed;inset:0;pointer-events:none;z-index:1}
-.drop{position:absolute;width:1px;height:50px;background:rgba(255,255,255,.15);animation:fall linear infinite}
-@keyframes fall{to{transform:translateY(110vh)}}
+        /* --- Intro Screen --- */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0b0e14 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 1.5s ease;
+        }
 
-/* ❤️ ENTRY */
-#entry-overlay{
-position:fixed;inset:0;
-background:radial-gradient(circle,#1a1a1a,#000);
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-z-index:1000;transition:1s
-}
+        canvas#rain {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
 
-/* 💔 BROKEN HEART */
-.heart-3d{
-width:120px;height:120px;
-background:#ff4d4d;
-transform:rotate(-45deg);
-animation:pulse 1.5s infinite,rotate 6s linear infinite;
-cursor:pointer;
-box-shadow:0 0 80px #ff4d4d;
-position:relative
-}
-.heart-3d::before,.heart-3d::after{
-content:'';position:absolute;
-width:120px;height:120px;
-background:#ff4d4d;border-radius:50%
-}
-.heart-3d::before{top:-60px}
-.heart-3d::after{left:60px}
+        .scene-3d {
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+            z-index: 10;
+        }
 
-@keyframes pulse{50%{transform:scale(1.1) rotate(-45deg)}}
-@keyframes rotate{to{filter:hue-rotate(360deg)}}
+        .heart-3d {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 75px auto;
+            transform-style: preserve-3d;
+            animation: rotateHeart 10s linear infinite, pulseHeart 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
 
-/* 💌 PROPOSAL */
-#proposal-ui{display:none;text-align:center}
-.glow-text{
-font-size:2rem;
-color:#fff;
-text-shadow:0 0 20px var(--accent);
-margin:30px 20px
-}
-.btn-group{display:flex;gap:20px;justify-content:center}
-.btn{
-padding:15px 35px;
-border-radius:25px;border:none;
-font-size:1.1rem;cursor:pointer
-}
-.btn-yes{background:var(--accent);color:#fff}
-.btn-no{background:#222;color:#aaa}
+        @keyframes rotateHeart {
+            0% { transform: rotateY(0deg) rotateX(10deg); }
+            100% { transform: rotateY(360deg) rotateX(10deg); }
+        }
 
-/* 🌑 MAIN */
-#main-content{
-display:none;
-max-width:900px;
-margin:auto;padding:80px 15px;
-position:relative;z-index:10
-}
-.typewriter{
-font-size:2.3rem;
-color:var(--accent);
-text-align:center;
-margin-bottom:80px
-}
+        @keyframes pulseHeart {
+            0%, 100% { transform: scale(1) rotateY(var(--rotY, 0deg)); }
+            50% { transform: scale(1.1) rotateY(var(--rotY, 0deg)); }
+        }
 
-/* 🎬 VIDEO */
-.video-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;margin-bottom:100px
-}
-.video-card{
-background:#161a21;
-padding:10px;border-radius:12px;
-cursor:pointer;border:1px solid #333
-}
-.video-card video{width:100%;display:none;border-radius:8px}
-.video-card.active video{display:block}
+        .heart-part {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: var(--heart-red);
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 0 40px var(--accent-red);
+        }
 
-/* 📸 PHOTO (FIXED) */
-.photo-section{
-position:relative;
-height:420px;
-overflow:hidden;
-border-radius:15px;
-border:1px solid #222;
-margin-bottom:100px
-}
-.photo-slide{
-position:absolute;
-width:100%;height:100%;
-object-fit:cover;
-opacity:0;
-transition:opacity 1.5s ease,transform 1.5s ease;
-transform:scale(1.1)
-}
-.photo-slide.active{
-opacity:1;
-transform:scale(1)
-}
+        .heart-part.left { transform: rotate(-45deg) translateX(-50px); }
+        .heart-part.right { transform: rotate(45deg) translateX(50px); }
 
-/* 💔 SHAYARI */
-.shayari-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;margin-bottom:100px
-}
-.shayari-card{
-background:#161a21;
-padding:30px;
-border-radius:15px;
-text-align:center;
-cursor:pointer;
-border:1px solid #222;
-min-height:180px;
-display:flex;align-items:center;justify-content:center
-}
-.shayari-content{display:none;font-style:italic}
+        /* Proposal Section */
+        #proposal-ui {
+            display: none;
+            text-align: center;
+            z-index: 20;
+            animation: fadeIn 2s ease;
+        }
 
-/* 💬 CHAT */
-.chat-box{
-background:#000;
-padding:40px;border-radius:20px;
-border-left:4px solid var(--accent);
-margin-bottom:100px
-}
+        .proposal-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
+            line-height: 1.4;
+        }
 
-/* 🎵 AUDIO */
-audio{display:none}
-</style>
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-yes { background: #ff4d6d; color: white; box-shadow: 0 0 20px rgba(255, 77, 109, 0.4); }
+        .btn-breakup { background: #2b2d42; color: #8d99ae; border: 1px solid #454545; }
+
+        /* --- Breakup Main Website --- */
+        #breakup-website {
+            display: none;
+            height: 100vh;
+            overflow-y: auto;
+            background: #050505;
+            padding: 50px 20px;
+            scrollbar-width: none;
+        }
+
+        .section {
+            max-width: 800px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        /* Cracked Heart */
+        .broken-heart-container {
+            height: 200px;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .piece {
+            position: absolute;
+            width: 80px;
+            height: 120px;
+            background: #4a0404;
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+            transition: 2s ease-in-out;
+        }
+
+        /* Typewriter */
+        .typewriter {
+            font-size: 1.8rem;
+            color: #cfcfcf;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            min-height: 3em;
+        }
+
+        /* Fake Chat */
+        .chat-container {
+            background: #0e0e0e;
+            border: 1px solid #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: left;
+            margin: 40px auto;
+            max-width: 400px;
+        }
+
+        .chat-msg {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .sent { background: #1f1f1f; margin-left: auto; color: #eee; }
+        .status { font-size: 0.7rem; color: #666; text-align: right; margin-top: 5px; }
+
+        /* Memories */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .memory-card {
+            aspect-ratio: 1/1;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            filter: grayscale(100%) brightness(0.7);
+            transition: 0.5s;
+        }
+
+        .memory-card:hover {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.05);
+        }
+
+        .memory-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Socials */
+        .socials {
+            border-top: 1px solid #222;
+            padding-top: 50px;
+        }
+
+        .insta-link {
+            display: block;
+            color: var(--accent-red);
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Final Goodbye */
+        #final-goodbye {
+            position: fixed;
+            inset: 0;
+            background: black;
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Utils */
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
+<body>
 
-<body onclick="initAudio()">
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3" type="audio/mpeg">
+    </audio>
 
-<div id="rain-container"></div>
+    <div id="intro-screen">
+        <canvas id="rain"></canvas>
+        
+        <div class="scene-3d" id="heart-trigger">
+            <div class="heart-3d" id="main-heart">
+                <div class="heart-part left"></div>
+                <div class="heart-part right"></div>
+            </div>
+        </div>
 
-<div id="entry-overlay">
-<div class="heart-3d" id="heart"></div>
+        <div id="proposal-ui">
+            <h1 class="proposal-text">
+                Aarvi ji<br>
+                <span style="font-size: 1.2rem; color: var(--text-gray);">Welcome to SivaSingh’s heart 💖</span><br>
+                I want to say I love you...<br>
+                Do you love me?
+            </h1>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="handleYes()">YES ❤️</button>
+                <button class="btn btn-breakup" onclick="handleBreakup()">BREAKUP 💔</button>
+            </div>
+        </div>
+    </div>
 
-<div id="proposal-ui">
-<h1 class="glow-text">
-Aarvi ji 💔<br>
-welcome to SivaSingh’s heart<br>
-I want to say I love you<br>
-Do you love me?
-</h1>
-<div class="btn-group">
-<button class="btn btn-yes" onclick="errorYes()">YES</button>
-<button class="btn btn-no" onclick="breakup()">BREAK UP 💔</button>
-</div>
-</div>
-</div>
+    <div id="breakup-website">
+        <div class="section">
+            <div class="broken-heart-container" id="broken-heart-anim">
+                </div>
+            <div class="typewriter" id="sad-quotes"></div>
+        </div>
 
-<main id="main-content">
-<h2 class="typewriter" id="type"></h2>
+        <div class="section">
+            <div class="chat-container">
+                <div class="chat-msg sent">
+                    Tum ab bhi yaad aati ho...
+                    <div class="status">Seen ✔✔</div>
+                </div>
+                <div class="status" style="text-align: center; width: 100%;">Last seen long ago</div>
+            </div>
+        </div>
 
-<div class="video-grid">
-<div class="video-card" onclick="playVideo(this)"><video src="video1.mp4" controls></video></div>
-<div class="video-card" onclick="playVideo(this)"><video src="video2.mp4" controls></video></div>
-<div class="video-card" onclick="playVideo(this)"><video src="video3.mp4" controls></video></div>
-<div class="video-card" onclick="playVideo(this)"><video src="video4.mp4" controls></video></div>
-<div class="video-card" onclick="playVideo(this)"><video src="video5.mp4" controls></video></div>
-</div>
+        <div class="section">
+            <h3>Memories fading away...</h3>
+            <div class="memories-grid">
+                <div class="memory-card"><img src="photo1.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo2.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo3.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo4.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo5.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo6.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo7.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo8.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo9.jpg" alt="Memory"></div>
+                <div class="memory-card"><img src="photo10.jpg" alt="Memory"></div>
+            </div>
+        </div>
 
-<div class="photo-section">
-<img src="photo1.jpg" class="photo-slide active">
-<img src="photo2.jpg" class="photo-slide">
-<img src="photo3.jpg" class="photo-slide">
-<img src="photo4.jpg" class="photo-slide">
-<img src="photo5.jpg" class="photo-slide">
-<img src="photo6.jpg" class="photo-slide">
-<img src="photo7.jpg" class="photo-slide">
-<img src="photo8.jpg" class="photo-slide">
-<img src="photo9.jpg" class="photo-slide">
-<img src="photo10.jpg" class="photo-slide">
-</div>
+        <div class="section socials">
+            <p>Some paths are never meant to cross again.</p>
+            <a href="https://instagram.com/smss1708" class="insta-link">📸 @smss1708</a>
+            <a href="https://instagram.com/black_its_me20" class="insta-link">📸 @black_its_me20</a>
+            
+            <button class="btn btn-breakup" style="margin-top: 50px;" onclick="showFinalGoodbye()">Let You Go 🥀</button>
+        </div>
+    </div>
 
-<div class="shayari-grid" id="shayari"></div>
+    <div id="final-goodbye">
+        <h1 class="proposal-text">Aaj bhi pyaar hai...<br>Par ab haq nahi...</h1>
+        <p style="color: #444;">Goodbye, Forever.</p>
+    </div>
 
-<div class="chat-box">
-<div>You: I still miss you…</div>
-<div style="color:#34b7f1;font-size:.8rem">Seen ✔✔</div>
-</div>
+    <script>
+        const canvas = document.getElementById('rain');
+        const ctx = canvas.getContext('2d');
+        const heartTrigger = document.getElementById('heart-trigger');
+        const proposalUI = document.getElementById('proposal-ui');
+        const mainHeart = document.getElementById('main-heart');
+        const bgMusic = document.getElementById('bg-music');
 
-<p style="text-align:center;opacity:.6">
-Instagram : @smss1708 &nbsp; @black_its_me20<br>
-Made with 💔 by SivaSingh
-</p>
-</main>
+        // Rain Effect
+        let w, h;
+        let rainDrops = [];
 
-<!-- 🎵 AUDIO -->
-<audio id="bg" src="newsong.mp3" loop></audio>
-<audio id="broken" src="broken.mp3"></audio>
-<audio id="heartSound" src="heart.mp3"></audio>
+        function initRain() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            rainDrops = Array(300).fill().map(() => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                l: Math.random() * 20,
+                s: Math.random() * 10 + 5
+            }));
+        }
 
-<script>
-/* RAIN */
-for(let i=0;i<100;i++){
-let d=document.createElement('div');
-d.className='drop';
-d.style.left=Math.random()*100+'vw';
-d.style.animationDuration=Math.random()+.5+'s';
-rain-container.appendChild(d);
-}
+        function drawRain() {
+            ctx.clearRect(0, 0, w, h);
+            ctx.strokeStyle = 'rgba(174, 194, 224, 0.2)';
+            ctx.lineWidth = 1;
+            rainDrops.forEach(d => {
+                ctx.beginPath();
+                ctx.moveTo(d.x, d.y);
+                ctx.lineTo(d.x, d.y + d.l);
+                ctx.stroke();
+                d.y += d.s;
+                if (d.y > h) d.y = -20;
+            });
+            requestAnimationFrame(drawRain);
+        }
 
-/* AUDIO */
-const bg=document.getElementById('bg');
-const broken=document.getElementById('broken');
-const heartSound=document.getElementById('heartSound');
-let started=false;
-function initAudio(){if(!started){bg.play();started=true}}
+        window.addEventListener('resize', initRain);
+        initRain();
+        drawRain();
 
-/* HEART */
-heart.onclick=()=>{
-heartSound.play();
-heart.style.display='none';
-setTimeout(()=>proposal-ui.style.display='block',500);
-};
+        // Heart Click Interaction
+        heartTrigger.onclick = () => {
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 500);
+            
+            heartTrigger.style.display = 'none';
+            proposalUI.style.display = 'block';
+            
+            // Generate particle hearts
+            for(let i=0; i<30; i++) createParticle(window.innerWidth/2, window.innerHeight/2);
+        };
 
-/* YES ERROR */
-function errorYes(){
-alert("ERROR 404 : Happiness Not Found 💔");
-}
+        function createParticle(x, y) {
+            const p = document.createElement('div');
+            p.innerHTML = '❤️';
+            p.style.position = 'fixed';
+            p.style.left = x + 'px';
+            p.style.top = y + 'px';
+            p.style.fontSize = Math.random() * 20 + 10 + 'px';
+            p.style.pointerEvents = 'none';
+            p.style.zIndex = '100';
+            document.body.appendChild(p);
 
-/* BREAKUP */
-function breakup(){
-proposal-ui.innerHTML=`
-<h1 class="glow-text">
-💔 Broken 💔<br>
-Hame dil me rehne ko bola tha,<br>
-aapne hamara hi dil tod diya…
-</h1>`;
-heartSound.play();
-setTimeout(()=>{
-entry-overlay.style.opacity=0;
-setTimeout(()=>{
-entry-overlay.style.display='none';
-main-content.style.display='block';
-typeWriter();
-},1000);
-},2500);
-}
+            const destX = x + (Math.random() - 0.5) * 500;
+            const destY = y + (Math.random() - 0.5) * 500;
 
-/* TYPE */
-function typeWriter(){
-let t="Kuch kahaniyan poori nahi hoti…";
-let i=0;
-let el=document.getElementById('type');
-(function type(){
-if(i<t.length){el.innerHTML+=t[i++];setTimeout(type,120);}
-})();
-}
+            p.animate([
+                { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
+            ], { duration: 2000, easing: 'ease-out' }).onfinish = () => p.remove();
+        }
 
-/* VIDEO */
-function playVideo(card){
-bg.pause();
-document.querySelectorAll('.video-card').forEach(c=>{
-c.classList.remove('active');
-c.querySelector('video').pause();
-});
-card.classList.add('active');
-card.querySelector('video').play();
-}
+        // Logic Flows
+        function handleYes() {
+            alert("She said YES 💖");
+            location.reload(); // In a real app, you'd load the 'Love' version here
+        }
 
-/* PHOTO SLIDE */
-let p=0;
-let photos=document.querySelectorAll('.photo-slide');
-setInterval(()=>{
-photos[p].classList.remove('active');
-p=(p+1)%photos.length;
-photos[p].classList.add('active');
-bg.play();
-},3500);
+        function handleBreakup() {
+            bgMusic.play().catch(() => console.log("Audio needs interaction"));
+            
+            const intro = document.getElementById('intro-screen');
+            intro.style.background = '#000';
+            
+            // Intensify rain logic
+            rainDrops.forEach(d => d.s *= 2);
+            
+            // Transition to Breakup Site
+            setTimeout(() => {
+                intro.style.opacity = '0';
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                    const breakupSite = document.getElementById('breakup-website');
+                    breakupSite.style.display = 'block';
+                    initBreakupContent();
+                }, 1500);
+            }, 1000);
+        }
 
-/* SHAYARI */
-const texts=[
-"Tumhe chaha toh bahut magar tum mile nahi...",
-"Ek tarfa pyar bhi kitna ajeeb hota hai na?",
-"Wo jo kehte the hum kabhi juda nahi honge...",
-"Ab sukoon sirf maut mein hai..."
-];
-texts.forEach(t=>{
-let c=document.createElement('div');
-c.className='shayari-card';
-c.innerHTML=`<div>💔</div><div class="shayari-content">${t}</div>`;
-c.onclick=e=>{
-bg.pause();
-broken.currentTime=0;
-broken.play();
-c.children[0].style.display='none';
-c.children[1].style.display='block';
-heartSound.play();
-};
-shayari.appendChild(c);
-});
-</script>
+        function initBreakupContent() {
+            // Create Cracked Heart pieces
+            const container = document.getElementById('broken-heart-anim');
+            for(let i=0; i<6; i++) {
+                const p = document.createElement('div');
+                p.className = 'piece';
+                p.style.left = '50%';
+                p.style.top = '20%';
+                p.style.transform = `translateX(-50%) rotate(${i * 60}deg)`;
+                container.appendChild(p);
+                
+                // Animate break
+                setTimeout(() => {
+                    p.style.transform = `translate(${(Math.random()-0.5)*300}px, ${500 + Math.random()*200}px) rotate(${Math.random()*360}deg)`;
+                    p.style.opacity = '0';
+                }, 1000 + (i*200));
+            }
+
+            // Typewriter Effect
+            const quotes = [
+                "Kuch log sirf yaadon mein reh jaate hain...",
+                "Hum chaah kar bhi tumhare nahi rahe...",
+                "Mohabbat aaj bhi hai, par ab saath nahi..."
+            ];
+            let qIdx = 0;
+            const typewriter = document.getElementById('sad-quotes');
+            
+            function type() {
+                let charIdx = 0;
+                typewriter.innerHTML = "";
+                const interval = setInterval(() => {
+                    typewriter.innerHTML += quotes[qIdx][charIdx];
+                    charIdx++;
+                    if(charIdx >= quotes[qIdx].length) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            qIdx = (qIdx + 1) % quotes.length;
+                            type();
+                        }, 3000);
+                    }
+                }, 100);
+            }
+            type();
+        }
+
+        function showFinalGoodbye() {
+            const final = document.getElementById('final-goodbye');
+            final.style.display = 'flex';
+            final.animate([{opacity: 0}, {opacity: 1}], 2000);
+            
+            setTimeout(() => {
+                document.body.innerHTML = "";
+                document.body.style.background = "black";
+            }, 5000);
+        }
+    </script>
 </body>
 </html>
