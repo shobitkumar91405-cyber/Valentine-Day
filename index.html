@@ -3,513 +3,698 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broken Heart - Aarvi & SivaSingh</title>
+    <title>Broken Heart - Siva Singh</title>
     <style>
         :root {
-            --bg: #0b0e14;
-            --primary: #ff2d55;
-            --accent: #800000;
-            --text: #e0e0e0;
+            --bg-color: #0b0e14;
+            --accent-red: #ff4d4d;
+            --dark-red: #8b0000;
+            --text-color: #e0e0e0;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
             overflow-x: hidden;
-            overflow-y: hidden; /* Locked until intro ends */
+            line-height: 1.6;
         }
 
-        /* --- BACKGROUND ELEMENTS --- */
-        .rain-container {
+        /* Rain Animation */
+        #rain-canvas {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10;
         }
-        .drop {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            width: 1px; height: 50px;
+
+        /* Petals */
+        .petal {
+            position: fixed;
+            background: radial-gradient(circle, #ff4d4d, #8b0000);
+            border-radius: 150% 0 150% 0;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 9;
             animation: fall linear infinite;
         }
-        @keyframes fall { to { transform: translateY(100vh); } }
 
-        .petal {
-            position: absolute;
-            background: radial-gradient(circle, #ff4d6d, #800000);
-            width: 10px; height: 10px;
-            border-radius: 50% 0 50% 50%;
-            opacity: 0.6;
-            animation: petalFall linear infinite;
-        }
-        @keyframes petalFall {
+        @keyframes fall {
             0% { transform: translateY(-10vh) rotate(0deg); }
-            100% { transform: translateY(110vh) rotate(720deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
         }
 
-        /* --- INTRO SECTION --- */
+        /* Intro Section */
         #intro-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at center, #1a1a1a, #000);
-            z-index: 1000;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            z-index: 1000;
             transition: opacity 1s ease;
         }
 
-        .heart-3d-wrap {
+        .heart-container {
             perspective: 1000px;
             cursor: pointer;
-            width: 200px; height: 200px;
-            position: relative;
+            margin-bottom: 2rem;
         }
 
-        .heart-3d {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            transform-style: preserve-3d;
-            animation: rotateHeart 10s infinite linear, heartbeat 1.5s infinite;
-            margin: 50px auto;
+        #main-heart {
+            font-size: 100px;
+            display: inline-block;
+            animation: rotate3D 6s infinite linear, pulse 1.5s infinite ease-in-out;
+            transition: transform 0.3s, color 5s;
+            filter: drop-shadow(0 0 20px var(--accent-red));
+            user-select: none;
         }
 
-        .heart-3d div {
-            position: absolute;
-            width: 100px; height: 100px;
-            background: var(--primary);
-            border-radius: 50% 50% 0 0;
-            box-shadow: 0 0 40px var(--accent);
-            transition: background 5s ease;
+        @keyframes rotate3D {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
         }
 
-        .heart-3d .left { transform: rotateY(0deg) rotateZ(-45deg); transform-origin: 100% 100%; }
-        .heart-3d .right { transform: rotateY(90deg) rotateZ(-45deg); transform-origin: 100% 100%; }
-
-        @keyframes rotateHeart { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
-        @keyframes heartbeat { 0%, 100% { scale: 1; } 50% { scale: 1.1; } }
-
-        .intro-ui {
-            margin-top: 50px;
-            opacity: 0;
-            transition: 1s ease;
-            transform: translateY(20px);
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotateY(var(--rot, 0deg)); }
+            50% { transform: scale(1.1) rotateY(var(--rot, 0deg)); }
         }
-        .intro-ui.show { opacity: 1; transform: translateY(0); }
 
-        .btn-group { display: flex; gap: 20px; margin-top: 20px; }
+        .intro-text {
+            text-align: center;
+            display: none;
+            padding: 20px;
+            animation: fadeIn 1.5s forwards;
+        }
+
+        .intro-text h1 {
+            color: #fff;
+            text-shadow: 0 0 15px var(--accent-red);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
         .btn {
             padding: 12px 30px;
             border: none;
             border-radius: 25px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .btn-yes { background: #ff2d55; color: white; }
-        .btn-break { background: #333; color: #888; }
 
-        /* --- MAIN CONTENT --- */
+        .btn-yes { background: #ff4d4d; color: white; }
+        .btn-breakup { background: #333; color: #bbb; border: 1px solid #444; }
+
+        /* Main Content */
         #main-site {
             display: none;
             padding: 20px;
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
             position: relative;
-            z-index: 10;
         }
 
-        .typewriter {
-            font-size: 1.5rem;
-            height: 3rem;
+        .section-title {
             text-align: center;
-            margin: 40px 0;
-            color: #ff4d6d;
-            font-style: italic;
+            margin: 40px 0 20px;
+            font-size: 1.2rem;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
+        /* Typewriter */
+        #typewriter {
+            height: 60px;
+            text-align: center;
+            font-style: italic;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        /* Video Grid */
         .video-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 40px;
         }
+
         .video-card {
-            background: #161a21;
-            border: 1px solid #333;
+            background: #151921;
             border-radius: 10px;
             overflow: hidden;
+            border: 1px solid #222;
             position: relative;
         }
-        video { width: 100%; cursor: pointer; display: block; }
 
-        .photo-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        #memory-photo {
+        video {
             width: 100%;
-            max-height: 400px;
-            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Memory Section */
+        #photo-display {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background-size: cover;
+            background-position: center;
             border-radius: 15px;
-            border: 2px solid #333;
+            border: 2px solid #222;
             cursor: pointer;
             transition: opacity 0.5s;
+            position: relative;
         }
 
-        .shayari-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 40px;
+        .tap-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 8px;
+            border-radius: 5px;
         }
+
+        /* Shayari Cards */
         .shayari-card {
-            background: linear-gradient(145deg, #1a1e26, #0b0e14);
+            background: linear-gradient(145deg, #151921, #0b0e14);
             padding: 20px;
             border-radius: 12px;
-            border-left: 4px solid var(--accent);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--dark-red);
             cursor: pointer;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+            transition: transform 0.1s;
         }
 
-        .fake-chat {
-            background: #000;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-        }
-        .chat-bubble {
-            background: #1a1e26;
-            padding: 10px 15px;
-            border-radius: 10px;
-            width: fit-content;
-            margin-bottom: 10px;
-        }
-        .chat-bubble.right { margin-left: auto; background: #054d44; }
-        .status { font-size: 0.7rem; color: #888; text-align: right; }
+        .shayari-card:active { transform: scale(0.98); }
 
-        /* --- CALL UI --- */
-        #call-ui {
-            display: none;
+        /* Fake Chat */
+        .chat-container {
             background: #111;
-            border: 1px solid #333;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 40px;
-            animation: vibrate 0.5s infinite;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
         }
-        @keyframes vibrate { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); } }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .sent {
+            background: #056162;
+            align-self: flex-end;
+            margin-left: auto;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-status {
+            font-size: 0.7rem;
+            color: #777;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Call UI */
+        #call-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding: 50px 0;
+        }
+
+        .caller-info { text-align: center; }
+        .caller-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            margin-bottom: 20px;
+            background: #333;
+        }
+
+        .call-btns {
+            display: flex;
+            gap: 60px;
+        }
 
         .call-btn {
-            background: #4cd964;
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            border: none;
-            margin-top: 20px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
             cursor: pointer;
+            animation: vibrate 0.5s infinite;
         }
 
-        /* --- FINAL SECTIONS --- */
-        .instagram-box {
+        .pick { background: #4cd964; color: white; }
+        .decline { background: #ff3b30; color: white; }
+
+        #call-dialog {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 2001;
+            display: none;
+            flex-direction: column;
+            padding: 40px 20px;
+        }
+
+        .bubble {
+            padding: 12px 18px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            max-width: 85%;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s;
+        }
+
+        .bubble.aarvi { background: #333; align-self: flex-start; }
+        .bubble.siva { background: var(--dark-red); align-self: flex-end; }
+        .bubble.show { opacity: 1; transform: translateY(0); }
+
+        /* Instagram Section */
+        .insta-box {
+            background: #1c1c1c;
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            padding: 20px;
-            background: rgba(255,45,85,0.05);
-            border-radius: 15px;
-            margin-bottom: 40px;
+            margin: 20px 0;
         }
-        .insta-link { color: #ff2d55; text-decoration: none; display: block; margin: 5px; }
 
-        .goodbye-section {
-            padding: 60px 20px;
+        .insta-handle { color: var(--accent-red); font-weight: bold; display: block; }
+
+        /* Goodbye Section */
+        .goodbye-sec {
+            margin-top: 100px;
+            padding: 40px 20px;
             text-align: center;
-            border-top: 1px solid #333;
-            margin-top: 50px;
-        }
-        .goodbye-btn {
-            background: transparent;
-            border: 1px solid #800000;
-            color: #800000;
-            padding: 10px 30px;
-            margin-top: 30px;
-            cursor: pointer;
+            border-top: 1px solid #222;
         }
 
-        /* --- UTILS --- */
-        .thunder {
-            position: fixed; inset: 0; background: white; opacity: 0; z-index: 2000; pointer-events: none;
-        }
-        .shake { animation: shake 0.3s; }
-        @keyframes shake { 0% { transform: translate(0); } 25% { transform: translate(5px); } 50% { transform: translate(-5px); } 75% { transform: translate(5px); } 100% { transform: translate(0); } }
+        #final-heart { font-size: 50px; margin: 20px 0; transition: opacity 2s, filter 2s; }
 
-        @media (max-width: 600px) {
-            .video-grid { grid-template-columns: 1fr; }
-        }
+        /* Utils */
+        .flash { position: fixed; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 3000; }
+        @keyframes thunder { 0% { opacity: 0; } 10% { opacity: 0.8; } 15% { opacity: 0; } 20% { opacity: 0.5; } 100% { opacity: 0; } }
+        @keyframes shake { 0% { transform: translate(0,0); } 25% { transform: translate(5px,5px); } 50% { transform: translate(-5px,0); } 75% { transform: translate(5px,-5px); } 100% { transform: translate(0,0); } }
+        @keyframes vibrate { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="thunder" id="thunder-flash"></div>
-    <div class="rain-container" id="rain"></div>
+<canvas id="rain-canvas"></canvas>
+<div class="flash" id="flash-effect"></div>
 
-    <audio id="bg-music" loop>
-        <source src="newsong.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="shayari-sfx">
-        <source src="broken.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="intro-overlay">
-        <div class="heart-3d-wrap" onclick="explodeHeart()">
-            <div class="heart-3d" id="main-heart">
-                <div class="left"></div>
-                <div class="right"></div>
-            </div>
+<section id="intro-overlay">
+    <div class="heart-container" onclick="handleHeartClick()">
+        <div id="main-heart">💖</div>
+    </div>
+    <div class="intro-text" id="intro-content">
+        <h1>Aarvi ji</h1>
+        <p>Welcome to SivaSingh’s heart 💖</p>
+        <p>I want to say I love you</p>
+        <p>Do you love me?</p>
+        <div class="btn-group">
+            <button class="btn btn-yes" onclick="handleYes()">YES ❤️</button>
+            <button class="btn btn-breakup" onclick="handleBreakup()">BREAKUP 💔</button>
         </div>
+    </div>
+</section>
+
+<div id="call-overlay">
+    <div class="caller-info">
+        <div class="caller-img" style="background: url('photo1.jpg') center/cover;"></div>
+        <h2 style="font-size: 2rem;">Aarvi</h2>
+        <p>Calling...</p>
+    </div>
+    <div class="call-btns">
+        <div class="call-btn decline">✖</div>
+        <div class="call-btn pick" onclick="startCallDialog()">📞</div>
+    </div>
+</div>
+
+<div id="call-dialog"></div>
+
+<main id="main-site">
+    <div id="typewriter"></div>
+
+    <div class="section-title">Memories</div>
+    <div id="photo-display" onclick="nextPhoto()" style="background-image: url('photo1.jpg');">
+        <div class="tap-hint">Tap to change</div>
+    </div>
+
+    <div class="section-title">Video Diary</div>
+    <div class="video-grid">
+        <div class="video-card"><video src="video1.mp4" onclick="playVid(this)" loop></video></div>
+        <div class="video-card"><video src="video2.mp4" onclick="playVid(this)" loop></video></div>
+        <div class="video-card"><video src="video3.mp4" onclick="playVid(this)" loop></video></div>
+        <div class="video-card"><video src="video4.mp4" onclick="playVid(this)" loop></video></div>
+    </div>
+
+    <div class="section-title">Silent Screams</div>
+    <div id="shayari-container">
+        <div class="shayari-card" onclick="playShayariEffect(this)">
+            "Tumne kaha tha har mod par saath nibhaoge... par tumne toh mod hi badal diya."
+        </div>
+        <div class="shayari-card" onclick="playShayariEffect(this)">
+            "Dard tab nahi hota jab koi chhod jata hai, dard tab hota hai jab koi apni yaadein chhod jata hai."
+        </div>
+        <div class="shayari-card" onclick="playShayariEffect(this)">
+            "Tum ab bhi yaad aati ho @black_its_me20... par ab haq nahi raha jataane ka."
+        </div>
+    </div>
+
+    <div class="section-title">Unread Messages</div>
+    <div class="chat-container">
+        <div class="message sent">
+            Tum ab bhi yaad aati ho…
+            <div class="chat-status">Seen ✔✔<br>Last seen long ago</div>
+        </div>
+    </div>
+
+    <div class="insta-box">
+        📸 Instagram<br>
+        <span class="insta-handle">@smss1708</span>
+        <span class="insta-handle">@black_its_me20</span>
+    </div>
+
+    <div class="goodbye-sec" id="goodbye-section">
+        <div id="final-heart">💔</div>
+        <p>"Mai ja rahi hoon… hamesha ke liye…"</p>
+        <p style="color: #777; margin: 15px 0;">Aarvi: Tum apni zindagi jee lena, mujhe bhool jana…</p>
+        <button class="btn btn-breakup" id="btn-final" onclick="finalGoodbye()">Good Bye 🥀</button>
+    </div>
+</main>
+
+<audio id="bg-music" loop src="newsong.mp3"></audio>
+<audio id="broken-audio" src="broken.mp3"></audio>
+
+<script>
+    const canvas = document.getElementById('rain-canvas');
+    const ctx = canvas.getContext('2d');
+    let rainIntensity = 2;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.onresize = resize;
+    resize();
+
+    class Drop {
+        constructor() { this.init(); }
+        init() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * -canvas.height;
+            this.speed = 5 + Math.random() * 10;
+            this.len = 10 + Math.random() * 20;
+        }
+        update() {
+            this.y += this.speed;
+            if (this.y > canvas.height) this.init();
+        }
+        draw() {
+            ctx.strokeStyle = 'rgba(174, 194, 224, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x, this.y + this.len);
+            ctx.stroke();
+        }
+    }
+
+    const drops = Array.from({ length: 150 }, () => new Drop());
+
+    function animateRain() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drops.forEach(d => { d.update(); d.draw(); });
+        requestAnimationFrame(animateRain);
+    }
+    animateRain();
+
+    // Petals
+    function createPetal() {
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.width = petal.style.height = (Math.random() * 10 + 10) + 'px';
+        petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+        document.body.appendChild(petal);
+        setTimeout(() => petal.remove(), 8000);
+    }
+    setInterval(createPetal, 300);
+
+    const mainHeart = document.getElementById('main-heart');
+    const introContent = document.getElementById('intro-content');
+    const flash = document.getElementById('flash-effect');
+    const bgMusic = document.getElementById('bg-music');
+    const brokenAudio = document.getElementById('broken-audio');
+    
+    let currentPhoto = 1;
+    let isBreakup = false;
+
+    function handleHeartClick() {
+        flash.style.animation = 'thunder 0.5s';
+        document.body.style.animation = 'shake 0.3s';
+        setTimeout(() => {
+            flash.style.animation = '';
+            document.body.style.animation = '';
+        }, 500);
         
-        <div class="intro-ui" id="intro-ui">
-            <h1 style="color: #ff2d55; text-shadow: 0 0 10px #000;">Aarvi ji</h1>
-            <p>Welcome to SivaSingh’s heart 💖</p>
-            <p>I want to say I love you... Do you love me?</p>
-            <div class="btn-group">
-                <button class="btn btn-yes" onclick="proceed(true)">YES ❤️</button>
-                <button class="btn btn-break" onclick="proceed(false)">BREAKUP 💔</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="main-site">
-        <div class="typewriter" id="typewriter-text"></div>
-
-        <div class="video-grid">
-            <div class="video-card"><video src="video1.mp4" onclick="playVid(this)"></video></div>
-            <div class="video-card"><video src="video2.mp4" onclick="playVid(this)"></video></div>
-            <div class="video-card"><video src="video3.mp4" onclick="playVid(this)"></video></div>
-            <div class="video-card"><video src="video4.mp4" onclick="playVid(this)"></video></div>
-        </div>
-
-        <div class="photo-section">
-            <img src="photo1.jpg" id="memory-photo" onclick="nextPhoto()">
-            <p style="font-size: 0.8rem; margin-top: 10px; color: #555;">Tap photo to change memory</p>
-        </div>
-
-        <div class="shayari-container">
-            <div class="shayari-card" onclick="playShayari()">"Bhulna seekh lo varna marna padega... Mohabbat mein aksar yahi hota hai."</div>
-            <div class="shayari-card" onclick="playShayari()">"Ek muddat se usne humein yaad nahi kiya, aur humne usey bhula diya."</div>
-            <div class="shayari-card" onclick="playShayari()">"Dard toh wahi dete hain jinhe hum apna maante hain."</div>
-        </div>
-
-        <div class="fake-chat">
-            <div class="chat-bubble">Tum ab bhi yaad aati ho...</div>
-            <div class="status">Seen ✔✔</div>
-            <div class="status" style="text-align: left">Last seen: long ago</div>
-        </div>
-
-        <div id="call-ui">
-            <h3 style="color: #4cd964">Incoming Call...</h3>
-            <p style="font-size: 1.5rem; margin: 10px 0;">Aarvi</p>
-            <button class="call-btn" onclick="answerCall()">Pick Call 📞</button>
-        </div>
-
-        <div id="call-msg" style="display: none; padding: 20px; border: 1px solid #ff2d55; margin-bottom: 40px;">
-            <p id="caller-text"></p>
-        </div>
-
-        <div class="instagram-box">
-            <p>📸 Instagram</p>
-            <a href="#" class="insta-link">@smss1708</a>
-            <a href="#" class="insta-link">@black_its_me20</a>
-        </div>
-
-        <div class="goodbye-section">
-            <p>"Mai ja rahi hoon… Hamesha ke liye…"</p>
-            <br>
-            <p style="color: #888;">Aarvi: Tum apni zindagi jee lena, Mujhe bhool jana…</p>
-            <button class="goodbye-btn" id="final-bye" onclick="finalGoodbye()">Good Bye 🥀</button>
-        </div>
-    </div>
-
-    <script>
-        // --- Setup Rain ---
-        const rainContainer = document.getElementById('rain');
-        function createRain() {
-            for(let i=0; i<100; i++) {
-                let drop = document.createElement('div');
-                drop.className = 'drop';
-                drop.style.left = Math.random() * 100 + 'vw';
-                drop.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
-                drop.style.animationDelay = Math.random() * 2 + 's';
-                rainContainer.appendChild(drop);
-            }
-            for(let i=0; i<30; i++) {
-                let petal = document.createElement('div');
-                petal.className = 'petal';
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                petal.style.animationDelay = Math.random() * 5 + 's';
-                rainContainer.appendChild(petal);
-            }
-        }
-        createRain();
-
-        // --- Intro Interaction ---
-        function explodeHeart() {
-            flash();
-            document.body.classList.add('shake');
-            setTimeout(() => document.body.classList.remove('shake'), 300);
-            document.getElementById('intro-ui').classList.add('show');
-        }
-
-        function flash() {
-            const f = document.getElementById('thunder-flash');
-            f.style.opacity = '1';
-            setTimeout(() => f.style.opacity = '0', 100);
-        }
-
-        function proceed(isYes) {
-            const overlay = document.getElementById('intro-overlay');
-            const bgMusic = document.getElementById('bg-music');
-            
-            if(!isYes) {
-                flash();
-                const heart = document.getElementById('main-heart');
-                heart.style.animation = 'none';
-                heart.style.transform = 'scale(0.8) rotateY(45deg)';
-                // Simple breakup effect: change color to dark
-                Array.from(heart.children).forEach(d => d.style.background = '#333');
-            }
-
-            bgMusic.play();
+        mainHeart.style.display = 'none';
+        introContent.style.display = 'block';
+        
+        // Spawn particles
+        for(let i=0; i<15; i++) {
+            const p = document.createElement('div');
+            p.innerHTML = '❤️';
+            p.style.position = 'fixed';
+            p.style.left = '50%';
+            p.style.top = '40%';
+            p.style.fontSize = '20px';
+            p.style.pointerEvents = 'none';
+            p.style.transition = 'all 1s ease-out';
+            document.body.appendChild(p);
             setTimeout(() => {
-                overlay.style.opacity = '0';
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    document.getElementById('main-site').style.display = 'block';
-                    document.body.style.overflowY = 'auto';
-                    startTypewriter();
-                    if(!isYes) triggerCall();
-                }, 1000);
-            }, 1500);
+                p.style.transform = `translate(${(Math.random()-0.5)*400}px, ${(Math.random()-0.5)*400}px) scale(0)`;
+                p.style.opacity = '0';
+            }, 10);
+            setTimeout(() => p.remove(), 1000);
         }
+    }
 
-        // --- Typewriter ---
-        const phrases = [
-            "Kuch log sirf yaadon mein reh jaate hain…",
-            "Hum chaah kar bhi tumhare nahi rahe…",
-            "Mohabbat aaj bhi hai, par ab saath nahi…"
-        ];
-        let pIndex = 0;
-        function startTypewriter() {
-            const el = document.getElementById('typewriter-text');
-            let charIndex = 0;
-            let currentText = phrases[pIndex];
-            
-            function type() {
-                if(charIndex < currentText.length) {
-                    el.innerHTML += currentText.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(type, 100);
-                } else {
-                    setTimeout(() => {
-                        el.innerHTML = "";
-                        pIndex = (pIndex + 1) % phrases.length;
-                        startTypewriter();
-                    }, 2000);
-                }
+    function handleYes() {
+        flash.style.background = 'white';
+        flash.style.animation = 'thunder 0.8s';
+        alert('She said YES 💖');
+        enterWebsite();
+    }
+
+    function handleBreakup() {
+        isBreakup = true;
+        rainIntensity = 5;
+        flash.style.animation = 'thunder 0.5s';
+        mainHeart.innerHTML = '💔';
+        mainHeart.style.display = 'block';
+        mainHeart.style.animation = 'none';
+        
+        setTimeout(() => {
+            mainHeart.style.transform = 'translateY(100vh)';
+            mainHeart.style.opacity = '0';
+            mainHeart.style.transition = 'all 2s ease-in';
+            setTimeout(enterWebsite, 2000);
+        }, 1000);
+    }
+
+    function enterWebsite() {
+        document.getElementById('intro-overlay').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('intro-overlay').style.display = 'none';
+            document.getElementById('main-site').style.display = 'block';
+            bgMusic.play().catch(()=>{});
+            startTypewriter();
+            if(isBreakup) {
+                setTimeout(showIncomingCall, 3000);
             }
-            type();
-        }
+        }, 1000);
+    }
 
-        // --- Video Logic ---
-        function playVid(v) {
-            const bgMusic = document.getElementById('bg-music');
-            const allVids = document.querySelectorAll('video');
-            
-            if(v.paused) {
-                allVids.forEach(vid => vid.pause());
-                bgMusic.pause();
-                v.play();
-                v.onended = () => bgMusic.play();
+    const sadLines = [
+        "Kuch log sirf yaadon mein reh jaate hain…",
+        "Hum chaah kar bhi tumhare nahi rahe…",
+        "Mohabbat aaj bhi hai, par ab saath nahi…",
+        "Instagram user: black_its_me20..."
+    ];
+    let lineIdx = 0;
+    function startTypewriter() {
+        const target = document.getElementById('typewriter');
+        let charIdx = 0;
+        let currentText = sadLines[lineIdx];
+        
+        function type() {
+            if (charIdx < currentText.length) {
+                target.innerHTML += currentText.charAt(charIdx);
+                charIdx++;
+                setTimeout(type, 100);
             } else {
-                v.pause();
-                bgMusic.play();
+                setTimeout(() => {
+                    target.innerHTML = '';
+                    charIdx = 0;
+                    lineIdx = (lineIdx + 1) % sadLines.length;
+                    currentText = sadLines[lineIdx];
+                    type();
+                }, 2000);
             }
         }
+        type();
+    }
 
-        // --- Photo Logic ---
-        let photoIdx = 1;
-        function nextPhoto() {
-            const img = document.getElementById('memory-photo');
-            photoIdx = photoIdx >= 10 ? 1 : photoIdx + 1;
-            img.style.opacity = '0';
-            setTimeout(() => {
-                img.src = `photo${photoIdx}.jpg`;
-                img.style.opacity = '1';
-            }, 500);
-        }
+    function nextPhoto() {
+        currentPhoto = (currentPhoto % 10) + 1;
+        const display = document.getElementById('photo-display');
+        display.style.opacity = '0';
+        setTimeout(() => {
+            display.style.backgroundImage = `url('photo${currentPhoto}.jpg')`;
+            display.style.opacity = '1';
+        }, 300);
+    }
 
-        // --- Shayari Blast ---
-        function playShayari() {
-            flash();
-            const sfx = document.getElementById('shayari-sfx');
-            sfx.currentTime = 0;
-            sfx.play();
-        }
-
-        // --- Call Logic ---
-        function triggerCall() {
-            setTimeout(() => {
-                document.getElementById('call-ui').style.display = 'block';
-            }, 5000);
-        }
-
-        function answerCall() {
-            const bgMusic = document.getElementById('bg-music');
+    function playVid(el) {
+        document.querySelectorAll('video').forEach(v => {
+            if(v !== el) {
+                v.pause();
+                v.style.filter = 'grayscale(1)';
+            }
+        });
+        
+        if (el.paused) {
             bgMusic.pause();
-            document.getElementById('call-ui').style.animation = 'none';
-            document.getElementById('call-ui').style.display = 'none';
-            const msgBox = document.getElementById('call-msg');
-            msgBox.style.display = 'block';
-            
-            const t = document.getElementById('caller-text');
-            t.innerHTML = "Aarvi: Please mujhe chhod ke mat jao… Main pagal ho jaunga…";
-            
+            el.play();
+            el.style.filter = 'none';
+            el.onended = () => {
+                bgMusic.play();
+                el.style.filter = 'grayscale(1)';
+            };
+        } else {
+            el.pause();
+            bgMusic.play();
+            el.style.filter = 'grayscale(1)';
+        }
+    }
+
+    function playShayariEffect(el) {
+        flash.style.animation = 'thunder 0.3s';
+        setTimeout(() => flash.style.animation = '', 300);
+        brokenAudio.currentTime = 0;
+        brokenAudio.play().catch(()=>{});
+        
+        // Particles
+        for(let i=0; i<5; i++) {
+            const p = document.createElement('div');
+            p.innerHTML = '💔';
+            p.style.position = 'absolute';
+            p.style.left = (event.pageX) + 'px';
+            p.style.top = (event.pageY) + 'px';
+            p.style.pointerEvents = 'none';
+            p.style.transition = 'all 0.8s';
+            document.body.appendChild(p);
             setTimeout(() => {
-                t.innerHTML = "Aarvi: Good bye… Main ja rahi hoon hamesha ke liye…";
+                p.style.transform = `translate(${(Math.random()-0.5)*100}px, -100px)`;
+                p.style.opacity = '0';
+            }, 10);
+            setTimeout(() => p.remove(), 1000);
+        }
+    }
+
+    function showIncomingCall() {
+        document.getElementById('call-overlay').style.display = 'flex';
+    }
+
+    const dialogue = [
+        { name: "Aarvi", text: "Hello Siva…", side: "aarvi" },
+        { name: "Siva", text: "Haan babu…", side: "siva" },
+        { name: "Aarvi", text: "Mai hamesha ke liye ja rahi hu…", side: "aarvi" },
+        { name: "Siva", text: "Please Aarvi mujhe chhod ke mat jao, mai pagal ho jaunga…", side: "siva" },
+        { name: "Aarvi", text: "Sorry Siva… ab hum kabhi nahi milenge…", side: "aarvi" }
+    ];
+
+    function startCallDialog() {
+        document.getElementById('call-overlay').style.display = 'none';
+        const dialBox = document.getElementById('call-dialog');
+        dialBox.style.display = 'flex';
+        bgMusic.pause();
+        
+        let i = 0;
+        function nextMsg() {
+            if(i < dialogue.length) {
+                const b = document.createElement('div');
+                b.className = `bubble ${dialogue[i].side}`;
+                b.innerHTML = `<strong>${dialogue[i].name}</strong><br>${dialogue[i].text}`;
+                dialBox.appendChild(b);
+                setTimeout(() => b.classList.add('show'), 50);
+                i++;
+                setTimeout(nextMsg, 2500);
+            } else {
                 setTimeout(() => {
-                    msgBox.style.opacity = '0.5';
+                    dialBox.style.display = 'none';
                     bgMusic.play();
-                }, 3000);
-            }, 4000);
+                }, 2000);
+            }
         }
+        nextMsg();
+    }
 
-        // --- Final Goodbye ---
-        function finalGoodbye() {
-            const btn = document.getElementById('final-bye');
-            const bgMusic = document.getElementById('bg-music');
-            btn.disabled = true;
-            btn.innerHTML = "🥀 Ended";
-            
-            let vol = 1.0;
-            const fade = setInterval(() => {
-                if(vol > 0.05) {
-                    vol -= 0.05;
-                    bgMusic.volume = vol;
-                } else {
-                    bgMusic.pause();
-                    clearInterval(fade);
-                }
-            }, 200);
+    function finalGoodbye() {
+        const btn = document.getElementById('btn-final');
+        const heart = document.getElementById('final-heart');
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        
+        heart.style.filter = 'blur(10px) grayscale(1)';
+        heart.style.opacity = '0';
+        
+        let vol = 1;
+        const fade = setInterval(() => {
+            if(vol > 0.05) {
+                vol -= 0.05;
+                bgMusic.volume = vol;
+            } else {
+                bgMusic.pause();
+                clearInterval(fade);
+            }
+        }, 100);
 
-            document.body.style.filter = "grayscale(0.5) brightness(0.7)";
-            flash();
-        }
-    </script>
+        document.body.style.transition = 'background 5s';
+        document.body.style.background = '#000';
+    }
+</script>
 </body>
 </html>
