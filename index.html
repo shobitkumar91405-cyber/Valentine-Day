@@ -3,100 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Broken Heart - Aarvi & Siva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>SivaSingh Heart</title>
     <style>
         :root {
             --bg: #0b0e14;
-            --primary: #ff4d6d;
-            --accent: #800f2f;
+            --accent: #ff2d55;
+            --dark-red: #8b0000;
+            --glass: rgba(255, 255, 255, 0.05);
             --text: #e0e0e0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background-color: var(--bg);
+            background: var(--bg);
             color: var(--text);
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             overflow-x: hidden;
-            line-height: 1.6;
+            height: 100vh;
         }
 
-        /* --- UTILS --- */
-        .hidden { display: none !important; pointer-events: none !important; }
-        .flex-center { display: flex; justify-content: center; align-items: center; flex-direction: column; }
-
-        /* --- INTRO OVERLAY --- */
-        #intro-overlay {
+        /* --- GLOBAL BACKGROUND EFFECTS --- */
+        #canvas-bg {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1a0a0a 0%, #0b0e14 100%);
-            z-index: 9999;
-            overflow: hidden;
-        }
-
-        #rain-canvas {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             pointer-events: none;
         }
 
+        .thunder-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        /* --- INTRO SCREEN --- */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0b0e14 100%);
+            transition: opacity 1s ease-out;
+        }
+
         .heart-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
             perspective: 1000px;
             cursor: pointer;
-            z-index: 10;
+            position: relative;
         }
 
         .heart-3d {
-            width: 100%;
-            height: 100%;
+            width: 150px;
+            height: 150px;
             position: relative;
             transform-style: preserve-3d;
-            animation: rotateHeart 10s infinite linear, heartbeat 1.5s infinite ease-in-out;
-            transition: color 3s;
+            animation: rotate3d 10s infinite linear, heartbeat 1.5s infinite ease-in-out;
+            transition: transform 0.3s;
         }
 
-        @keyframes rotateHeart {
-            0% { transform: rotateY(0deg) rotateX(0deg); }
-            100% { transform: rotateY(360deg) rotateX(360deg); }
+        .heart-3d:before, .heart-3d:after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 160px;
+            background: var(--accent);
+            border-radius: 50px 50px 0 0;
+            transform-origin: 0 100%;
+            box-shadow: 0 0 40px var(--accent);
+        }
+
+        .heart-3d:before { transform: rotate(-45deg); left: 75px; }
+        .heart-3d:after { transform: rotate(45deg); left: -25px; }
+
+        @keyframes rotate3d {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
         }
 
         @keyframes heartbeat {
-            0%, 100% { transform: scale(1) rotateY(var(--ry, 0deg)); }
-            50% { transform: scale(1.1) rotateY(var(--ry, 0deg)); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
-        .heart-3d svg {
-            fill: var(--primary);
-            filter: drop-shadow(0 0 20px var(--primary));
-            animation: colorCycle 8s infinite alternate;
-        }
-
-        @keyframes colorCycle {
-            0% { fill: #ff85a1; }
-            50% { fill: #ff0000; }
-            100% { fill: #4a0000; }
-        }
-
-        /* --- PROMPT SCREEN --- */
-        #prompt-screen {
+        /* --- WELCOME BOX --- */
+        #welcome-box {
+            display: none;
             text-align: center;
+            z-index: 101;
             padding: 20px;
-            color: white;
+            animation: fadeIn 1s;
         }
 
         .glowing-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            text-shadow: 0 0 15px var(--primary);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
             margin-bottom: 30px;
+            line-height: 1.4;
         }
 
-        .btn-group { display: flex; gap: 20px; }
+        .btn-container { display: flex; gap: 20px; justify-content: center; }
         .btn {
             padding: 12px 30px;
             border: none;
@@ -105,368 +125,537 @@
             cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .btn-yes { background: #e91e63; color: white; box-shadow: 0 0 15px #e91e63; }
-        .btn-breakup { background: #444; color: #ccc; }
+        .btn-yes { background: var(--accent); color: white; box-shadow: 0 0 15px var(--accent); }
+        .btn-breakup { background: transparent; border: 2px solid #555; color: #aaa; }
 
-        /* --- CALL UI --- */
-        #call-ui {
+        /* --- CALL SCREEN --- */
+        #call-screen {
             position: fixed;
-            top: 10%; left: 50%;
-            transform: translateX(-50%);
-            width: 90%; max-width: 350px;
-            background: rgba(20, 20, 20, 0.95);
-            border: 1px solid #333;
-            border-radius: 20px;
-            padding: 30px;
-            z-index: 10000;
-            text-align: center;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.8);
-            animation: vibrate 0.2s infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 14, 20, 0.95);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 80px 0;
+            animation: slideUp 0.5s ease-out;
         }
 
-        @keyframes vibrate {
-            0% { transform: translate(-50%, 0); }
-            25% { transform: translate(-52%, 2px); }
-            50% { transform: translate(-48%, -2px); }
-            75% { transform: translate(-51%, 1px); }
-            100% { transform: translate(-50%, 0); }
-        }
-
+        .caller-info { text-align: center; }
         .caller-img {
-            width: 100px; height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 3px solid var(--primary);
+            border: 3px solid #fff;
             margin-bottom: 15px;
             object-fit: cover;
+            animation: vibrate 0.5s infinite;
+        }
+
+        .call-btns {
+            display: flex;
+            gap: 60px;
         }
 
         .call-btn {
-            width: 60px; height: 60px;
-            background: #4caf50;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 20px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
             cursor: pointer;
-            color: white; font-size: 24px;
+        }
+        .accept { background: #4cd964; color: white; animation: pulse 1.5s infinite; }
+        .decline { background: #ff3b30; color: white; opacity: 0.5; cursor: not-allowed; }
+
+        .chat-dialog {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80%;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #fff;
+            display: none;
         }
 
-        .dialog-box { margin-top: 20px; font-style: italic; color: #ff85a1; min-height: 60px; }
-
-        /* --- MAIN CONTENT --- */
-        #main-site { opacity: 0; transition: opacity 1s; padding: 20px; max-width: 600px; margin: 0 auto; }
-
-        .typewriter-box {
-            height: 80px; text-align: center; font-size: 1.2rem;
-            color: #ffb7c5; margin: 20px 0; font-weight: 300;
+        /* --- MAIN WEBSITE --- */
+        #main-content {
+            display: none;
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 1s;
         }
 
-        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0; }
+        .section-title {
+            margin: 40px 0 20px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Typewriter */
+        .typewriter {
+            height: 50px;
+            text-align: center;
+            font-style: italic;
+            color: #aaa;
+            margin: 20px 0;
+        }
+
+        /* Videos */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
         .video-card {
-            background: #161a23; border-radius: 10px; overflow: hidden;
-            position: relative; aspect-ratio: 9/16;
+            background: var(--glass);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
         }
-        .video-card video { width: 100%; height: 100%; object-fit: cover; }
+        video { width: 100%; display: block; }
 
-        .photo-viewer {
-            width: 100%; height: 80vh; border-radius: 15px;
-            background-size: cover; background-position: center;
-            margin: 30px 0; position: relative;
-            transition: background-image 0.5s ease-in-out;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        .shayeri-card {
-            background: linear-gradient(145deg, #1a1f29, #0b0e14);
-            padding: 25px; border-radius: 15px; margin: 15px 0;
-            border-left: 4px solid var(--accent);
+        /* Photos */
+        #photo-memories {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            transition: 0.5s ease-in-out;
             cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .chat-section {
-            background: #000; border-radius: 15px; padding: 15px; margin: 30px 0;
-            border: 1px solid #222;
+        /* Shayari Cards */
+        .sad-card {
+            background: linear-gradient(145deg, #161b22, #0b0e14);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--dark-red);
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .chat-msg { margin: 10px 0; max-width: 80%; padding: 10px; border-radius: 10px; }
-        .sent { background: #075e54; margin-left: auto; border-bottom-right-radius: 2px; }
-        .chat-meta { font-size: 0.7rem; color: #888; text-align: right; margin-top: 5px; }
+        .sad-card:active { transform: scale(0.98); }
 
-        .insta-section { text-align: center; padding: 40px 0; color: #ff4d6d; }
-        .insta-link { color: white; text-decoration: none; display: block; margin: 10px 0; font-weight: bold; }
+        /* Fake Chat */
+        .chat-ui {
+            background: #121820;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .msg { margin-bottom: 10px; max-width: 80%; padding: 10px 15px; border-radius: 18px; font-size: 0.9rem; }
+        .msg.sent { background: #056162; margin-left: auto; border-bottom-right-radius: 2px; }
+        .msg-meta { font-size: 0.7rem; color: #888; text-align: right; margin-top: 5px; }
 
-        .goodbye-section {
-            text-align: center; padding: 100px 20px;
-            background: linear-gradient(to bottom, transparent, #1a0a0a);
+        .insta-footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #555;
         }
 
-        /* --- PARTICLES --- */
-        .particle {
-            position: absolute; pointer-events: none;
-            animation: fall linear forwards;
+        #goodbye-section {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid #222;
         }
-        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
 
-        .thunder-flash {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; opacity: 0; pointer-events: none; z-index: 10001;
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes vibrate { 0% { transform: rotate(0); } 25% { transform: rotate(2deg); } 75% { transform: rotate(-2deg); } 100% { transform: rotate(0); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(76, 217, 100, 0.4); } 70% { box-shadow: 0 0 0 20px rgba(76, 217, 100, 0); } 100% { box-shadow: 0 0 0 0 rgba(76, 217, 100, 0); } }
+
+        .broken-heart-anim {
+            width: 100px; height: 100px; position: relative;
         }
-        .flash-active { animation: flashAnim 0.3s ease-out; }
-        @keyframes flashAnim { 0% { opacity: 0.8; } 100% { opacity: 0; } }
-
+        .half {
+            position: absolute; width: 50px; height: 80px; background: #555; border-radius: 50px 50px 0 0;
+        }
+        .left-h { left: 0; transform: rotate(-45deg); transition: 2s; transform-origin: 100% 100%; }
+        .right-h { left: 25px; transform: rotate(45deg); transition: 2s; transform-origin: 0% 100%; }
     </style>
 </head>
-<body>
+<body onclick="initAudio()">
 
-    <div id="thunder-layer" class="thunder-flash"></div>
+    <canvas id="canvas-bg"></canvas>
+    <div class="thunder-flash" id="thunder"></div>
 
     <audio id="bg-music" loop src="newsong.mp3"></audio>
-    <audio id="broken-sfx" src="broken.mp3"></audio>
+    <audio id="tap-sound" src="broken.mp3"></audio>
+    <audio id="heart-beat" loop src="broken.mp3" volume="0.3"></audio> <section id="intro-screen">
+        <div class="heart-container" id="main-heart-trigger">
+            <div class="heart-3d" id="heart-node"></div>
+        </div>
+        <div id="welcome-box">
+            <h1 class="glowing-text">Aarvi ji<br>Welcome to SivaSingh’s heart 💖<br>I want to say I love you<br>Do you love me?</h1>
+            <div class="btn-container">
+                <button class="btn btn-yes" onclick="handleYes()">YES ❤️</button>
+                <button class="btn btn-breakup" onclick="handleBreakup()">BREAKUP 💔</button>
+            </div>
+        </div>
+    </section>
 
-    <div id="intro-overlay" class="flex-center">
-        <canvas id="rain-canvas"></canvas>
-        
-        <div id="heart-stage" class="flex-center">
-            <div class="heart-container" onclick="handleHeartClick()">
-                <div class="heart-3d" id="main-heart">
-                    <svg viewBox="0 0 32 32"><path d="M16 28.5L14.1 26.6C7.33 20.44 3 16.5 3 11.5 3 7.36 6.36 4 10.5 4c2.34 0 4.59 1.08 6 2.8C17.91 5.08 20.16 4 22.5 4 26.64 4 30 7.36 30 11.5c0 5-4.33 8.94-11.1 15.1L16 28.5z"/></svg>
+    <section id="call-screen">
+        <div class="caller-info">
+            <img src="photo1.jpg" class="caller-img" alt="Aarvi">
+            <h2>Aarvi</h2>
+            <p>Calling...</p>
+        </div>
+        <div class="chat-dialog" id="call-dialog"></div>
+        <div class="call-btns" id="call-controls">
+            <div class="call-btn decline">❌</div>
+            <div class="call-btn accept" onclick="startConversation()">📞</div>
+        </div>
+    </section>
+
+    <main id="main-content">
+        <div class="typewriter" id="typewriter"></div>
+
+        <h2 class="section-title">Broken Memories</h2>
+        <div id="photo-memories" onclick="changePhoto()" style="background-image: url('photo1.jpg');"></div>
+
+        <h2 class="section-title">Feel My Pain</h2>
+        <div class="video-grid">
+            <div class="video-card"><video id="v1" onclick="playVideo('v1')" src="video1.mp3"></video></div>
+            <div class="video-card"><video id="v2" onclick="playVideo('v2')" src="video2.mp3"></video></div>
+            <div class="video-card"><video id="v3" onclick="playVideo('v3')" src="video3.mp3"></video></div>
+            <div class="video-card"><video id="v4" onclick="playVideo('v4')" src="video4.mp3"></video></div>
+        </div>
+
+        <h2 class="section-title">Silent Screams</h2>
+        <div class="sad-card" onclick="shayariTap(this)">
+            "Kuch log sirf yaadon mein reh jaate hain... Mohabbat toh rehti hai, par insaan chale jaate hain."
+        </div>
+        <div class="sad-card" onclick="shayariTap(this)">
+            "Tumhara hoke bhi hum tumhare na rahe, ye kaisi mohabbat hai jo sirf dard deti hai."
+        </div>
+
+        <h2 class="section-title">The Unread</h2>
+        <div class="chat-ui">
+            <div class="msg sent">
+                Tum ab bhi yaad aati ho...
+                <div class="msg-meta">Seen ✔✔</div>
+            </div>
+            <div style="font-size: 0.7rem; color: #555; text-align: center; margin-top: 10px;">Last seen long ago</div>
+        </div>
+
+        <div class="insta-footer">
+            <p>📸 Instagram</p>
+            <p>@smss1708 | @black_its_me20</p>
+        </div>
+
+        <div id="goodbye-section">
+            <div id="final-heart" style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <div class="broken-heart-anim">
+                    <div class="half left-h" id="final-l"></div>
+                    <div class="half right-h" id="final-r"></div>
                 </div>
             </div>
-            <p style="margin-top:20px; color:#666; font-size:0.8rem;">Tap the heart</p>
+            <p style="color: #888; margin-bottom: 10px;">"Mai ja rahi hoon… hamesha ke liye…"</p>
+            <p style="color: #666; font-style: italic; margin-bottom: 30px;">"Aarvi: Tum apni zindagi jee lena, mujhe bhool jana…"</p>
+            <button class="btn btn-breakup" onclick="finalGoodbye()">Good Bye 🥀</button>
         </div>
-
-        <div id="prompt-screen" class="hidden flex-center">
-            <h1 class="glowing-text">Aarvi ji<br>Welcome to SivaSingh’s heart 💖<br>I want to say I love you<br>Do you love me?</h1>
-            <div class="btn-group">
-                <button class="btn btn-yes" onclick="flowYes()">YES ❤️</button>
-                <button class="btn btn-breakup" onclick="flowBreakup()">BREAKUP 💔</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="call-ui" class="hidden">
-        <img src="photo1.jpg" class="caller-img" alt="Aarvi">
-        <h2 style="color:white">Aarvi</h2>
-        <p style="color:#888">Incoming Call...</p>
-        <div class="call-btn" onclick="startCallConversation()">📞</div>
-        <div id="dialog-text" class="dialog-box"></div>
-    </div>
-
-    <div id="main-site">
-        <div class="typewriter-box" id="typewriter"></div>
-
-        <div class="video-grid">
-            <div class="video-card"><video src="video1.mp4" onclick="playVideo(this)"></video></div>
-            <div class="video-card"><video src="video2.mp4" onclick="playVideo(this)"></video></div>
-            <div class="video-card"><video src="video3.mp4" onclick="playVideo(this)"></video></div>
-            <div class="video-card"><video src="video4.mp4" onclick="playVideo(this)"></video></div>
-        </div>
-
-        <div class="photo-viewer" id="photo-v" onclick="nextPhoto()" style="background-image: url('photo1.jpg');">
-            <div style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px; font-size:0.7rem;">Tap to change</div>
-        </div>
-
-        <div class="shayeri-card" onclick="triggerShayeri()">
-            <p>"Tumhari yaadon se achha to maut hai... kam se kam ek baar aakar hamesha ke liye sula to degi."</p>
-        </div>
-        <div class="shayeri-card" onclick="triggerShayeri()">
-            <p>"Zindagi mein sab kuch mil gaya, bas wo nahi mila jiske liye sari zindagi dua maangi thi."</p>
-        </div>
-
-        <div class="chat-section">
-            <p style="color:#075e54; font-size:0.8rem; margin-bottom:10px;">Aarvi • Last seen long ago</p>
-            <div class="chat-msg sent">
-                Tum ab bhi yaad aati ho…
-                <div class="chat-meta">Seen ✔✔</div>
-            </div>
-        </div>
-
-        <div class="insta-section">
-            <h3>Contact Me</h3>
-            <a href="#" class="insta-link">📸 @smss1708</a>
-            <a href="#" class="insta-link">📸 @black_its_me20</a>
-        </div>
-
-        <div class="goodbye-section">
-            <h2 style="font-family: 'Dancing Script'; font-size: 2rem; color: var(--primary);">Mai ja rahi hoon… hamesha ke liye…</h2>
-            <p style="margin: 20px 0; color: #888;">Aarvi: Tum apni zindagi jee lena, mujhe bhool jana…</p>
-            <button class="btn btn-breakup" onclick="finalGoodbye(this)">Good Bye 🥀</button>
-        </div>
-    </div>
+    </main>
 
     <script>
-        const canvas = document.getElementById('rain-canvas');
+        const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
-        let drops = [];
+        let particles = [];
+        let rain = [];
+        let heartParticles = [];
+        let audioStarted = false;
 
-        function initRain() {
+        function initAudio() {
+            if(audioStarted) return;
+            document.getElementById('heart-beat').play();
+            audioStarted = true;
+        }
+
+        // --- BACKGROUND ENGINE ---
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            for(let i=0; i<100; i++) drops.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, l: Math.random()*20, v: Math.random()*10+5});
         }
+        window.addEventListener('resize', resize);
+        resize();
 
-        function drawRain() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(174,194,224,0.5)';
-            ctx.lineWidth = 1;
-            drops.forEach(d => {
+        class RainDrop {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.v = 10 + Math.random() * 10;
+                this.l = 10 + Math.random() * 20;
+            }
+            update() {
+                this.y += this.v;
+                if (this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.strokeStyle = 'rgba(174, 194, 224, 0.2)';
+                ctx.lineWidth = 1;
                 ctx.beginPath();
-                ctx.moveTo(d.x, d.y);
-                ctx.lineTo(d.x, d.y + d.l);
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y + this.l);
                 ctx.stroke();
-                d.y += d.v;
-                if(d.y > canvas.height) d.y = -20;
-            });
-            requestAnimationFrame(drawRain);
-        }
-
-        initRain(); drawRain();
-
-        function thunder() {
-            const t = document.getElementById('thunder-layer');
-            t.classList.add('flash-active');
-            setTimeout(() => t.classList.remove('flash-active'), 300);
-        }
-
-        function spawnParticles(type, x, y) {
-            for(let i=0; i<20; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.innerHTML = type === 'heart' ? '❤️' : '💔';
-                p.style.left = (x || window.innerWidth/2) + 'px';
-                p.style.top = (y || window.innerHeight/2) + 'px';
-                p.style.fontSize = Math.random()*20+10+'px';
-                const destX = (Math.random()-0.5)*400;
-                p.style.setProperty('--dx', destX + 'px');
-                p.style.transition = `all ${Math.random()*2+1}s ease-out`;
-                document.body.appendChild(p);
-                setTimeout(() => {
-                    p.style.transform = `translate(${destX}px, ${window.innerHeight}px) rotate(${Math.random()*360}deg)`;
-                    p.style.opacity = '0';
-                }, 10);
-                setTimeout(() => p.remove(), 3000);
             }
         }
 
-        function handleHeartClick() {
-            thunder();
-            spawnParticles('heart');
-            document.getElementById('heart-stage').classList.add('hidden');
-            document.getElementById('prompt-screen').classList.remove('hidden');
-            document.getElementById('bg-music').play();
+        class RosePetal {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.s = 1 + Math.random() * 2;
+                this.r = Math.random() * 360;
+                this.rs = Math.random() * 2;
+            }
+            update() {
+                this.y += this.s;
+                this.x += Math.sin(this.y / 50);
+                this.r += this.rs;
+                if (this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.r * Math.PI / 180);
+                ctx.fillStyle = 'rgba(255, 0, 50, 0.4)';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 5, 8, 0, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.restore();
+            }
         }
 
-        function flowYes() {
-            alert("She said YES 💖");
-            exitIntro();
-        }
+        for(let i=0; i<100; i++) rain.push(new RainDrop());
+        for(let i=0; i<30; i++) particles.push(new RosePetal());
 
-        function flowBreakup() {
-            thunder();
-            const h3d = document.getElementById('main-heart');
-            h3d.innerHTML = '<svg viewBox="0 0 32 32" style="fill:#333"><path d="M16 28.5L14.1 26.6C7.33 20.44 3 16.5 3 11.5 3 7.36 6.36 4 10.5 4c2.34 0 4.59 1.08 6 2.8C17.91 5.08 20.16 4 22.5 4 26.64 4 30 7.36 30 11.5c0 5-4.33 8.94-11.1 15.1L16 28.5z"/><path d="M16 4 L16 28" stroke="black" stroke-width="2"/></svg>';
-            spawnParticles('broken');
-            setTimeout(() => {
-                document.getElementById('call-ui').classList.remove('hidden');
-            }, 1500);
-        }
-
-        const dialogue = [
-            { n: "Aarvi", t: "Hello Siva…" },
-            { n: "Siva", t: "Haan babu…" },
-            { n: "Aarvi", t: "Mai hamesha ke liye ja rahi hu…" },
-            { n: "Siva", t: "Please Aarvi mujhe chhod ke mat jao, mai pagal ho jaunga…" },
-            { n: "Aarvi", t: "Sorry Siva… ab hum kabhi nahi milenge…" }
-        ];
-
-        let diagStep = 0;
-        function startCallConversation() {
-            document.querySelector('.call-btn').classList.add('hidden');
-            const box = document.getElementById('dialog-text');
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            rain.forEach(r => { r.update(); r.draw(); });
+            particles.forEach(p => { p.update(); p.draw(); });
             
-            const nextStep = () => {
-                if(diagStep < dialogue.length) {
-                    box.innerHTML = `<strong>${dialogue[diagStep].n}:</strong> ${dialogue[diagStep].t}`;
-                    diagStep++;
-                    setTimeout(nextStep, 2500);
+            heartParticles.forEach((hp, i) => {
+                hp.x += hp.vx; hp.y += hp.vy; hp.alpha -= 0.01;
+                if(hp.alpha <= 0) heartParticles.splice(i, 1);
+                ctx.fillStyle = `rgba(255, 45, 85, ${hp.alpha})`;
+                ctx.font = '20px Arial';
+                ctx.fillText('❤️', hp.x, hp.y);
+            });
+
+            if(Math.random() < 0.005) {
+                document.getElementById('thunder').style.opacity = '0.3';
+                setTimeout(() => document.getElementById('thunder').style.opacity = '0', 100);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- INTERACTION LOGIC ---
+        const intro = document.getElementById('intro-screen');
+        const welcome = document.getElementById('welcome-box');
+        const heartNode = document.getElementById('heart-node');
+
+        document.getElementById('main-heart-trigger').onclick = function() {
+            triggerThunder();
+            heartNode.style.display = 'none';
+            welcome.style.display = 'block';
+            for(let i=0; i<20; i++) {
+                heartParticles.push({
+                    x: window.innerWidth/2, y: window.innerHeight/2,
+                    vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, alpha: 1
+                });
+            }
+        };
+
+        function triggerThunder() {
+            const t = document.getElementById('thunder');
+            t.style.opacity = '0.8';
+            document.body.style.transform = 'translate(5px, 5px)';
+            setTimeout(() => { t.style.opacity = '0'; document.body.style.transform = 'none'; }, 150);
+        }
+
+        function handleYes() {
+            const glowingText = welcome.querySelector('.glowing-text');
+            glowingText.innerHTML = "She said YES 💖";
+            welcome.querySelector('.btn-container').style.display = 'none';
+            setTimeout(openMainSite, 2000);
+        }
+
+        function handleBreakup() {
+            triggerThunder();
+            welcome.style.display = 'none';
+            intro.style.background = '#050505';
+            
+            const brokenDiv = document.createElement('div');
+            brokenDiv.className = 'broken-heart-anim';
+            brokenDiv.innerHTML = `<div class="half left-h" style="background:#8b0000"></div><div class="half right-h" style="background:#8b0000"></div>`;
+            intro.appendChild(brokenDiv);
+            
+            setTimeout(() => {
+                brokenDiv.querySelector('.left-h').style.transform = 'rotate(-60deg) translate(-20px, 50px)';
+                brokenDiv.querySelector('.right-h').style.transform = 'rotate(60deg) translate(20px, 50px)';
+                brokenDiv.style.opacity = '0';
+            }, 500);
+
+            setTimeout(() => {
+                intro.style.display = 'none';
+                document.getElementById('call-screen').style.display = 'flex';
+            }, 2500);
+        }
+
+        function startConversation() {
+            const controls = document.getElementById('call-controls');
+            const dialog = document.getElementById('call-dialog');
+            controls.style.display = 'none';
+            dialog.style.display = 'block';
+
+            const script = [
+                { name: "Aarvi", text: "Hello Siva…" },
+                { name: "Siva", text: "Haan babu…" },
+                { name: "Aarvi", text: "Mai hamesha ke liye ja rahi hu…" },
+                { name: "Siva", text: "Please Aarvi mujhe chhod ke mat jao, mai pagal ho jaunga…" },
+                { name: "Aarvi", text: "Sorry Siva… ab hum kabhi nahi milenge…" }
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if(i < script.length) {
+                    dialog.innerHTML = `<strong style="color:var(--accent)">${script[i].name}:</strong><br>${script[i].text}`;
+                    i++;
                 } else {
-                    exitIntro();
+                    clearInterval(interval);
+                    endCall();
                 }
-            };
-            nextStep();
+            }, 3000);
         }
 
-        function exitIntro() {
-            document.getElementById('intro-overlay').style.display = 'none';
-            document.getElementById('call-ui').style.display = 'none';
-            document.getElementById('main-site').style.opacity = '1';
-            startTypewriter();
+        function endCall() {
+            document.getElementById('call-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('call-screen').style.display = 'none';
+                openMainSite();
+            }, 1000);
         }
 
-        const lines = [
+        function openMainSite() {
+            const main = document.getElementById('main-content');
+            main.style.display = 'block';
+            setTimeout(() => { 
+                main.style.opacity = '1'; 
+                document.getElementById('bg-music').play();
+                startTypewriter();
+            }, 100);
+        }
+
+        // --- TYPEWRITER ---
+        const phrases = [
             "Kuch log sirf yaadon mein reh jaate hain…",
             "Hum chaah kar bhi tumhare nahi rahe…",
             "Mohabbat aaj bhi hai, par ab saath nahi…"
         ];
-        let lineIdx = 0;
+        let pIdx = 0;
         function startTypewriter() {
-            const el = document.getElementById('typewriter');
             let charIdx = 0;
-            el.innerHTML = "";
-            const type = () => {
-                if(charIdx < lines[lineIdx].length) {
-                    el.innerHTML += lines[lineIdx][charIdx];
-                    charIdx++;
-                    setTimeout(type, 100);
-                } else {
+            const target = document.getElementById('typewriter');
+            target.innerHTML = "";
+            const text = phrases[pIdx];
+            
+            const timer = setInterval(() => {
+                target.innerHTML += text[charIdx];
+                charIdx++;
+                if(charIdx >= text.length) {
+                    clearInterval(timer);
                     setTimeout(() => {
-                        lineIdx = (lineIdx + 1) % lines.length;
+                        pIdx = (pIdx + 1) % phrases.length;
                         startTypewriter();
                     }, 2000);
                 }
-            };
-            type();
+            }, 100);
         }
 
+        // --- CONTENT HELPERS ---
         let currentPhoto = 1;
-        function nextPhoto() {
+        function changePhoto() {
             currentPhoto = currentPhoto >= 10 ? 1 : currentPhoto + 1;
-            document.getElementById('photo-v').style.backgroundImage = `url('photo${currentPhoto}.jpg')`;
+            const container = document.getElementById('photo-memories');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.style.backgroundImage = `url('photo${currentPhoto}.jpg')`;
+                container.style.opacity = '1';
+            }, 300);
         }
 
-        function playVideo(vid) {
-            const bg = document.getElementById('bg-music');
-            document.querySelectorAll('video').forEach(v => {
-                if(v !== vid) v.pause();
+        function playVideo(id) {
+            const vids = document.querySelectorAll('video');
+            const bgMusic = document.getElementById('bg-music');
+            
+            vids.forEach(v => {
+                if(v.id !== id) v.pause();
             });
-            if(vid.paused) {
-                bg.pause();
-                vid.play();
-                vid.onended = () => bg.play();
+
+            const target = document.getElementById(id);
+            if(target.paused) {
+                target.play();
+                bgMusic.pause();
+                target.onended = () => bgMusic.play();
             } else {
-                vid.pause();
-                bg.play();
+                target.pause();
+                bgMusic.play();
             }
         }
 
-        function triggerShayeri() {
-            thunder();
-            spawnParticles('broken');
-            const sfx = document.getElementById('broken-sfx');
-            sfx.currentTime = 0;
-            sfx.play();
+        function shayariTap(el) {
+            triggerThunder();
+            document.getElementById('tap-sound').currentTime = 0;
+            document.getElementById('tap-sound').play();
+            for(let i=0; i<10; i++) {
+                heartParticles.push({
+                    x: event.clientX, y: event.clientY,
+                    vx: (Math.random()-0.5)*8, vy: (Math.random()-0.5)*8, alpha: 1
+                });
+            }
         }
 
-        function finalGoodbye(btn) {
-            btn.innerHTML = "Rest in Peace 🥀";
-            document.getElementById('bg-music').pause();
-            spawnParticles('broken');
-            document.body.style.filter = "grayscale(1) brightness(0.7)";
-            setTimeout(() => {
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            }, 1000);
+        function finalGoodbye() {
+            document.getElementById('final-l').style.transform = 'rotate(-80deg) translate(-50px, 100px)';
+            document.getElementById('final-r').style.transform = 'rotate(80deg) translate(50px, 100px)';
+            document.getElementById('final-heart').style.opacity = '0';
+            document.getElementById('final-heart').style.transition = '2s';
+            
+            let vol = 1;
+            const fade = setInterval(() => {
+                vol -= 0.05;
+                if(vol <= 0) {
+                    clearInterval(fade);
+                    document.getElementById('bg-music').pause();
+                } else {
+                    document.getElementById('bg-music').volume = vol;
+                }
+            }, 200);
         }
-
-        window.addEventListener('resize', initRain);
     </script>
 </body>
 </html>
