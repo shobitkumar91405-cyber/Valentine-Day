@@ -1,361 +1,349 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SivaSingh & Pallavi - A Beautiful Journey</title>
-    <style>
-        :root {
-            --bg-dark: #0b0e14;
-            --rose-pink: #ff4d6d;
-            --soft-glow: rgba(255, 77, 109, 0.4);
-            --text-gold: #f8f9fa;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divya Bhakti Mandir</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+<style>
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-gold);
-            overflow-x: hidden;
-        }
+/* ================= ROOT ================= */
+:root{
+  --bg:#f8f4ec;
+  --saffron:#ff9f1c;
+  --gold:#ffd166;
+  --maroon:#7a1f1f;
+  --white:#ffffff;
+  --shadow:rgba(0,0,0,0.25);
+}
 
-        /* Particles & Background */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
+/* ================= RESET ================= */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
 
-        /* Opening Screen */
-        #opening-screen {
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: radial-gradient(circle at center, #1a1e26 0%, #0b0e14 100%);
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-            transition: opacity 1s ease-out;
-        }
+body{
+  background:radial-gradient(circle at top,#fff6e0,#f2e7d5,#e8dcc8);
+  color:#3b2f2f;
+  overflow-x:hidden;
+}
 
-        .hero-text {
-            font-size: 3rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: white;
-            text-shadow: 0 0 20px var(--rose-pink);
-            animation: pulseGlow 3s infinite alternate;
-        }
+/* ================= INTRO ================= */
+#intro{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(#fff4d6,#f7e7c3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:999;
+}
 
-        .hero-names {
-            font-size: 1.5rem;
-            margin-top: 20px;
-            color: var(--rose-pink);
-        }
+#intro h1{
+  font-size:42px;
+  color:var(--maroon);
+  text-shadow:0 0 20px var(--gold);
+  animation:fadeIn 3s ease forwards;
+}
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1); text-shadow: 0 0 10px var(--rose-pink); }
-            100% { transform: scale(1.05); text-shadow: 0 0 40px var(--rose-pink), 0 0 60px #ff8fa3; }
-        }
+#intro p{
+  margin-top:15px;
+  font-size:20px;
+  color:#5a3e2b;
+  opacity:0;
+  animation:fadeIn 3s ease forwards 1s;
+}
 
-        /* Main Content */
-        #main-content {
-            display: none;
-            padding: 50px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+#enterBtn{
+  margin-top:40px;
+  padding:15px 40px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(45deg,var(--saffron),var(--gold));
+  box-shadow:0 10px 30px var(--shadow);
+  cursor:pointer;
+  animation:pulse 2s infinite;
+}
 
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 77, 109, 0.2);
-            border-radius: 20px;
-            margin-bottom: 80px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+/* ================= BELLS ================= */
+.bell{
+  position:absolute;
+  top:-20px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:radial-gradient(circle,#ffd166,#ff9f1c);
+  animation:swing 3s ease-in-out infinite;
+}
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(255, 77, 109, 0.2);
-        }
+.bell.left{left:10%}
+.bell.right{right:10%}
 
-        .gif-container {
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-        }
+/* ================= MAIN ================= */
+#main{
+  display:none;
+}
 
-        .gif-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
+/* ================= HEADER ================= */
+header{
+  padding:50px 20px;
+  text-align:center;
+}
 
-        .shayari-container {
-            padding: 40px;
-            text-align: center;
-            min-height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
+header h2{
+  font-size:36px;
+  color:var(--maroon);
+}
 
-        .shayari-line {
-            font-size: 1.4rem;
-            font-style: italic;
-            line-height: 1.6;
-            min-height: 3.2em;
-            color: #ffd1dc;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-        }
+header span{
+  display:block;
+  margin-top:10px;
+  color:#6b4a2b;
+}
 
-        /* Instagram Section */
-        .footer {
-            padding: 60px 0;
-            text-align: center;
-            border-top: 1px solid rgba(255, 77, 109, 0.2);
-        }
+/* ================= DEITY ================= */
+#deity{
+  margin:40px auto;
+  max-width:500px;
+  text-align:center;
+  padding:20px;
+}
 
-        .insta-handle {
-            display: inline-block;
-            margin: 10px 20px;
-            color: var(--rose-pink);
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+#deity img{
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 20px 40px var(--shadow);
+  animation:glow 4s infinite alternate;
+}
 
-        .insta-handle:hover {
-            color: white;
-            transform: scale(1.1);
-        }
+#deity p{
+  margin-top:20px;
+  font-style:italic;
+}
 
-        @media (max-width: 768px) {
-            .hero-text { font-size: 1.8rem; }
-            .card { margin-bottom: 40px; }
-            .gif-container { height: 300px; }
-            .shayari-line { font-size: 1.1rem; }
-        }
-    </style>
+/* ================= DIYA ================= */
+#diya{
+  display:flex;
+  justify-content:center;
+  margin:60px 0;
+}
+
+.flame{
+  width:20px;
+  height:30px;
+  background:radial-gradient(circle,#ffd166,#ff9f1c,#ff6f00);
+  border-radius:50% 50% 50% 50%;
+  animation:flicker 1s infinite;
+  margin:0 10px;
+}
+
+/* ================= SHLOK ================= */
+#shlok{
+  text-align:center;
+  font-size:22px;
+  margin:50px 20px;
+  min-height:80px;
+  color:#5a3e2b;
+  text-shadow:0 0 10px rgba(255,200,100,0.6);
+}
+
+/* ================= GALLERY ================= */
+#gallery{
+  padding:40px 20px;
+}
+
+#gallery h3{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:20px;
+}
+
+.grid img{
+  width:100%;
+  border-radius:15px;
+  box-shadow:0 10px 20px var(--shadow);
+  transition:transform 0.5s;
+}
+
+.grid img:hover{
+  transform:scale(1.05);
+}
+
+/* ================= AARTI ================= */
+#aarti{
+  text-align:center;
+  padding:50px 20px;
+}
+
+#aarti p{
+  margin-top:15px;
+}
+
+/* ================= BLESSING ================= */
+#bless{
+  padding:60px 20px;
+  text-align:center;
+  background:linear-gradient(#fff,#f6eddc);
+}
+
+#bless h2{
+  color:var(--maroon);
+}
+
+#restart{
+  margin-top:30px;
+  padding:12px 30px;
+  border:none;
+  border-radius:25px;
+  background:linear-gradient(45deg,var(--saffron),var(--gold));
+  cursor:pointer;
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+@keyframes swing{
+  0%{transform:rotate(0deg)}
+  50%{transform:rotate(10deg)}
+  100%{transform:rotate(0deg)}
+}
+
+@keyframes glow{
+  from{box-shadow:0 0 20px gold}
+  to{box-shadow:0 0 50px orange}
+}
+
+@keyframes flicker{
+  0%{transform:scaleY(1)}
+  50%{transform:scaleY(1.2)}
+  100%{transform:scaleY(1)}
+}
+
+</style>
 </head>
+
 <body>
 
-    <canvas id="canvas-container"></canvas>
+<!-- INTRO -->
+<div id="intro">
+  <div class="bell left"></div>
+  <div class="bell right"></div>
+  <h1>ॐ नमः शिवाय</h1>
+  <p>Divya Bhakti Mandir</p>
+  <button id="enterBtn">🕉️ Enter Mandir</button>
+</div>
 
-    <div id="opening-screen" onclick="startExperience()">
-        <div class="hero-text">Beautiful Friendship</div>
-        <div class="hero-names">SivaSingh & Pallavi 😍</div>
-        <p style="margin-top: 40px; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.6;">TAP TO ENTER OUR WORLD</p>
-    </div>
+<!-- MAIN -->
+<div id="main">
 
-    <div id="main-content">
-        <div class="card">
-            <div class="gif-container" onclick="toggleMedia(this)">
-                <img src="gif1.gif" alt="Friendship Moment">
-            </div>
-            <div class="shayari-container">
-                <div class="shayari-line" id="shayari-1"></div>
-            </div>
-        </div>
+<header>
+  <h2>Divya Bhakti Mandir</h2>
+  <span>शांति • श्रद्धा • आस्था</span>
+</header>
 
-        <div class="card">
-            <div class="gif-container" onclick="toggleMedia(this)">
-                <img src="gif2.gif" alt="Bonding">
-            </div>
-            <div class="shayari-container">
-                <div class="shayari-line" id="shayari-2"></div>
-            </div>
-        </div>
+<section id="deity">
+  <img src="gif1.gif">
+  <p>“श्रद्धा से किया गया दर्शन, जीवन को शांति देता है।”</p>
+</section>
 
-        <div class="card">
-            <div class="gif-container" onclick="toggleMedia(this)">
-                <img src="gif3.gif" alt="Trust">
-            </div>
-            <div class="shayari-container">
-                <div class="shayari-line" id="shayari-3"></div>
-            </div>
-        </div>
+<section id="diya">
+  <div class="flame"></div>
+  <div class="flame"></div>
+  <div class="flame"></div>
+</section>
 
-        <div class="card">
-            <div class="gif-container" onclick="toggleMedia(this)">
-                <img src="gif4.gif" alt="Happiness">
-            </div>
-            <div class="shayari-container">
-                <div class="shayari-line" id="shayari-4"></div>
-            </div>
-        </div>
+<section id="shlok"></section>
 
-        <div class="card">
-            <div class="gif-container" onclick="toggleMedia(this)">
-                <img src="gif5.gif" alt="Support">
-            </div>
-            <div class="shayari-container">
-                <div class="shayari-line" id="shayari-5"></div>
-            </div>
-        </div>
+<section id="gallery">
+<h3>🌸 Bhakti Gallery 🌸</h3>
+<div class="grid">
+<img src="gif1.gif">
+<img src="gif2.gif">
+<img src="gif3.gif">
+<img src="gif4.gif">
+<img src="gif5.gif">
+<img src="gif6.gif">
+<img src="gif7.gif">
+<img src="gif8.gif">
+<img src="gif9.gif">
+<img src="gif10.gif">
+<img src="gif11.gif">
+<img src="gif12.gif">
+</div>
+</section>
 
-        <div class="card">
-            <div class="gif-container" onclick="toggleMedia(this)">
-                <img src="gif6.gif" alt="Forever">
-            </div>
-            <div class="shayari-container">
-                <div class="shayari-line" id="shayari-6"></div>
-            </div>
-        </div>
+<section id="aarti">
+<h3>🪔 आरती 🪔</h3>
+<p>हे प्रभु, हम सब पर अपनी कृपा बनाए रखना</p>
+</section>
 
-        <footer class="footer">
-            <h3 style="margin-bottom: 20px; color: white;">📸 Instagram</h3>
-            <a href="#" class="insta-handle">@smss1708</a>
-            <a href="#" class="insta-handle">@black_its_me20</a>
-        </footer>
-    </div>
+<section id="bless">
+<h2>🙏 धन्यवाद 🙏</h2>
+<p>ईश्वर आप सभी को स्वास्थ्य, सुख और शांति प्रदान करें</p>
+<button id="restart">Restart Darshan</button>
+</section>
 
-    <audio id="bgMusic" loop>
-        <source src="newsong.mp3" type="audio/mpeg">
-    </audio>
+</div>
 
-    <script>
-        const canvas = document.getElementById('canvas-container');
-        const ctx = canvas.getContext('2d');
-        const music = document.getElementById('bgMusic');
-        let particles = [];
+<!-- AUDIO -->
+<audio id="music1" src="bhajan1.mp3" loop></audio>
+<audio id="music2" src="bhajan2.mp3" loop></audio>
+<audio id="music3" src="bhajan3.mp3" loop></audio>
+<audio id="music4" src="bhajan4.mp3" loop></audio>
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+<script>
 
-        class Particle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 5 + 2;
-                this.speedY = Math.random() * 1 + 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
-                this.type = Math.random() > 0.8 ? 'heart' : 'circle';
-            }
-            update() {
-                this.y -= this.speedY;
-                if (this.y < -20) this.reset();
-            }
-            draw() {
-                ctx.fillStyle = `rgba(255, 77, 109, ${this.opacity})`;
-                if (this.type === 'heart') {
-                    ctx.font = `${this.size * 2}px serif`;
-                    ctx.fillText('💖', this.x, this.y);
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-        }
+const intro=document.getElementById("intro");
+const main=document.getElementById("main");
+const enterBtn=document.getElementById("enterBtn");
 
-        for (let i = 0; i < 50; i++) particles.push(new Particle());
+const shlok=document.getElementById("shlok");
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
+const shloks=[
+"ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्",
+"हरे राम हरे राम राम राम हरे हरे",
+"वक्रतुंड महाकाय सूर्यकोटि समप्रभ"
+];
 
-        const shayariData = [
-            ["Dosti ka rishta sabse anokha hota hai,", "SivaSingh aur Pallavi ka saath sabse pyara hota hai."],
-            ["Zindagi ke safar mein milte hain bahut se log,", "Par Pallavi jaisa dost kismat se hi milta hai SivaSingh ko."],
-            ["Khamoshiyon mein bhi jo baat samajh le,", "Aisi dosti SivaSingh aur Pallavi ki dastaan kehle."],
-            ["Phoolon ki mehak aur taron ki chamak,", "SivaSingh-Pallavi ki dosti rahe hamesha damak."],
-            ["Mushkil raahon mein bhi jo muskuraana sikha de,", "Pallavi hi hai woh jo SivaSingh ka har pal saja de."],
-            ["Sadiyon tak yaad rakhi jayegi yeh dosti,", "SivaSingh aur Pallavi ki sabse haseen hasti."]
-        ];
+let sIndex=0;
 
-        function typeShayari(elementId, lines) {
-            let lineIdx = 0;
-            const el = document.getElementById(elementId);
-            
-            function showLine() {
-                el.style.transition = "opacity 1s, text-shadow 1s";
-                el.style.opacity = "0";
-                
-                setTimeout(() => {
-                    el.innerText = lines[lineIdx];
-                    el.style.opacity = "1";
-                    el.style.textShadow = "0 0 15px #ff4d6d";
-                    
-                    setTimeout(() => {
-                        lineIdx = (lineIdx + 1) % lines.length;
-                        showLine();
-                    }, 4000);
-                }, 1000);
-            }
-            showLine();
-        }
+function cycleShlok(){
+  shlok.innerHTML=shloks[sIndex];
+  sIndex=(sIndex+1)%shloks.length;
+}
 
-        function startExperience() {
-            document.getElementById('opening-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('opening-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                music.play().catch(e => console.log("Autoplay blocked, waiting for interaction"));
-                
-                shayariData.forEach((lines, i) => {
-                    typeShayari(`shayari-${i+1}`, lines);
-                });
-            }, 1000);
-        }
+setInterval(cycleShlok,4000);
 
-        function toggleMedia(container) {
-            if (music.paused) {
-                music.play();
-                container.style.boxShadow = "none";
-            } else {
-                music.pause();
-                container.style.boxShadow = "0 0 30px #ff4d6d";
-            }
-        }
+enterBtn.onclick=()=>{
+  intro.style.display="none";
+  main.style.display="block";
+  document.getElementById("music1").play();
+}
 
-        // Parallax and scroll reveal logic
-        window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                if (rect.top < window.innerHeight) {
-                    const volume = Math.max(0.2, 1 - (rect.top / window.innerHeight));
-                    music.volume = Math.min(volume, 1);
-                }
-            });
-        });
-    </script>
+document.getElementById("restart").onclick=()=>{
+  location.reload();
+}
+
+</script>
+
 </body>
 </html>
