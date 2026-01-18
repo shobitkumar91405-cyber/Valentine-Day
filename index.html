@@ -2,101 +2,115 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Babu 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Babu 💖</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@300;500&display=swap');
+
         :root {
-            --primary: #ff4d6d;
-            --secondary: #ff758f;
-            --dark: #1a0a0d;
-            --glass: rgba(255, 255, 255, 0.1);
-            --border: rgba(255, 255, 255, 0.2);
+            --pastel-pink: #ffe4e1;
+            --pastel-peach: #fff5ee;
+            --glass: rgba(255, 255, 255, 0.45);
+            --accent: #ff85a2;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: radial-gradient(circle at center, #2d0b13 0%, #000000 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-peach), #fff0f5);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Quicksand', sans-serif;
             overflow-x: hidden;
-            text-align: center;
-        }
-
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .heart-particle {
-            position: absolute;
-            color: var(--primary);
-            font-size: 20px;
-            animation: float linear infinite;
-            opacity: 0.6;
-            user-select: none;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(110vh) scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5) rotate(360deg); opacity: 0; }
-        }
-
-        section {
+            color: #555;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #bg-elements { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+
+        .butterfly {
+            position: absolute;
+            font-size: 24px;
+            z-index: 1;
+            opacity: 0.6;
+            animation: fly linear infinite;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(-10vw, 100vh) rotate(0deg); }
+            25% { transform: translate(30vw, 50vh) rotate(20deg); }
+            50% { transform: translate(60vw, 80vh) rotate(-10deg); }
+            75% { transform: translate(85vw, 20vh) rotate(15deg); }
+            100% { transform: translate(110vw, -10vh) rotate(0deg); }
+        }
+
+        .heart-float {
+            position: absolute;
+            bottom: -20px;
+            color: var(--accent);
+            opacity: 0.7;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-110vh) translateX(20px); opacity: 0; }
+        }
+
+        header {
+            text-align: center;
             padding: 20px;
             position: relative;
-            z-index: 2;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
+            z-index: 10;
         }
 
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
+        header h2 { font-family: 'Dancing Script', cursive; color: var(--accent); font-size: 1.4rem; }
+        header p { font-size: 0.9rem; opacity: 0.7; }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 5;
         }
 
-        .glass-card {
+        .card {
             background: var(--glass);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 25px;
-            padding: 30px 20px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(255, 182, 193, 0.2);
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #450a1d 0%, #000000 100%);
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 1s ease;
+        .card img { width: 140px; border-radius: 20px; margin-bottom: 20px; }
+        .card h3 { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
+        .card p { line-height: 1.8; font-size: 1.1rem; font-weight: 500; }
+
+        button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(255, 133, 162, 0.4);
+            transition: 0.3s;
         }
+
+        button:active { transform: scale(0.9); }
 
         #video-container {
             position: fixed;
@@ -104,232 +118,171 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 99;
-            background: black;
+            background: #fff;
+            z-index: 100;
             display: none;
             justify-content: center;
             align-items: center;
             transition: opacity 1s ease;
         }
 
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        #video-container video { width: 100%; height: 100%; object-fit: cover; }
 
-        h1 { font-size: 2rem; margin: 15px 0; font-weight: bold; }
-        p { font-size: 1.1rem; line-height: 1.6; color: #ffccd5; }
+        .hidden { display: none !important; opacity: 0; }
+        .fade-in { animation: fadeIn 1.2s forwards; }
 
-        .gif-small {
-            width: 140px;
-            height: 140px;
-            border-radius: 20px;
-            object-fit: cover;
-            margin-bottom: 15px;
-            border: 2px solid var(--border);
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 15px 0;
-        }
-
-        #music-toggle {
+        .music-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 101;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            width: 45px;
-            height: 45px;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: white;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             cursor: pointer;
-            backdrop-filter: blur(5px);
-            font-size: 20px;
+            font-size: 1.4rem;
         }
 
-        .btn-love {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-top: 20px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
-            animation: pulse 2s infinite;
-        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        .small-card { padding: 15px; }
+        .small-card img { width: 100%; height: auto; border-radius: 12px; }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .hidden { display: none !important; }
-        
-        .fade-out { opacity: 0; pointer-events: none; }
+        .heart-burst { animation: heartPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+        @keyframes heartPop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div id="particles"></div>
+<div id="bg-elements"></div>
 
-    <button id="music-toggle">🎵</button>
-    <audio id="bg-music" loop>
-        <source src="tere-liye.mp3" type="audio/mpeg">
-    </audio>
+<header>
+    <h2>Made by sivasingh 💖</h2>
+    <p>@smss1708</p>
+</header>
 
-    <div id="intro-overlay">
-        <div class="glass-card">
-            <img src="intro.gif" class="gif-small">
-            <h1>Hey Babu 💖</h1>
-            <p>Happy Valentine’s Day 🌹</p>
-            <button class="btn-love" onclick="startExperience()">Tap to Begin ❤️</button>
+<div class="music-btn" id="mToggle" onclick="toggleMusic()">🎵</div>
+
+<div class="container" id="main-content">
+    <div class="card fade-in" id="intro-card">
+        <img src="intro.gif" alt="Intro">
+        <h3>Hey Babu 💖</h3>
+        <p>Can we talk for a moment?<br>There’s something special I want to show you…</p>
+        <button onclick="startExperience()">Open 💌</button>
+    </div>
+
+    <div id="messages" class="hidden">
+        <div class="card">
+            <img src="rose.gif" alt="Rose">
+            <p>Babu 💖<br>Tum meri zindagi ka sabse khoobsurat ehsaas ho…</p>
+        </div>
+
+        <div class="grid-2">
+            <div class="card small-card"><img src="heart1.gif" alt="H1"></div>
+            <div class="card small-card"><img src="heart2.gif" alt="H2"></div>
+        </div>
+        <div class="card" style="margin-top: -15px;">
+            <p>Har dhadkan sirf tumhare naam…</p>
+        </div>
+
+        <div class="grid-3" id="burst-group">
+            <div class="card small-card"><img src="hug.gif" alt="Hug"></div>
+            <div class="card small-card"><img src="kiss.gif" alt="Kiss"></div>
+            <div class="card small-card"><img src="cute.gif" alt="Cute"></div>
+        </div>
+
+        <div class="card">
+            <img src="promise.gif" alt="Promise">
+            <p>Babu 💖<br>Main sirf aaj nahi,<br>har din tumhe chunta hoon… 🌹</p>
+        </div>
+
+        <div class="card" id="final-card" style="padding-bottom: 60px;">
+            <img src="endlove.gif" alt="End">
+            <h3>Will you stay with me forever, Babu? 💖</h3>
         </div>
     </div>
+</div>
 
-    <div id="video-container">
-        <video id="intro-video" playsinline muted>
-            <source src="intro-love.mp4" type="video/mp4">
-        </video>
-    </div>
+<div id="video-container">
+    <video id="love-video" playsinline>
+        <source src="intro-love.mp4" type="video/mp4">
+    </video>
+</div>
 
-    <main id="main-content" class="hidden">
-        <section id="s1">
-            <div class="glass-card">
-                <img src="rose.gif" class="gif-small">
-                <p>Babu 💖<br>Tum meri zindagi ka sabse khoobsurat ehsaas ho…</p>
-            </div>
-        </section>
+<audio id="bg-music" loop>
+    <source src="tere-liye.mp3" type="audio/mpeg">
+</audio>
 
-        <section id="s2">
-            <div class="glass-card">
-                <div class="grid-2">
-                    <img src="heart1.gif" class="gif-small" style="width:100%">
-                    <img src="heart2.gif" class="gif-small" style="width:100%">
-                </div>
-                <p>Har dhadkan sirf tumhare naam…</p>
-            </div>
-        </section>
+<script>
+    const bgMusic = document.getElementById('bg-music');
+    const loveVideo = document.getElementById('love-video');
+    const videoCont = document.getElementById('video-container');
+    const bgElements = document.getElementById('bg-elements');
+    bgMusic.volume = 0.35;
 
-        <section id="s3">
-            <div class="glass-card">
-                <div class="grid-3">
-                    <img src="hug.gif" class="gif-small" style="width:100%">
-                    <img src="kiss.gif" class="gif-small" style="width:100%">
-                    <img src="cute.gif" class="gif-small" style="width:100%">
-                </div>
-                <p>Har pal me tum...</p>
-            </div>
-        </section>
-
-        <section id="s4">
-            <div class="glass-card">
-                <img src="promise.gif" class="gif-small">
-                <p>Babu 💖<br>Main har din tumhe aur zyada pyaar karunga, sirf Valentine nahi… hamesha 🌹</p>
-            </div>
-        </section>
-
-        <section id="s5">
-            <div class="glass-card">
-                <img src="endlove.gif" class="gif-small">
-                <h1>Will you be my Valentine forever, Babu? 💖</h1>
-            </div>
-        </section>
-    </main>
-
-    <script>
-        const music = document.getElementById('bg-music');
-        const video = document.getElementById('intro-video');
-        const videoCont = document.getElementById('video-container');
-        const musicBtn = document.getElementById('music-toggle');
-        const particlesContainer = document.getElementById('particles');
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart-particle';
-            heart.innerHTML = Math.random() > 0.5 ? '💖' : '🌹';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            particlesContainer.appendChild(heart);
-            setTimeout(() => heart.remove(), 6000);
-        }
-        setInterval(createHeart, 300);
-
-        function startExperience() {
-            music.volume = 0.35;
-            music.play();
-            
-            document.getElementById('intro-overlay').classList.add('fade-out');
-            
+    function createDecorations() {
+        for(let i=0; i<12; i++) {
             setTimeout(() => {
-                document.getElementById('intro-overlay').classList.add('hidden');
-                videoCont.style.display = 'flex';
-                video.play();
-            }, 1000);
+                const b = document.createElement('div');
+                b.className = 'butterfly';
+                b.innerHTML = '🦋';
+                b.style.left = Math.random() * 100 + 'vw';
+                b.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                bgElements.appendChild(b);
+            }, i * 1500);
         }
 
-        video.onended = function() {
-            videoCont.classList.add('fade-out');
-            setTimeout(() => {
-                videoCont.classList.add('hidden');
-                document.getElementById('main-content').classList.remove('hidden');
-                revealOnScroll();
-            }, 1000);
-        };
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.className = 'heart-float';
+            h.innerHTML = Math.random() > 0.5 ? '💖' : '🌸';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            h.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            bgElements.appendChild(h);
+            setTimeout(() => h.remove(), 8000);
+        }, 500);
+    }
 
-        function revealOnScroll() {
-            const sections = document.querySelectorAll('section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.2 });
+    function startExperience() {
+        document.getElementById('intro-card').style.display = 'none';
+        videoCont.style.display = 'flex';
+        bgMusic.pause();
+        loveVideo.play().catch(e => console.log("Auto-play blocked, playing video..."));
+    }
 
-            sections.forEach(s => observer.observe(s));
+    loveVideo.onended = function() {
+        videoCont.style.opacity = '0';
+        setTimeout(() => {
+            videoCont.style.display = 'none';
+            document.getElementById('messages').classList.remove('hidden');
+            document.getElementById('messages').classList.add('fade-in');
+            bgMusic.play();
+            document.querySelectorAll('#burst-group .card').forEach(c => c.classList.add('heart-burst'));
+        }, 1000);
+    };
+
+    function toggleMusic() {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            document.getElementById('mToggle').innerHTML = '🎵';
+        } else {
+            bgMusic.pause();
+            document.getElementById('mToggle').innerHTML = '🔇';
         }
+    }
 
-        musicBtn.onclick = () => {
-            if (music.paused) {
-                music.play();
-                musicBtn.innerText = '🎵';
-            } else {
-                music.pause();
-                musicBtn.innerText = '🔇';
-            }
-        };
-
-        // Extra interaction
-        document.addEventListener('click', (e) => {
-            if(document.getElementById('main-content').classList.contains('hidden')) return;
-            const burst = document.createElement('div');
-            burst.className = 'heart-particle';
-            burst.innerHTML = '❤️';
-            burst.style.left = e.clientX + 'px';
-            burst.style.top = e.clientY + 'px';
-            burst.style.animation = 'float 0.8s ease-out forwards';
-            particlesContainer.appendChild(burst);
-            setTimeout(() => burst.remove(), 800);
-        });
-    </script>
+    window.onload = createDecorations;
+    document.body.addEventListener('click', () => {
+        if(bgMusic.paused && videoCont.style.display !== 'flex') bgMusic.play();
+    }, { once: true });
+</script>
 </body>
 </html>
