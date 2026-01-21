@@ -12,22 +12,17 @@
             --bg-dark: #050505;
             --glass: rgba(255, 255, 255, 0.08);
             --text-glow: 0 0 8px var(--neon-pink), 0 0 15px var(--neon-purple);
+            --blue-char-glow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue), 0 0 45px var(--neon-blue);
+            --pink-char-glow: 0 0 15px var(--neon-pink), 0 0 30px var(--neon-pink), 0 0 45px var(--neon-pink);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
         body {
             background-color: var(--bg-dark);
             color: white;
             overflow: hidden;
             height: 100vh;
-            width: 100vw;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -36,230 +31,222 @@
         #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
         .header-credit {
-            position: fixed;
-            top: 15px;
-            width: 100%;
-            text-align: center;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: rgba(255, 255, 255, 0.6);
-            z-index: 1000;
-            text-transform: uppercase;
+            position: fixed; top: 15px; width: 100%; text-align: center;
+            font-size: 12px; letter-spacing: 2px; color: rgba(255, 255, 255, 0.6);
+            z-index: 1000; text-transform: uppercase;
+        }
+        .header-credit strong {
+            color: var(--neon-blue);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        .header-credit span {
+            color: var(--neon-pink);
+            text-shadow: 0 0 5px var(--neon-pink);
         }
 
         .audio-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1001;
-            background: var(--glass);
-            padding: 12px;
-            border-radius: 50%;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--neon-pink);
-            cursor: pointer;
-            box-shadow: var(--text-glow);
+            position: fixed; bottom: 20px; right: 20px; z-index: 1001;
+            background: var(--glass); padding: 12px; border-radius: 50%;
+            backdrop-filter: blur(10px); border: 1px solid var(--neon-pink);
+            cursor: pointer; box-shadow: var(--text-glow);
         }
-
-        #music-icon { font-size: 20px; }
 
         .page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            position: absolute; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 20px; opacity: 0;
+            visibility: hidden; transition: 0.8s ease-in-out;
         }
 
-        .page.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .page.active { opacity: 1; visibility: visible; }
 
         .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 45, 117, 0.3);
-            border-radius: 25px;
-            padding: 25px;
-            text-align: center;
-            width: 100%;
-            max-width: 360px;
+            background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 45, 117, 0.3); border-radius: 25px;
+            padding: 25px; text-align: center; width: 100%; max-width: 360px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-            transform: scale(0.8); /* Initial smaller size */
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
+            transform: scale(0.8); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .glass-card.expanded {
-            transform: scale(1); /* Expanded size */
-            cursor: default;
-        }
-
-        .neon-text {
-            color: #fff;
-            text-shadow: var(--text-glow);
-            margin-bottom: 10px;
-        }
+        .glass-card.expanded { transform: scale(1); }
 
         .btn-continue {
-            margin-top: 25px;
-            padding: 15px 40px;
-            border-radius: 50px;
-            border: none;
+            margin-top: 25px; padding: 15px 40px; border-radius: 50px; border: none;
             background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));
-            color: white;
-            font-weight: bold;
-            letter-spacing: 1px;
-            cursor: pointer;
+            color: white; font-weight: bold; cursor: pointer;
             box-shadow: 0 5px 20px rgba(255, 45, 117, 0.5);
-            font-size: 1rem;
         }
 
         #intro-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 2000;
-            background: black;
-            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 2000; background: black; display: none;
         }
 
-        /* NEON CHARACTER STYLES */
+        /* --- REALISTIC NEON CHARACTERS --- */
         .stage {
             width: 100%;
-            height: 250px; /* Adjusted height for characters */
+            height: 350px; /* Increased height for characters */
             position: relative;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: center; /* Center characters initially */
+            align-items: flex-end; /* Align to bottom */
         }
 
-        .character {
+        .neon-char-container {
             position: absolute;
-            bottom: 20px;
-            width: 90px; /* Slightly larger characters */
-            height: 140px;
+            bottom: 0; /* Align to the very bottom of the stage */
+            width: 150px; /* Larger base size for characters */
+            height: 250px; /* Adjusted height */
+            opacity: 0; /* Hidden by default for animation */
+            transition: opacity 1s ease-in-out, transform 3.5s linear; /* For walking */
         }
 
-        #boy { left: -100px; filter: drop-shadow(0 0 10px var(--neon-blue)); }
-        #girl { right: 40px; filter: drop-shadow(0 0 10px var(--neon-pink)); }
+        #boy-char {
+            left: -200px; /* Start off-screen */
+            transform: translateX(0); /* Initial position for boy */
+            transition: transform 3.5s linear, opacity 1s ease-in-out;
+        }
+        #boy-char.walk-in {
+            transform: translateX(calc(50vw - 75px + 20px)); /* Walk to left of center */
+        }
 
-        .stick-man { stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-        .boy-color { stroke: var(--neon-blue); }
-        .girl-color { stroke: var(--neon-pink); }
+        #girl-char {
+            right: 50px; /* Fixed position */
+            opacity: 1; /* Girl is visible from start */
+        }
+        /* Common style for neon lines */
+        .neon-line {
+            position: absolute;
+            background: transparent;
+            border-radius: 50%; /* For rounded ends/circles */
+            box-shadow: 0 0 5px, 0 0 10px, 0 0 20px;
+        }
 
-        /* Boy specific parts */
-        #boy-head { cx="50" cy="25" r="15"; }
-        #boy-body-path { d="M50 40 L50 90 M50 55 L25 80 M50 55 L75 80 M50 90 L30 130 M50 90 L70 130"; }
-
-        /* Girl specific parts */
-        #girl-head { cx="50" cy="25" r="15"; }
-        #girl-body-path { d="M50 40 L30 100 L70 100 Z M50 100 L40 140 M50 100 L60 140 M50 60 L25 85 M50 60 L75 85"; }
-
-        /* Rose styles */
-        .rose-color { fill: #e74c3c; stroke: #c0392b; stroke-width: 1.5; }
-        .stem-color { stroke: #27ae60; stroke-width: 2; }
-        .leaf-color { fill: #2ecc71; }
-
-        /* Animation classes */
-        .kneel-boy {
-            transform: translateY(20px) scaleY(0.9); /* Slight squat */
+        /* Boy Character */
+        #boy-char .head {
+            width: 50px; height: 50px;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            border: 4px solid var(--neon-blue);
+            box-shadow: var(--blue-char-glow);
+            border-radius: 50%;
+        }
+        #boy-char .body {
+            width: 4px; height: 80px;
+            top: 70px; left: 50%; transform: translateX(-50%);
+            background: var(--neon-blue);
+            box-shadow: var(--blue-char-glow);
+        }
+        #boy-char .arm.left {
+            width: 4px; height: 50px;
+            top: 75px; left: calc(50% - 22px); transform: rotate(30deg);
+            background: var(--neon-blue);
+            box-shadow: var(--blue-char-glow);
+            transform-origin: top center;
+        }
+        #boy-char .arm.right {
+            width: 4px; height: 50px;
+            top: 75px; left: calc(50% + 18px); transform: rotate(-30deg);
+            background: var(--neon-blue);
+            box-shadow: var(--blue-char-glow);
+            transform-origin: top center;
+            transition: transform 0.8s ease;
+        }
+        #boy-char .leg.left, #boy-char .leg.right {
+            width: 4px; height: 70px;
+            top: 150px;
+            background: var(--neon-blue);
+            box-shadow: var(--blue-char-glow);
+            transform-origin: top center;
             transition: transform 0.5s ease;
         }
-        .boy-hand-up {
-            transform: rotate(-30deg) translate(5px, -5px);
-            transition: transform 0.5s ease;
-            transform-origin: 75px 80px; /* Rotate around the elbow */
+        #boy-char .leg.left { left: calc(50% - 12px); transform: rotate(10deg); }
+        #boy-char .leg.right { left: calc(50% + 8px); transform: rotate(-10deg); }
+
+        #boy-rose {
+            position: absolute;
+            width: 20px; height: 20px;
+            background: #ff0000; /* Red for rose */
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000;
+            top: 120px; /* Position relative to boy */
+            left: 105px; /* Position relative to boy */
+            display: none; /* Hidden initially */
+            z-index: 10;
+        }
+        #boy-char.proposing .leg.left { transform: rotate(40deg); height: 50px; top: 170px;}
+        #boy-char.proposing .leg.right { transform: rotate(-40deg); height: 50px; top: 170px;}
+        #boy-char.proposing .arm.right { transform: rotate(-80deg); top: 85px; left: calc(50% + 5px); } /* Arm up for rose */
+
+
+        /* Girl Character */
+        #girl-char .head {
+            width: 50px; height: 50px;
+            top: 20px; left: 50%; transform: translateX(-50%);
+            border: 4px solid var(--neon-pink);
+            box-shadow: var(--pink-char-glow);
+            border-radius: 50%;
+        }
+        #girl-char .body {
+            width: 4px; height: 90px;
+            top: 70px; left: 50%; transform: translateX(-50%) rotate(5deg);
+            background: var(--neon-pink);
+            box-shadow: var(--pink-char-glow);
+        }
+        #girl-char .dress { /* Triangle dress */
+            position: absolute;
+            width: 0; height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 70px solid var(--neon-pink);
+            top: 140px; left: 50%; transform: translateX(-50%);
+            box-shadow: var(--pink-char-glow);
+            z-index: 5;
+        }
+        #girl-char .arm.left, #girl-char .arm.right {
+            width: 4px; height: 50px;
+            top: 75px;
+            background: var(--neon-pink);
+            box-shadow: var(--pink-char-glow);
+            transform-origin: top center;
+        }
+        #girl-char .arm.left { left: calc(50% - 22px); transform: rotate(20deg); }
+        #girl-char .arm.right { left: calc(50% + 18px); transform: rotate(-20deg); }
+
+        #girl-accepted-rose {
+            position: absolute;
+            width: 20px; height: 20px;
+            background: #ff0000; /* Red for rose */
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000;
+            top: 120px; /* Position relative to girl */
+            left: 30px; /* Position relative to girl's left hand */
+            display: none; /* Hidden initially */
+            z-index: 10;
         }
 
         #proposal-text {
-            position: absolute;
-            top: 15%; /* Positioned higher */
-            width: 100%;
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-purple), 0 0 30px var(--neon-pink);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 1.5s all ease-out;
-            z-index: 1;
+            position: absolute; top: 10%; width: 100%; text-align: center;
+            font-size: 2.2rem; font-weight: bold; color: #fff;
+            text-shadow: var(--text-glow); opacity: 0; transition: 1s;
         }
 
-        .show-proposal-text { opacity: 1 !important; transform: translateY(0) !important; }
+        .show-proposal-text { opacity: 1 !important; transform: scale(1.1); }
 
         .message-text {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #f0f0f0;
-            font-style: italic;
-            opacity: 0; /* Hidden by default */
-            max-height: 0;
-            overflow: hidden;
-            transition: opacity 0.5s ease-in-out, max-height 0.5s ease-in-out;
+            font-size: 1.05rem; line-height: 1.6; color: #f0f0f0;
+            opacity: 0; max-height: 0; overflow: hidden; transition: 0.5s ease-in-out;
         }
-        .message-text.visible {
-            opacity: 1;
-            max-height: 200px; /* Adjust as needed to fit content */
-        }
+        .message-text.visible { opacity: 1; max-height: 300px; margin-top: 15px; }
 
-        .gif-frame {
-            width: 140px;
-            height: 140px;
-            border-radius: 15px;
-            margin: 0 auto 15px;
-            display: block;
-            border: 2px solid var(--neon-purple);
-            object-fit: cover;
-        }
-
-        .heart-fly {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            animation: moveUp 3s linear forwards;
-            font-size: 25px; /* Larger hearts */
-        }
-
-        @keyframes moveUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
-        }
-
-        /* Styles for heart burst from center */
-        .center-heart-burst {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
-            animation: burstOut 1.5s ease-out forwards;
-            font-size: 0; /* Starts hidden */
-            opacity: 0;
-        }
-
-        @keyframes burstOut {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(2); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
-        }
+        .gif-frame { width: 140px; height: 140px; border-radius: 15px; margin: 0 auto; display: block; object-fit: cover; }
+        .heart-fly { position: fixed; pointer-events: none; animation: moveUp 3s linear forwards; font-size: 25px; }
+        @keyframes moveUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100vh) scale(0.5); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="header-credit">Made with 💖 for Pallavi</div>
+    <div class="header-credit">Made by <strong>Sivasingh</strong> for my <span>Pallavi</span> 💖</div>
     <canvas id="bg-canvas"></canvas>
     <video id="intro-video" playsinline></video>
 
@@ -269,60 +256,48 @@
 
     <audio id="bg-music" loop>
         <source src="tere-liye.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
     </audio>
 
     <div class="page active" id="p1">
         <div class="glass-card" onclick="initiate()">
-            <img src="intro.gif" class="gif-frame" alt="Introduction GIF">
-            <h1 class="neon-text">Hey Pallavi 💖</h1>
-            <p style="color:rgba(255,255,255,0.8);">A moment that comes straight from my heart...</p>
-            <button class="btn-continue">Continue 💌</button>
+            <img src="intro.gif" class="gif-frame">
+            <h1 style="margin-top:15px; text-shadow: var(--text-glow);">Hey Pallavi 💖</h1>
+            <p style="color:rgba(255,255,255,0.8);">Click to see a message from my heart...</p>
+            <button class="btn-continue">Open 💌</button>
         </div>
     </div>
 
     <div class="page" id="p3">
         <div id="proposal-text">I Love You Pallavi! 💖</div>
         <div class="stage">
-            <div id="boy" class="character">
-                <svg viewBox="0 0 100 150">
-                    <circle class="stick-man boy-color" id="boy-head"/>
-                    <g id="boy-body-group">
-                        <path class="stick-man boy-color" id="boy-body-path"/>
-                        <g id="boy-rose-hand">
-                            <line class="stick-man boy-color" x1="75" y1="80" x2="85" y2="70"/>
-                            <path class="rose-color" d="M88 65 C90 60, 95 62, 90 68 C88 72, 83 70, 85 65 Z M85 65 C83 60, 78 62, 80 68 C82 72, 87 70, 85 65 Z"/>
-                            <line class="stem-color" x1="88" y1="65" x2="95" y2="55"/>
-                            <path class="leaf-color" d="M95 55 L90 50 L98 52 Z"/>
-                        </g>
-                    </g>
-                </svg>
+            <div id="boy-char" class="neon-char-container">
+                <div class="neon-line head"></div>
+                <div class="neon-line body"></div>
+                <div class="neon-line arm left"></div>
+                <div class="neon-line arm right"></div>
+                <div class="neon-line leg left"></div>
+                <div class="neon-line leg right"></div>
+                <div id="boy-rose" class="neon-line"></div>
             </div>
-            <div id="girl" class="character">
-                <svg viewBox="0 0 100 150">
-                    <circle class="stick-man girl-color" id="girl-head"/>
-                    <g id="girl-body-group">
-                        <path class="stick-man girl-color" id="girl-body-path"/>
-                        <g id="girl-rose-hand" style="opacity:0; transition: opacity 0.5s;">
-                            <line class="stick-man girl-color" x1="25" y1="85" x2="15" y2="75"/>
-                            <path class="rose-color" d="M12 70 C10 65, 5 67, 10 73 C12 77, 17 75, 15 70 Z M15 70 C17 65, 22 67, 20 73 C18 77, 13 75, 15 70 Z"/>
-                            <line class="stem-color" x1="12" y1="70" x2="5" y2="60"/>
-                            <path class="leaf-color" d="M5 60 L10 55 L2 57 Z"/>
-                        </g>
-                    </g>
-                </svg>
+            <div id="girl-char" class="neon-char-container">
+                <div class="neon-line head"></div>
+                <div class="neon-line body"></div>
+                <div class="neon-line arm left"></div>
+                <div class="neon-line arm right"></div>
+                <div class="neon-line dress"></div>
+                <div id="girl-accepted-rose" class="neon-line"></div>
             </div>
         </div>
-        <div id="prop-box" class="glass-card" style="opacity:0; transition: 1s; cursor: default;">
-            <h2 class="neon-text">Pallavi...</h2>
-            <p style="color:rgba(255,255,255,0.8);">I want to spend every sunrise and sunset of my life with you. Will you be mine forever?</p>
+        <div id="prop-box" class="glass-card" style="opacity:0; transition: 1s;">
+            <h2 style="text-shadow: var(--text-glow);">Pallavi...</h2>
+            <p>Will you be mine forever?</p>
             <button class="btn-continue" onclick="acceptRose()">YES 💖</button>
         </div>
     </div>
 
     <div class="page" id="p4">
         <div class="glass-card" onclick="toggleCardAndNext(this, 'p5')">
-            <img src="rose.gif" class="gif-frame" alt="Rose GIF">
+            <img src="rose.gif" class="gif-frame">
             <p class="message-text">Pallavi, you are the most beautiful soul I have ever known. Your kindness and grace inspire me every single day. Being with you feels like home, a place where I can truly be myself and find peace in your warm embrace.</p>
         </div>
     </div>
@@ -354,19 +329,18 @@
             <p class="message-text">Pallavi, I promise to choose you every single day, without a doubt, in a heartbeat. I look forward to building a beautiful future together, filled with laughter, deep conversations, and a love that only grows stronger with time.</p>
         </div>
     </div>
-
     <div class="page" id="p8">
-        <div class="glass-card" onclick="spawnCenterHearts();"> <img src="endlove.gif" class="gif-frame" alt="Ending Love GIF">
-            <h2 class="neon-text">Always & Forever</h2>
-            <p class="message-text visible" style="max-height: fit-content; opacity:1;">Pallavi, you are my heart's final destination. I love you more than words could ever express, and I am so blessed to have you in my life. This is just the beginning of our forever. I love you! 💖</p>
+        <div class="glass-card" onclick="spawnCenterHearts()">
+            <img src="endlove.gif" class="gif-frame">
+            <h2 style="text-shadow: var(--text-glow); margin-top:15px;">Always & Forever</h2>
+            <p class="message-text visible">Pallavi, you are my heart's final destination. I love you more than words could ever express, and I am so blessed to have you in my life. This is just the beginning of our forever. I love you! 💖</p>
         </div>
     </div>
 
     <script>
         const music = document.getElementById('bg-music');
         const video = document.getElementById('intro-video');
-        let current = 1; // Current page number
-        let cardExpanded = false; // To track if the message card is expanded
+        let current = 1;
 
         // Background Particles
         const canvas = document.getElementById('bg-canvas');
@@ -374,179 +348,101 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         let particles = [];
-        
-        class P {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.v = Math.random() * 0.5 + 0.2;
-                this.s = Math.random() * 2;
-            }
-            draw() {
-                ctx.fillStyle = "rgba(255, 45, 117, 0.5)";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.s, 0, Math.PI*2);
-                ctx.fill();
-                this.y -= this.v;
-                if(this.y < 0) this.y = canvas.height;
-            }
-        }
-        for(let i=0; i<80; i++) particles.push(new P());
-        function anim() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => p.draw());
-            requestAnimationFrame(anim);
-        }
+        class P { constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.v = Math.random()*0.5+0.2; this.s = Math.random()*2; } draw() { ctx.fillStyle = "rgba(255, 45, 117, 0.5)"; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); this.y -= this.v; if(this.y < 0) this.y = canvas.height; } }
+        for(let i=0; i<60; i++) particles.push(new P());
+        function anim() { ctx.clearRect(0,0,canvas.width, canvas.height); particles.forEach(p => p.draw()); requestAnimationFrame(anim); }
         anim();
 
-        function toggleAudio() {
-            if(music.paused) { music.play(); document.getElementById('music-icon').innerText='🎵'; }
-            else { music.pause(); document.getElementById('music-icon').innerText='🔇'; }
-        }
-
-        function spawnHearts() {
-            for(let i=0; i<15; i++) {
-                const h = document.createElement('div');
-                h.className = 'heart-fly';
-                h.innerHTML = '💖';
-                h.style.left = Math.random() * 100 + 'vw';
-                h.style.bottom = '-20px';
-                h.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 3000);
-            }
-        }
-
-        function spawnCenterHearts() {
-            const burstContainer = document.createElement('div');
-            burstContainer.className = 'center-heart-burst';
-            document.body.appendChild(burstContainer);
-
-            for(let i = 0; i < 30; i++) {
-                const heart = document.createElement('span');
-                heart.innerHTML = '💖';
-                heart.style.position = 'absolute';
-                heart.style.left = '50%';
-                heart.style.top = '50%';
-                heart.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
-                heart.style.fontSize = `${Math.random() * 20 + 15}px`;
-                heart.style.opacity = '1';
-
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 150 + 50; // Random distance
-                const finalX = distance * Math.cos(angle);
-                const finalY = distance * Math.sin(angle);
-
-                heart.animate([
-                    { transform: `translate(-50%, -50%) scale(0) rotate(0deg)`, opacity: 1 },
-                    { transform: `translate(calc(-50% + ${finalX}px), calc(-50% + ${finalY}px)) scale(1) rotate(${Math.random() * 720}deg)`, opacity: 0 }
-                ], {
-                    duration: 1500,
-                    easing: 'ease-out',
-                    delay: Math.random() * 200
-                });
-                burstContainer.appendChild(heart);
-            }
-
-            setTimeout(() => burstContainer.remove(), 2000);
-        }
+        function toggleAudio() { if(music.paused) music.play(); else music.pause(); }
 
         function initiate() {
             music.volume = 0.35;
             music.play();
             document.getElementById('p1').classList.remove('active');
             
-            // Video Page Logic
             video.style.display = 'block';
-            video.src = 'intro-love.mp4'; // Make sure this path is correct
-            music.pause();
+            video.src = 'intro-love.mp4';
+            music.pause(); // Pause music for video
             video.play();
             
             video.onended = () => {
                 video.style.opacity = '0';
                 setTimeout(() => {
                     video.style.display = 'none';
-                    music.play();
+                    music.play(); // Resume music
                     startProposal();
                 }, 800);
             };
-            spawnHearts();
         }
 
         function startProposal() {
             document.getElementById('p3').classList.add('active');
-            const boy = document.getElementById('boy');
-            const boyBodyGroup = document.getElementById('boy-body-group');
-            const boyRoseHand = document.getElementById('boy-rose-hand');
+            const boyChar = document.getElementById('boy-char');
+            const girlChar = document.getElementById('girl-char');
 
-            // 1. Boy walks to Girl
+            // Set girl's initial position on stage
+            girlChar.style.right = 'calc(50vw - 75px - 20px)'; // To the right of center
+            girlChar.style.opacity = '1';
+
+            // Boy walks in
             setTimeout(() => {
-                boy.style.transition = "left 3.5s linear";
-                boy.style.left = "calc(50% - 60px)"; // Position boy near girl
+                boyChar.style.opacity = '1';
+                boyChar.classList.add('walk-in');
                 
-                // 2. Boy kneels down and raises hand with rose
+                // Boy Proposes
                 setTimeout(() => {
-                    boyBodyGroup.classList.add('kneel-boy');
-                    boyRoseHand.classList.add('boy-hand-up');
-                    spawnHearts();
-                    
-                    setTimeout(() => {
-                        document.getElementById('prop-box').style.opacity = '1';
-                    }, 800);
+                    boyChar.classList.add('proposing');
+                    document.getElementById('boy-rose').style.display = "block";
+                    document.getElementById('prop-box').style.opacity = '1';
                 }, 3600); // After walking animation ends
             }, 500);
         }
 
         function acceptRose() {
-            // Hide boy's rose, show girl's rose
-            document.getElementById('boy-rose-hand').style.opacity = '0';
-            document.getElementById('girl-rose-hand').style.opacity = '1';
-            
-            // Show "I Love You Pallavi"
+            document.getElementById('boy-rose').style.display = 'none';
+            document.getElementById('girl-accepted-rose').style.display = 'block';
             document.getElementById('proposal-text').classList.add('show-proposal-text');
-            
-            // Hide the button box
             document.getElementById('prop-box').style.opacity = '0';
-            
-            // Effects
             spawnCenterHearts();
-            setInterval(spawnHearts, 1000); // Keep hearts flying
-
-            // After a delay, move to the next page automatically
             setTimeout(() => {
                 document.getElementById('p3').classList.remove('active');
                 current = 4;
                 document.getElementById('p' + current).classList.add('active');
-                spawnHearts();
-            }, 3000); // Wait for the text to show and hearts to burst
+            }, 3500);
         }
 
         function toggleCardAndNext(cardElement, nextPageId) {
             const messageText = cardElement.querySelector('.message-text');
 
             if (!cardElement.classList.contains('expanded')) {
-                // Expand the card
                 cardElement.classList.add('expanded');
                 if (messageText) {
                     messageText.classList.add('visible');
                 }
-                spawnCenterHearts(); // Burst hearts when card expands
-                cardExpanded = true;
+                spawnCenterHearts();
             } else {
-                // Move to the next page
                 document.querySelector('.page.active').classList.remove('active');
                 const next = document.getElementById(nextPageId);
                 if (next) {
                     next.classList.add('active');
                     current++;
-                    spawnHearts();
-                    cardExpanded = false; // Reset for the next card
+                    // Optional: Spawn hearts on page change
                 } else {
-                    // This is the last page, maybe do something else or just keep it active
                     console.log("End of pages.");
                 }
             }
         }
+
+        function spawnCenterHearts() {
+            for(let i=0; i<20; i++) {
+                const h = document.createElement('div');
+                h.className = 'heart-fly'; h.innerHTML = '💖';
+                h.style.left = '50%'; h.style.top = '50%';
+                document.body.appendChild(h);
+                h.animate([{transform:'translate(-50%,-50%) scale(0)', opacity:1}, {transform:`translate(${Math.random()*400-200}px, ${Math.random()*400-200}px) scale(1.5)`, opacity:0}], {duration:1500});
+                setTimeout(() => h.remove(), 1500);
+            }
+        }
     </script>
 </body>
-</html>
+        </html>
