@@ -2,178 +2,193 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Rose Day My Love</title>
+    <title>SIVA SINGH - FREE FIRE MAX HTML</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background: #0b0101; font-family: 'Poppins', sans-serif; }
-
-        .container {
-            width: 100%; height: 100%; position: relative;
-            background: radial-gradient(circle at center, #2d0a0e 0%, #0b0101 100%);
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .header {
-            position: absolute; top: 15px; text-align: center; width: 100%; z-index: 100;
-            font-size: 12px; color: rgba(255, 182, 193, 0.7); text-shadow: 0 0 8px rgba(255, 50, 100, 0.4);
-            font-weight: 300; letter-spacing: 1px;
-        }
-
-        .screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out; padding: 20px;
-        }
-
-        .screen.active { opacity: 1; visibility: visible; }
-
-        .big-rose { font-size: 75px; filter: drop-shadow(0 0 20px #ff2d55); animation: float 3s ease-in-out infinite; }
-        .glowing-text { font-family: 'Dancing Script', cursive; font-size: 2.8rem; text-align: center; margin: 10px 0; background: linear-gradient(to bottom, #ff9a9e 0%, #fecfef 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 15px rgba(255, 105, 180, 0.5); }
-        .subtitle { font-size: 15px; text-align: center; color: #ffb6c1; max-width: 280px; font-style: italic; line-height: 1.6; }
-
-        .btn {
-            margin-top: 40px; padding: 14px 40px; border: none; border-radius: 50px;
-            background: linear-gradient(45deg, #ff4e50, #f9d423); color: white;
-            font-weight: 600; font-size: 18px; cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 78, 80, 0.4); transition: transform 0.2s;
-        }
-        .btn:active { transform: scale(0.92); }
-
-        .card {
-            background: #fffefb; background-image: radial-gradient(#f3ede1 1px, transparent 1px); background-size: 25px 25px;
-            width: 92%; max-width: 340px; border-radius: 20px; padding: 35px 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5); color: #333; position: relative; animation: cardFloat 5s ease-in-out infinite;
-        }
-        .card-title { font-family: 'Great Vibes', cursive; font-size: 2.5rem; color: #d63384; margin-bottom: 15px; text-align: center; }
-        .card-msg { font-family: 'Dancing Script', cursive; font-size: 1.25rem; line-height: 1.6; text-align: center; margin-bottom: 20px; color: #444; }
-        .card-footer { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 14px; color: #ff4e50; text-align: center; }
-
-        .slider-frame { width: 85%; max-width: 320px; height: 380px; border: 10px solid white; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); overflow: hidden; position: relative; background: #1a1a1a; }
-        .slider-img { width: 100%; height: 100%; object-fit: contain; position: absolute; opacity: 0; transition: opacity 1.2s ease-in-out; }
-        .slider-img.active { opacity: 1; }
-
-        .couple-box { font-size: 110px; filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.8)); text-align: center; margin-bottom: 10px; }
-        .yes-text { font-family: 'Great Vibes', cursive; font-size: 2.5rem; text-align: center; color: #fff; margin-bottom: 5px; }
-
-        .petal, .heart { position: fixed; top: -10%; pointer-events: none; z-index: 50; animation: fall linear infinite; }
+        body { margin: 0; overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif; }
+        #ui { position: absolute; width: 100%; height: 100%; pointer-events: none; }
         
-        @keyframes fall {
-            0% { transform: translateY(0vh) translateX(0px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) translateX(120px) rotate(360deg); opacity: 0; }
-        }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        @keyframes cardFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-8px) rotate(0.5deg); } }
-
-        .next-btn { position: absolute; bottom: 30px; color: rgba(255,255,255,0.4); font-size: 12px; cursor: pointer; text-decoration: underline; }
+        /* Stats Styling */
+        .hud { position: absolute; padding: 15px; color: white; background: rgba(0,0,0,0.6); border-radius: 10px; border-left: 5px solid #ffcc00; }
+        #top-left { top: 20px; left: 20px; }
+        #bottom-right { bottom: 20px; right: 20px; text-align: right; }
+        
+        /* Health Bar */
+        .bar-container { width: 200px; height: 15px; background: #333; margin-top: 5px; border: 1px solid #fff; }
+        #hp-fill { width: 100%; height: 100%; background: linear-gradient(90deg, #ff0000, #ff6666); transition: 0.3s; }
+        
+        /* Crosshair */
+        #crosshair { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #0f0; font-size: 24px; font-weight: bold; }
+        
+        #watermark { position: absolute; top: 10px; width: 100%; text-align: center; color: rgba(255,255,255,0.3); font-size: 50px; font-weight: 900; z-index: -1; }
+        
+        #game-over { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.9); color: gold; padding: 50px; text-align: center; display: none; border: 4px solid #ffcc00; pointer-events: all; }
+        button { background: #ffcc00; border: none; padding: 10px 25px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-        <source src="rose-day.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="container">
-        <div class="header">Made with Love by Sivasingh ❤️<br>@smss1708</div>
-
-        <div class="screen active" id="s0">
-            <div class="big-rose">🌹</div>
-            <h1 class="glowing-text">Happy Rose Day<br>Cutiee ❤️</h1>
-            <p class="subtitle">“This rose is not just a flower, it’s my heart reaching out to you.”</p>
-            <button class="btn" onclick="startApp()">Tap for Magic ✨</button>
-        </div>
-
-        <div class="screen" id="s1">
-            <div class="card">
-                <h2 class="card-title">My Love 💖</h2>
-                <p class="card-msg">“On this special Rose Day, I want you to know that you are the most beautiful part of my life. Like a rose, you bring color and happiness into my world. Every petal reminds me of your kindness. You are my today and my forever.”</p>
-                <p class="card-footer">Happy Rose Day, Cutiee 🌹❤️</p>
-            </div>
-            <div class="next-btn" onclick="next(2)">Tap to feel more...</div>
-        </div>
-
-        <div class="screen" id="s2">
-            <div class="card">
-                <h2 class="card-title">My Heart 💞</h2>
-                <p class="card-msg">“From this moment till my last breath, I promise to stand beside you in every happiness and pain. No matter where life takes us, my heart will always find its way back to you.”</p>
-                <div class="card-footer" style="font-size: 22px;">I Love You ❤️</div>
-            </div>
-            <div class="next-btn" onclick="next(3)">Tap to continue...</div>
-        </div>
-
-        <div class="screen" id="s3">
-            <div class="couple-box">👩‍❤️‍👨</div>
-            <h2 class="yes-text">You said YES ❤️</h2>
-            <p class="subtitle">“My life just became complete.”</p>
-            <div class="next-btn" onclick="next(4)">Our Memories ✨</div>
-        </div>
-
-        <div class="screen" id="s4">
-            <div class="slider-frame">
-                <img src="photo1.jpg" class="slider-img active">
-                <img src="photo2.jpg" class="slider-img">
-                <img src="photo3.jpg" class="slider-img">
-                <img src="photo4.jpg" class="slider-img">
-            </div>
-            <p class="subtitle" style="margin-top: 15px;">You are my favorite view.</p>
-            <div class="next-btn" onclick="next(5)">One last thing...</div>
-        </div>
-
-        <div class="screen" id="s5">
-            <div class="card">
-                <p class="card-msg" style="font-size: 1.4rem;">“Cutiee, this Rose Day is about everything my heart feels for you. If love had a shape, it would look like you.”</p>
-                <div class="card-title" style="font-size: 1.8rem; margin-top: 10px;">Forever Yours 🌹</div>
-            </div>
-        </div>
+<div id="ui">
+    <div id="watermark">MADE BY SIVASINGH</div>
+    
+    <div id="top-left" class="hud">
+        <div style="font-weight: bold; font-size: 18px; color: #ffcc00;">SIVASINGH SURVIVOR</div>
+        <div>HP:</div>
+        <div class="bar-container"><div id="hp-fill"></div></div>
+        <div style="margin-top:10px;">KILLS: <span id="kills">0</span></div>
     </div>
 
-    <script>
-        const audio = document.getElementById('bgMusic');
-        
-        function startApp() {
-            audio.volume = 0.35;
-            audio.play().catch(() => {});
-            next(1);
-            setInterval(createPetal, 400);
-            setInterval(createHeart, 800);
-        }
+    <div id="bottom-right" class="hud">
+        <div style="font-size: 24px;">AMMO: <span id="ammo">30</span>/90</div>
+        <div style="font-size: 12px; color: #aaa;">PRESS 'R' TO RELOAD</div>
+    </div>
 
-        function next(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('s' + id).classList.add('active');
-            if(id === 4) {
-                const imgs = document.querySelectorAll('.slider-img');
-                let idx = 0;
-                setInterval(() => {
-                    imgs[idx].classList.remove('active');
-                    idx = (idx + 1) % imgs.length;
-                    imgs[idx].classList.add('active');
-                }, 3000);
+    <div id="crosshair">+</div>
+</div>
+
+<div id="game-over">
+    <h1>BOOYAH!</h1>
+    <p>SivaSingh, aapne maidaan maar liya!</p>
+    <p>Final Kills: <span id="final-kills">0</span></p>
+    <button onclick="location.reload()">PLAY AGAIN</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+let scene, camera, renderer, player, clock;
+let bullets = [], enemies = [], obstacles = [];
+let keys = {}, ammo = 30, health = 100, kills = 0, isJumping = false, vVel = 0;
+
+function init() {
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x131d29);
+    scene.fog = new THREE.Fog(0x131d29, 10, 80);
+    clock = new THREE.Clock();
+
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+    const sun = new THREE.PointLight(0xffaa00, 1, 100);
+    sun.position.set(10, 20, 10);
+    scene.add(sun);
+
+    // Ground
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({color: 0x1a2b1a}));
+    ground.rotation.x = -Math.PI/2;
+    scene.add(ground);
+
+    // Player with Gun
+    player = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.5, 1, 4, 8), new THREE.MeshStandardMaterial({color: 0x2244ff}));
+    const gun = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.2, 1), new THREE.MeshStandardMaterial({color: 0x111}));
+    gun.position.set(0.4, 0.5, -0.8);
+    player.add(body, gun);
+    player.position.y = 1.5;
+    scene.add(player);
+
+    // Add Obstacles (Buildings/Boxes)
+    for(let i=0; i<15; i++) {
+        let h = Math.random()*5 + 2;
+        let box = new THREE.Mesh(new THREE.BoxGeometry(4, h, 4), new THREE.MeshStandardMaterial({color: 0x444444}));
+        box.position.set(Math.random()*80-40, h/2, Math.random()*80-40);
+        scene.add(box);
+        obstacles.push(box);
+    }
+
+    // Controls
+    window.addEventListener('keydown', e => {
+        keys[e.code] = true;
+        if(e.code === 'KeyR') { ammo = 30; updateUI(); }
+        if(e.code === 'Space' && !isJumping) { vVel = 0.2; isJumping = true; }
+    });
+    window.addEventListener('keyup', e => keys[e.code] = false);
+    window.addEventListener('mousedown', shoot);
+
+    setInterval(spawnEnemy, 2500);
+    animate();
+}
+
+function shoot() {
+    if(ammo <= 0) return;
+    ammo--; updateUI();
+    const b = new THREE.Mesh(new THREE.SphereGeometry(0.15), new THREE.MeshBasicMaterial({color: 0xffff00}));
+    b.position.copy(player.position);
+    b.position.y += 0.5;
+    const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(player.quaternion);
+    b.userData = { velocity: dir.multiplyScalar(1.5) };
+    bullets.push(b);
+    scene.add(b);
+}
+
+function spawnEnemy() {
+    const enemy = new THREE.Mesh(new THREE.BoxGeometry(1.2, 2.2, 1.2), new THREE.MeshStandardMaterial({color: 0xff3300}));
+    const dist = 40; const ang = Math.random()*Math.PI*2;
+    enemy.position.set(Math.cos(ang)*dist, 1.1, Math.sin(ang)*dist);
+    enemies.push(enemy);
+    scene.add(enemy);
+}
+
+function updateUI() {
+    document.getElementById('hp-fill').style.width = health + "%";
+    document.getElementById('ammo').innerText = ammo;
+    document.getElementById('kills').innerText = kills;
+}
+
+function animate() {
+    if(health <= 0) return;
+    requestAnimationFrame(animate);
+
+    // Movement Logic
+    let speed = keys['ShiftLeft'] ? 0.3 : 0.15;
+    if(keys['KeyW']) player.translateZ(-speed);
+    if(keys['KeyS']) player.translateZ(speed);
+    if(keys['KeyA']) player.rotation.y += 0.04;
+    if(keys['KeyD']) player.rotation.y -= 0.04;
+
+    // Jump Physics
+    player.position.y += vVel;
+    if(player.position.y > 1.5) vVel -= 0.01;
+    else { player.position.y = 1.5; vVel = 0; isJumping = false; }
+
+    // Camera follow
+    let camPos = new THREE.Vector3(0, 6, 12).applyQuaternion(player.quaternion).add(player.position);
+    camera.position.lerp(camPos, 0.1);
+    camera.lookAt(player.position);
+
+    // Bullet collision
+    bullets.forEach((b, i) => {
+        b.position.add(b.userData.velocity);
+        enemies.forEach((e, ei) => {
+            if(b.position.distanceTo(e.position) < 1.5) {
+                scene.remove(e); enemies.splice(ei, 1);
+                scene.remove(b); bullets.splice(i, 1);
+                kills++; updateUI();
             }
-            if(id === 5) setInterval(createPetal, 150);
-        }
+        });
+        if(b.position.length() > 100) { scene.remove(b); bullets.splice(i, 1); }
+    });
 
-        function createPetal() {
-            const p = document.createElement('div');
-            p.innerHTML = '🌹'; p.className = 'petal';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            p.style.fontSize = (Math.random() * 10 + 15) + 'px';
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 6000);
+    // Enemy AI
+    enemies.forEach(e => {
+        e.lookAt(player.position);
+        e.translateZ(0.06);
+        if(e.position.distanceTo(player.position) < 1.5) {
+            health -= 0.5; updateUI();
+            if(health <= 0) {
+                document.getElementById('game-over').style.display = 'block';
+                document.getElementById('final-kills').innerText = kills;
+            }
         }
+    });
 
-        function createHeart() {
-            const h = document.createElement('div');
-            h.innerHTML = '💖'; h.className = 'heart';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 5000);
-        }
-    </script>
+    renderer.render(scene, camera);
+}
+
+init();
+</script>
 </body>
 </html>
