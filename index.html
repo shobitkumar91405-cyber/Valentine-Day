@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Ritika didu 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For Ritika Didu</title>
 <style>
 * {
 margin: 0;
@@ -13,11 +13,18 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 -webkit-tap-highlight-color: transparent;
 }
     body {
-        background: radial-gradient(circle at center, #2c0211 0%, #000000 100%);
+        background: radial-gradient(circle at top, #2c0221, #120112, #000000);
         color: white;
         overflow-x: hidden;
         height: 100vh;
         width: 100vw;
+    }
+
+    #app-container {
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        overflow: hidden;
     }
 
     .header {
@@ -27,7 +34,7 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         padding: 15px;
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(10px);
-        z-index: 1000;
+        z-index: 100;
         text-align: center;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -38,66 +45,46 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         letter-spacing: 1px;
     }
 
-    .header p {
-        font-size: 10px;
+    .header span {
+        font-size: 11px;
         opacity: 0.6;
-        margin-top: 2px;
+        display: block;
     }
 
-    #particles-container {
-        position: fixed;
+    .section {
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .heart-particle {
-        position: absolute;
-        color: rgba(255, 50, 100, 0.6);
-        animation: float linear forwards;
-    }
-
-    @keyframes float {
-        0% { transform: translateY(100vh) scale(0); opacity: 0; }
-        20% { opacity: 0.8; }
-        100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-    }
-
-    .container {
-        position: relative;
-        z-index: 10;
-        width: 100%;
-        height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 20px;
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10;
     }
 
-    .card {
+    .section.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+    }
+
+    .glass-card {
         background: rgba(255, 255, 255, 0.07);
         backdrop-filter: blur(15px);
         border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 24px;
-        padding: 30px 20px;
+        padding: 25px;
         width: 100%;
-        max-width: 360px;
+        max-width: 340px;
         text-align: center;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 15px rgba(255, 50, 100, 0.1);
-        display: none;
-        animation: fadeInScale 0.6s ease-out forwards;
-    }
-
-    .card.active {
-        display: block;
-    }
-
-    @keyframes fadeInScale {
-        from { opacity: 0; transform: scale(0.9) translateY(20px); }
-        to { opacity: 1; transform: scale(1) translateY(0); }
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255, 105, 180, 0.1);
     }
 
     .gif-container {
@@ -105,7 +92,7 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         border-radius: 15px;
         overflow: hidden;
         margin-bottom: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
 
     .gif-container img {
@@ -113,22 +100,16 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         display: block;
     }
 
-    h2 {
-        font-size: 24px;
-        margin-bottom: 15px;
-        color: #ff4d79;
-        text-shadow: 0 0 10px rgba(255, 77, 121, 0.3);
-    }
-
-    p {
-        font-size: 16px;
+    .text-content {
+        font-size: 18px;
         line-height: 1.6;
-        color: rgba(255, 255, 255, 0.9);
         margin-bottom: 25px;
+        font-weight: 300;
+        color: rgba(255,255,255,0.9);
     }
 
     .btn {
-        background: linear-gradient(45deg, #ff4d79, #ff1a53);
+        background: linear-gradient(45deg, #ff4d94, #ff71ce);
         color: white;
         border: none;
         padding: 12px 30px;
@@ -137,43 +118,98 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         font-weight: 600;
         cursor: pointer;
         transition: transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 5px 15px rgba(255, 77, 121, 0.4);
+        box-shadow: 0 4px 15px rgba(255, 77, 148, 0.4);
     }
 
     .btn:active {
         transform: scale(0.95);
     }
 
-    .gif-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+    .side-by-side {
+        display: flex;
         gap: 10px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
 
-    .option-btn {
-        display: block;
+    .side-by-side .gif-container {
+        margin-bottom: 0;
+    }
+
+    .little-things-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
         width: 100%;
-        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .sub-btn {
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.2);
         color: white;
         padding: 15px;
-        border-radius: 12px;
-        margin-bottom: 10px;
+        border-radius: 15px;
         text-align: left;
         font-size: 15px;
         cursor: pointer;
         transition: background 0.3s;
     }
 
-    .option-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
+    .sub-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
     }
 
-    #music-btn {
+    /* Overlay Styles */
+    .overlay {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(10px);
+        z-index: 200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .overlay.active {
+        display: flex;
+        animation: fadeIn 0.4s ease forwards;
+    }
+
+    .overlay-card {
+        background: rgba(30, 0, 30, 0.8);
+        border: 1px solid rgba(255, 113, 206, 0.3);
+        border-radius: 24px;
+        padding: 30px;
+        max-width: 340px;
+        text-align: center;
+        position: relative;
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    .overlay.active .overlay-card {
+        animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    .close-overlay {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0.7;
+    }
+
+    /* Music Button */
+    .music-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
         width: 45px;
         height: 45px;
         background: rgba(255, 255, 255, 0.1);
@@ -183,168 +219,222 @@ font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        z-index: 1000;
+        z-index: 150;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        box-shadow: 0 0 15px rgba(255, 113, 206, 0.3);
     }
 
-    .music-playing {
-        animation: rotate 3s linear infinite;
+    .music-btn.playing {
+        animation: pulse 2s infinite;
     }
 
-    @keyframes rotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+    /* Floating Hearts */
+    .heart {
+        position: fixed;
+        color: rgba(255, 105, 180, 0.3);
+        font-size: 10px;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
+        animation: float linear forwards;
     }
 
-    .final-text {
-        font-size: 18px;
-        font-weight: 500;
-        margin-top: 20px;
-        white-space: pre-line;
+    @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(255, 113, 206, 0.4); }
+        70% { box-shadow: 0 0 0 15px rgba(255, 113, 206, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 113, 206, 0); }
     }
 </style>
 
 </head>
 <body>
-<div class="header">
+<header class="header">
     <h1>Made by Ansh 💖</h1>
-    <p>@smss1708</p>
+    <span>@smss1708</span>
+</header>
+
+<div id="app-container">
+    <div class="section active" id="sec-1">
+        <div class="glass-card">
+            <div class="gif-container">
+                <img src="intro.gif" alt="Intro">
+            </div>
+            <div class="text-content">
+                Hey Cutiepie 🌹<br>
+                Can we talk for a moment?<br>
+                There’s something important I want to tell you…
+            </div>
+            <button class="btn" onclick="nextSection(2)">Continue ❤️</button>
+        </div>
+    </div>
+
+    <div class="section" id="sec-2">
+        <div class="glass-card">
+            <div class="gif-container">
+                <img src="sorry1.gif" alt="Sorry">
+            </div>
+            <div class="text-content">
+                Ritika didu…<br>
+                I know I hurt you…<br>
+                and I’ve been feeling really bad about it.
+            </div>
+            <button class="btn" onclick="nextSection(3)">Next →</button>
+        </div>
+    </div>
+
+    <div class="section" id="sec-3">
+        <div class="glass-card">
+            <h2 style="margin-bottom: 15px; font-weight: 300;">From my heart…</h2>
+            <div class="side-by-side">
+                <div class="gif-container"><img src="heart1.gif"></div>
+                <div class="gif-container"><img src="heart2.gif"></div>
+            </div>
+            <div class="text-content">Tap to see the message ↓</div>
+            <button class="btn" onclick="nextSection(4)">Continue ❤️</button>
+        </div>
+    </div>
+
+    <div class="section" id="sec-4">
+        <div class="glass-card">
+            <h2 style="margin-bottom: 5px; font-weight: 400;">Little things…</h2>
+            <p style="margin-bottom: 20px; opacity: 0.7;">Things I want you to know</p>
+            <div class="little-things-grid">
+                <button class="sub-btn" onclick="openMessage('regret')">💖 My Regret</button>
+                <button class="sub-btn" onclick="openMessage('care')">💖 My Care</button>
+                <button class="sub-btn" onclick="openMessage('promise')">💖 My Promise</button>
+            </div>
+            <button class="btn" style="margin-top: 25px; background: none; border: 1px solid rgba(255,255,255,0.3); box-shadow: none;" onclick="nextSection(5)">Next →</button>
+        </div>
+    </div>
+
+    <div class="section" id="sec-5">
+        <div class="glass-card">
+            <div class="gif-container">
+                <img src="promise.gif" alt="Promise">
+            </div>
+            <div class="text-content" style="font-size: 15px; text-align: left;">
+                I’m sorry Ritika didu, for hurting you and making you feel upset. 
+                I never wanted to be the reason behind your tears or your silence.<br><br>
+                You matter to me more than I ever show. 
+                I promise to listen, to grow, and to be better every single day.<br><br>
+                I’m really trying… and I hope you can forgive me.
+            </div>
+            <button class="btn" onclick="nextSection(6)">Forgive Me? ❤️</button>
+        </div>
+    </div>
+
+    <div class="section" id="sec-6">
+        <div class="glass-card">
+            <div class="gif-container">
+                <img src="endlove.gif" alt="End">
+            </div>
+            <div class="text-content">
+                I promise to listen more,<br>
+                understand better,<br>
+                and never let you walk alone through pain again.
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="particles-container"></div>
-
-<div class="container">
-    <div class="card active" id="card-1">
-        <div class="gif-container">
-            <img src="intro.gif" alt="Intro">
-        </div>
-        <h2>Hey Cutiepie 🌹</h2>
-        <p>Can we talk for a moment?<br>There’s something important I want to tell you…</p>
-        <button class="btn" onclick="nextCard(2)">Continue ❤️</button>
-    </div>
-
-    <div class="card" id="card-2">
-        <div class="gif-container">
-            <img src="sorry1.gif" alt="Sorry">
-        </div>
-        <h2>Ritika didu…</h2>
-        <p>I know I hurt you…<br>and I’ve been feeling really bad about it.</p>
-        <button class="btn" onclick="nextCard(3)">Next →</button>
-    </div>
-
-    <div class="card" id="card-3">
-        <h2>From my heart…</h2>
-        <div class="gif-grid">
-            <div class="gif-container"><img src="heart1.gif" alt="Heart 1"></div>
-            <div class="gif-container"><img src="heart2.gif" alt="Heart 2"></div>
-        </div>
-        <p>Tap to see the message ↓</p>
-        <button class="btn" onclick="nextCard(4)">Continue ❤️</button>
-    </div>
-
-    <div class="card" id="card-4">
-        <h2>Little things…</h2>
-        <p style="margin-bottom:15px; font-size: 14px; opacity:0.8;">Things I want you to know</p>
-        <button class="option-btn" onclick="alert('I am deeply sorry for my actions. I never meant to cause any pain.')">💖 My Regret</button>
-        <button class="option-btn" onclick="alert('You mean the world to me, and your happiness is my priority.')">💖 My Care</button>
-        <button class="option-btn" onclick="alert('I promise to be more understanding and patient with us.')">💖 My Promise</button>
-        <div style="margin-top: 20px;">
-            <button class="btn" onclick="nextCard(5)">Next →</button>
-        </div>
-    </div>
-
-    <div class="card" id="card-5">
-        <div class="gif-container">
-            <img src="promise.gif" alt="Promise">
-        </div>
-        <p style="font-size: 14px; text-align: left;">
-            I’m sorry Ritika didu, for hurting you and making you feel upset. 
-            I never wanted to be the reason behind your tears or your silence.
-            <br><br>
-            You matter to me more than I ever show. 
-            I promise to listen, to grow, and to be better every single day.
-            <br><br>
-            I’m really trying… and I hope you can forgive me.
-        </p>
-        <button class="btn" onclick="nextCard(6)">Forgive Me? ❤️</button>
-    </div>
-
-    <div class="card" id="card-6">
-        <div class="gif-container">
-            <img src="endlove.gif" alt="End Love">
-        </div>
-        <div class="final-text">
-            I promise to listen more,
-            understand better,
-            and never let you walk alone through pain again.
-        </div>
+<div class="overlay" id="message-overlay">
+    <div class="overlay-card">
+        <span class="close-overlay" onclick="closeMessage()">✖</span>
+        <div id="overlay-text" class="text-content" style="margin-bottom: 0;"></div>
     </div>
 </div>
 
-<div id="music-btn" onclick="toggleMusic()">🎵</div>
 <audio id="bg-music" loop>
-    <source src="[https://www.bensound.com/bensound-music/bensound-love.mp3](https://www.bensound.com/bensound-music/bensound-love.mp3)" type="audio/mpeg">
+    <source src="tere-liye.mp3" type="audio/mpeg">
 </audio>
+
+<div class="music-btn" id="music-toggle" onclick="toggleMusic()">
+    <span id="music-icon">🎵</span>
+</div>
 
 <script>
     const music = document.getElementById('bg-music');
-    const musicBtn = document.getElementById('music-btn');
+    const musicToggle = document.getElementById('music-toggle');
+    const musicIcon = document.getElementById('music-icon');
     let musicStarted = false;
 
-    function initMusic() {
+    function startMusic() {
         if (!musicStarted) {
             music.volume = 0.35;
-            music.play().catch(() => {
-                console.log("Autoplay blocked by browser");
-            });
-            musicBtn.classList.add('music-playing');
+            music.play().catch(e => console.log("Autoplay blocked"));
             musicStarted = true;
+            musicToggle.classList.add('playing');
         }
     }
 
     function toggleMusic() {
         if (music.paused) {
             music.play();
-            musicBtn.classList.add('music-playing');
+            musicIcon.innerText = "🎵";
+            musicToggle.classList.add('playing');
         } else {
             music.pause();
-            musicBtn.classList.remove('music-playing');
+            musicIcon.innerText = "🔇";
+            musicToggle.classList.remove('playing');
         }
     }
 
-    function nextCard(cardNumber) {
-        initMusic();
-        document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
-        document.getElementById('card-' + cardNumber).classList.add('active');
-        window.scrollTo(0, 0);
+    function nextSection(num) {
+        startMusic();
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('sec-' + num).classList.add('active');
     }
 
+    const messages = {
+        regret: "I regret hurting you Ritika didu… I never meant to cause pain or silence in your heart… Seeing you upset because of me is the hardest thing to handle.",
+        care: "You matter to me Ritika didu more than words can explain… Your smile, your peace, your feelings matter more than anything else in my world.",
+        promise: "I promise to listen more, understand better, and never let you walk alone through pain again… I'll be the person you deserve to have by your side."
+    };
+
+    function openMessage(type) {
+        startMusic();
+        document.getElementById('overlay-text').innerText = messages[type];
+        document.getElementById('message-overlay').classList.add('active');
+    }
+
+    function closeMessage() {
+        document.getElementById('message-overlay').classList.remove('active');
+    }
+
+    // Floating Hearts Logic
     function createHeart() {
-        const container = document.getElementById('particles-container');
         const heart = document.createElement('div');
-        heart.className = 'heart-particle';
+        heart.classList.add('heart');
         heart.innerHTML = '❤️';
         heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
-        
-        const duration = Math.random() * 3 + 4;
-        heart.style.animationDuration = duration + 's';
-        
-        container.appendChild(heart);
-        
+        heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        heart.style.opacity = Math.random() * 0.5 + 0.2;
+        document.body.appendChild(heart);
+
         setTimeout(() => {
             heart.remove();
-        }, duration * 1000);
+        }, 6000);
     }
 
     setInterval(createHeart, 400);
 
-    // Interaction listener to handle browser autoplay policies
-    document.body.addEventListener('click', () => {
-        if(!musicStarted) initMusic();
-    }, { once: true });
+    // Interaction listener for music start
+    document.body.addEventListener('click', startMusic, { once: true });
 </script>
 
 </body>
