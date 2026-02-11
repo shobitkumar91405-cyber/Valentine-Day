@@ -27,7 +27,7 @@
             top: 10px;
             font-size: 14px;
             font-weight: bold;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.7);
             padding: 5px 15px;
             border-radius: 20px;
             z-index: 1000;
@@ -35,74 +35,86 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* Lighting Effect Animation */
+        /* RGB Lighting Effect Animation */
         @keyframes rgbGlow {
             0% { box-shadow: 0 0 20px #ff0000, 0 0 10px #ff0000 inset; border-color: #ff0000; }
-            20% { box-shadow: 0 0 20px #ff8800, 0 0 10px #ff8800 inset; border-color: #ff8800; }
-            40% { box-shadow: 0 0 20px #ffff00, 0 0 10px #ffff00 inset; border-color: #ffff00; }
-            60% { box-shadow: 0 0 20px #00ff00, 0 0 10px #00ff00 inset; border-color: #00ff00; }
-            80% { box-shadow: 0 0 20px #0000ff, 0 0 10px #0000ff inset; border-color: #0000ff; }
+            25% { box-shadow: 0 0 20px #ffff00, 0 0 10px #ffff00 inset; border-color: #ffff00; }
+            50% { box-shadow: 0 0 20px #00ff00, 0 0 10px #00ff00 inset; border-color: #00ff00; }
+            75% { box-shadow: 0 0 20px #0000ff, 0 0 10px #0000ff inset; border-color: #0000ff; }
             100% { box-shadow: 0 0 20px #ff00ff, 0 0 10px #ff00ff inset; border-color: #ff00ff; }
         }
 
         .card {
             background: white;
-            width: 90%;
+            width: 85%;
             max-width: 350px;
-            padding: 20px;
-            border-radius: 20px;
+            padding: 25px 20px;
+            border-radius: 25px;
             text-align: center;
             position: relative;
-            /* Applying the Lighting Effect */
-            border: 4px solid transparent;
-            animation: rgbGlow 3s infinite alternate; 
+            /* Applying the RGB Lighting Effect */
+            border: 3px solid transparent;
+            animation: rgbGlow 4s linear infinite alternate; 
             transition: transform 0.3s;
+            box-sizing: border-box;
         }
 
         h1 {
             font-family: 'Fredoka One', cursive;
             color: #ff4d79;
-            font-size: 26px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 15px;
         }
 
         p {
             color: #555;
             font-size: 16px;
             margin: 15px 0;
+            line-height: 1.4;
         }
 
+        /* UPDATED Image Container for fixed look */
         .img-container {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
+            width: 220px;  /* Fixed square size */
+            height: 220px; /* Fixed square size */
+            margin: 0 auto; /* Center the box */
             border-radius: 15px;
             overflow: hidden;
-            background: #fff0f5;
+            background: #fff0f5; /* Pale background if image isn't perfectly square */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #f0d4d4; /* Subtle border like screenshots */
         }
 
+        /* UPDATED Image Styling so photos fit nicely */
         img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Ensure full photo is visible without cutting */
+            border-radius: 12px;
         }
 
         .btn {
             background: #ff4d79;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 10px;
             font-weight: bold;
             box-shadow: 0 4px 10px rgba(255, 77, 121, 0.4);
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
 
-        .btn:active {
-            transform: scale(0.95);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 77, 121, 0.5);
         }
 
         .hidden {
@@ -137,11 +149,13 @@
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin-top: 20px;
         }
         
         #noBtn {
-            background: #ccc;
-            color: #555;
+            background: #e0e0e0;
+            color: #666;
+            box-shadow: none;
         }
 
     </style>
@@ -151,7 +165,7 @@
     <div class="top-header">Follow 📷 - @smss1708</div>
 
     <audio id="bgMusic" loop>
-        <source src="tere-liyr.mp3" type="audio/mp3">
+        <source src="tere-liye.mp3" type="audio/mp3">
     </audio>
 
     <div class="heart-bg" id="hearts"></div>
@@ -159,16 +173,16 @@
     <div class="card" id="screen1">
         <h1>Happy Promise Day ❤️</h1>
         <div class="img-container">
-            <img src="https://media.giphy.com/media/l0HlO3BJ8LALPW4sE/giphy.gif" alt="Hold Hands">
+            <img src="photo1.jpg" alt="Start Journey Photo">
         </div>
-        <p>Click anywhere to begin with music...</p>
+        <p>Click the button below to begin this special journey with music...</p>
         <button class="btn" onclick="startJourney()">Start Journey 💌</button>
     </div>
 
     <div class="card hidden" id="screen2">
         <h1>My First Promise 💖</h1>
         <div class="img-container">
-            <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Promise">
+            <img src="photo2.jpg" alt="Promise 1 Photo">
         </div>
         <p>I promise... No matter how far we are, distance will never separate my heart from yours.</p>
         <button class="btn" onclick="nextScreen(3)">Next Promise 👉</button>
@@ -177,31 +191,30 @@
     <div class="card hidden" id="screen3">
         <h1>My Second Promise 🌸</h1>
         <div class="img-container">
-            <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Care">
+            <img src="photo3.jpg" alt="Promise 2 Photo">
         </div>
-        <p>I promise... I will always take care of you, in your highs and your lows.</p>
+        <p>I promise... I will always take care of you, stand by you in your highs and your lows.</p>
         <button class="btn" onclick="nextScreen(4)">Final Promise 👉</button>
     </div>
 
     <div class="card hidden" id="screen4">
         <h1>One Last Question 💍</h1>
         <div class="img-container">
-            <img src="https://media.giphy.com/media/3o7TKoWXm3okO1kgHC/giphy.gif" alt="Ask">
+            <img src="photo4.jpg" alt="Final Question Photo">
         </div>
-        <p>Will you stay with me forever?</p>
+        <p>Will you stay with me forever and be my valentine?</p>
         <div class="btn-group">
             <button class="btn" onclick="finalSuccess()">YES 💖</button>
-            <button class="btn" id="noBtn" onmouseover="moveButton()">NO 🙈</button>
+            <button class="btn" id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">NO 🙈</button>
         </div>
     </div>
 
     <div class="card hidden" id="screen5">
-        <h1>Yayyy! I Love You! 🥳</h1>
-        <div class="img-container">
-            <img src="https://media.giphy.com/media/10UeeqP1IyKUqu65c/giphy.gif" alt="Happy">
+        <h1>Yayyy! I Knew It! 🥳</h1>
+        <div class="img-container" style="background: transparent; border: none;">
+            <img src="https://media.giphy.com/media/U4DswrBzhxB5LS0FNg/giphy.gif" alt="Celebration" style="object-fit: cover;">
         </div>
-        <p>You are my forever and always. Happy Promise Day! ✨</p>
-        <p style="font-size: 12px; margin-top: 20px;">Created for @smss1708</p>
+        <p>You are my forever and always. Happy Promise Day, my love! ✨</p>
     </div>
 
     <script>
@@ -210,8 +223,10 @@
         function startJourney() {
             // Try to play music
             var audio = document.getElementById("bgMusic");
+            // Set volume to 50% initially
+            audio.volume = 0.5;
             audio.play().catch(error => {
-                console.log("Audio play failed (browser policy): ", error);
+                console.log("Audio play failed (browser policy needs interaction first): ", error);
             });
             
             // Go to next screen
@@ -220,11 +235,9 @@
 
         function nextScreen(screenNumber) {
             // Hide all screens
-            document.getElementById('screen1').classList.add('hidden');
-            document.getElementById('screen2').classList.add('hidden');
-            document.getElementById('screen3').classList.add('hidden');
-            document.getElementById('screen4').classList.add('hidden');
-            document.getElementById('screen5').classList.add('hidden');
+            for(let i = 1; i <= 5; i++) {
+                document.getElementById('screen' + i).classList.add('hidden');
+            }
 
             // Show requested screen
             document.getElementById('screen' + screenNumber).classList.remove('hidden');
@@ -232,40 +245,35 @@
 
         function finalSuccess() {
             nextScreen(5);
-            // Optional: Confetti effect or alert
-            confettiEffect();
+            // Makes the RGB border flash faster on success
+            document.querySelector('.card').style.animationDuration = "1s";
         }
 
-        // Funny logic: Move the 'NO' button when hovered
+        // Funny logic: Move the 'NO' button when hovered or touched
         function moveButton() {
-            var x = Math.random() * (window.innerWidth - 100); // Random X
-            var y = Math.random() * (window.innerHeight - 100); // Random Y
+            var x = Math.random() * (window.innerWidth - 120); // Ensure it stays within width
+            var y = Math.random() * (window.innerHeight - 120); // Ensure it stays within height
             var btn = document.getElementById('noBtn');
             btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
+            btn.style.left = Math.max(10, x) + 'px'; // Keep some margin
+            btn.style.top = Math.max(10, y) + 'px';
+            btn.style.zIndex = '1001'; // Ensure it's on top
         }
 
-        // Creating floating hearts
+        // Creating floating hearts background
         function createHearts() {
             const heartContainer = document.getElementById('hearts');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 let div = document.createElement('div');
                 div.className = 'heart';
-                div.innerHTML = '❤';
+                div.innerHTML = ['❤', '💖', '🌸', '✨'][Math.floor(Math.random() * 4)]; // Random symbols
                 div.style.left = Math.random() * 100 + 'vw';
-                div.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                div.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                div.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                div.style.fontSize = (Math.random() * 25 + 15) + 'px';
                 heartContainer.appendChild(div);
             }
         }
         createHearts();
-
-        // Optional simple confetti effect function
-        function confettiEffect() {
-            // Makes the border flash faster
-            document.querySelector('.card').style.animationDuration = "0.5s";
-        }
     </script>
 </body>
 </html>
