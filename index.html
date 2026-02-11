@@ -3,175 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy Promise Day 💖</title>
+    <title>Forever Promises | Sivasingh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #ff2d75;
+            --secondary: #ffb6c1;
+            --garden-dark: #0f1a10;
+            --gold: #ffd700;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body, html { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
 
-        /* Animated Romantic Background */
-        #main-canvas {
-            width: 100%; height: 100%;
-            background: linear-gradient(45deg, #ffafbd, #ffc3a0, #ee9ca7, #c9ffbf, #a1887f);
-            background-size: 400% 400%;
-            animation: skyFlow 20s ease infinite;
-            position: relative;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        body, html {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: var(--garden-dark);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
         }
 
-        @keyframes skyFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* --- COPY TOOL --- */
+        .copy-utility {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 10000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 18px;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        .copy-utility:hover { background: var(--primary); }
 
-        /* Twinkling Stars */
-        .star { position: absolute; background: white; border-radius: 50%; opacity: 0.8; animation: twinkle 3s infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
-
-        /* Garden Elements */
-        .garden { position: absolute; bottom: 0; width: 100%; height: 40%; pointer-events: none; z-index: 5; }
-        .tree { position: absolute; bottom: -10px; transform-origin: bottom; animation: sway 6s infinite ease-in-out; }
-        @keyframes sway { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
-
-        /* Birds */
-        .bird { position: absolute; width: 35px; z-index: 10; transition: all 3s ease-in; }
-        .bird svg { fill: #2e7d32; filter: drop-shadow(0 0 5px rgba(0,0,0,0.2)); }
-
-        /* UI Elements */
-        .header { position: absolute; top: 8%; text-align: center; color: white; z-index: 20; width: 100%; }
-        .header h1 { font-size: 2.2rem; text-shadow: 0 0 15px rgba(255,255,255,0.7); }
-        .header p { font-size: 0.9rem; opacity: 0.9; margin-top: 5px; }
-
-        .container { z-index: 25; width: 85%; max-width: 380px; display: flex; flex-direction: column; gap: 15px; }
+        /* --- MAGICAL BACKGROUND --- */
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: 1; }
         
-        .card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px; padding: 22px; color: white;
-            text-align: center; font-size: 1.1rem; font-weight: 500;
-            cursor: pointer; transition: 0.4s; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        .garden-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 2;
+            pointer-events: none;
         }
 
-        .card.selected { background: rgba(255, 255, 255, 0.45); border-color: white; transform: scale(1.05); box-shadow: 0 0 25px white; }
-        .card.fade { opacity: 0.2; transform: scale(0.9); }
-
-        /* Confirmation Screen */
-        #screen2 {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.1); z-index: 100; opacity: 0; transition: 1s;
+        .gradient-shift {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            background: linear-gradient(45deg, #2d0f1a, #0f1a10, #1a102d, #0f161a);
+            background-size: 400% 400%;
+            animation: shift 15s infinite alternate;
         }
-        .msg-box { background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-radius: 30px; padding: 40px 20px; width: 85%; text-align: center; color: white; border: 1px solid rgba(255,255,255,0.3); }
-        .final-p { font-size: 1.4rem; font-weight: bold; margin: 25px 0; display: block; }
+        @keyframes shift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 
-        /* Hearts */
-        .heart { position: absolute; color: #ff4d6d; pointer-events: none; z-index: 15; animation: float 4s linear forwards; }
-        @keyframes float { 0% { transform: translateY(0) scale(0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } }
+        /* --- PAGE SYSTEM --- */
+        .page-wrapper {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .page {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* --- ROMANTIC GLASS CARDS --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            padding: 60px 40px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .glow-circle {
+            position: absolute;
+            top: -20px; left: -20px; width: 60px; height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            filter: blur(30px);
+            animation: pulse 3s infinite;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 45, 117, 0.6);
+        }
+
+        p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+
+        .btn-romantic {
+            background: linear-gradient(45deg, var(--primary), #ff758c);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(255, 45, 117, 0.4);
+            transition: 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .btn-romantic:hover { transform: scale(1.05); box-shadow: 0 20px 50px rgba(255, 45, 117, 0.6); }
+
+        /* --- MUSIC ICON --- */
+        .music-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            background: var(--glass);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 24px;
+        }
+
+        /* --- ANIMATED ELEMENTS --- */
+        .floating-object {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatUp 6s linear forwards;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(10vh) scale(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-110vh) scale(2) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+        /* --- SIGNATURE --- */
+        .signature {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            opacity: 0.6;
+            z-index: 100;
+            text-transform: uppercase;
+        }
     </style>
 </head>
-<body onclick="playMusic()">
+<body>
 
-    <audio id="music" loop><source src="tere-liye.mp3" type="audio/mpeg"></audio>
+    <button class="copy-utility" id="copyBtn">ONE-CLICK COPY</button>
 
-    <div id="main-canvas">
-        <div class="header" id="h-text">
-            <h1>Happy Promise Day 💖</h1>
-            <p>Made by Sivasingh 🥀 | @smss1708</p>
-        </div>
+    <div class="gradient-shift"></div>
+    <canvas id="bg-canvas"></canvas>
+    <div class="garden-overlay"></div>
 
-        <div class="container" id="card-box">
-            <div class="card" onclick="step(this, '1️⃣ Always Stay With You 🤍')">1️⃣ Always Stay With You 🤍</div>
-            <div class="card" onclick="step(this, '2️⃣ Never Hurt You 💞')">2️⃣ Never Hurt You 💞</div>
-            <div class="card" onclick="step(this, '3️⃣ Choose You Every Day 🌸')">3️⃣ Choose You Every Day 🌸</div>
-            <div class="card" onclick="step(this, '4️⃣ Love You Forever 🫶')">4️⃣ Love You Forever 🫶</div>
-        </div>
+    <audio id="bgMusic" loop>
+        <source src="tere-liye.mp3" type="audio/mp3">
+    </audio>
 
-        <div id="screen2">
-            <div class="msg-box">
-                <p>You chose this promise from your heart 💖</p>
-                <span class="final-p" id="result"></span>
-                <p>Take a screenshot<br>and send it to me<br>so I can always remember<br>what you promised 🫰</p>
+    <div class="music-toggle" onclick="toggleMusic()">
+        <span id="musicIcon">🎵</span>
+    </div>
+
+    <div class="signature">Made by Sivasingh 🌹 @smss1708</div>
+
+    <div class="page-wrapper">
+        <section class="page active" id="page1">
+            <div class="glass-card">
+                <div class="glow-circle"></div>
+                <h1>My Heart...</h1>
+                <p>Before this day ends, I have a few promises to whisper to your soul. Are you ready to hear them?</p>
+                <button class="btn-romantic" onclick="nextPage(2)">Open My Soul</button>
             </div>
-        </div>
+        </section>
 
-        <div class="garden" id="garden"></div>
+        <section class="page" id="page2">
+            <div class="glass-card">
+                <h1>I Promise...</h1>
+                <p>"To be the anchor in your storm and the sunshine in your morning. I will love you when you are happy and even more when you are sad."</p>
+                <button class="btn-romantic" onclick="nextPage(3)">Next Promise</button>
+            </div>
+        </section>
+
+        <section class="page" id="page3">
+            <div class="glass-card">
+                <h1>I Promise...</h1>
+                <p>"To respect your journey, support your wildest dreams, and never let go of your hand, no matter how crowded the world gets."</p>
+                <button class="btn-romantic" onclick="nextPage(4)">One More</button>
+            </div>
+        </section>
+
+        <section class="page" id="page4">
+            <div class="glass-card">
+                <h1>I Promise...</h1>
+                <p>"To find new reasons to fall in love with you every single day. You are not just my partner; you are my home."</p>
+                <button class="btn-romantic" onclick="nextPage(5)">My Final Vow</button>
+            </div>
+        </section>
+
+        <section class="page" id="page5">
+            <div class="glass-card">
+                <h1 style="font-size: 5rem;">Always.</h1>
+                <p>I promise to stay with you until the stars go out. Happy Promise Day, my love. Forever is just the start.</p>
+                <div style="font-size: 4rem; filter: drop-shadow(0 0 20px #ff2d75);">💖</div>
+                <div style="margin-top:20px; font-weight: bold; color: var(--secondary);">@smss1708</div>
+            </div>
+        </section>
     </div>
 
     <script>
-        let musicOn = false;
-        function playMusic() {
-            if(!musicOn) { 
-                let m = document.getElementById('music');
-                m.volume = 0.35; m.play(); musicOn = true; 
+        // --- COPY FEATURE ---
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const code = document.documentElement.outerHTML;
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            this.innerText = 'COPIED TO CLIPBOARD! ✅';
+            setTimeout(() => this.innerText = 'ONE-CLICK COPY', 2000);
+        });
+
+        // --- MAGICAL PARTICLES ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let dots = [];
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for(let i=0; i<120; i++) {
+                dots.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 2 + 1,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random()
+                });
             }
         }
 
-        // Generate Background Magic
-        function setup() {
-            const canvas = document.getElementById('main-canvas');
-            for(let i=0; i<60; i++) {
-                let s = document.createElement('div');
-                s.className = 'star';
-                let size = Math.random() * 3 + 1;
-                s.style.width = size+'px'; s.style.height = size+'px';
-                s.style.top = Math.random()*70+'%'; s.style.left = Math.random()*100+'%';
-                s.style.animationDelay = Math.random()*3+'s';
-                canvas.appendChild(s);
+        function draw() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            dots.forEach(d => {
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255, 182, 193, ${d.opacity})`;
+                ctx.fill();
+                d.x += d.dx; d.y += d.dy;
+                if(d.x < 0 || d.x > canvas.width) d.dx *= -1;
+                if(d.y < 0 || d.y > canvas.height) d.dy *= -1;
+            });
+            requestAnimationFrame(draw);
+        }
+        init(); draw();
+
+        // --- NAVIGATION ---
+        function nextPage(id) {
+            const music = document.getElementById('bgMusic');
+            if(music.paused) {
+                music.volume = 0.4;
+                music.play();
+                document.getElementById('musicIcon').innerText = '⏸️';
             }
-            
-            const garden = document.getElementById('garden');
-            const treeData = [5, 25, 50, 75, 90];
-            treeData.forEach(pos => {
-                let t = document.createElement('div');
-                t.className = 'tree';
-                t.style.left = pos + '%';
-                let h = 150 + Math.random()*80;
-                t.innerHTML = `<svg width="${h/2}" height="${h}" viewBox="0 0 100 200"><path d="M50 200 L50 120" stroke="#4a2e2a" stroke-width="8"/><circle cx="50" cy="80" r="50" fill="#2e7d32" opacity="0.8"/><circle cx="30" cy="70" r="40" fill="#388e3c" opacity="0.8"/><circle cx="70" cy="70" r="40" fill="#388e3c" opacity="0.8"/></svg>`;
-                garden.appendChild(t);
-                
-                let b = document.createElement('div');
-                b.className = 'bird'; b.style.left = (pos+2)+'%'; b.style.bottom = (h*0.4)+'px';
-                b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M21,5c-1.11-1.11-2.59-1.32-3-1.3c-0.4,0.02-1.89,0.24-3,1.3c-1.11,1.11-1.32,2.59-1.3,3c0.02,0.4,0.24,1.89,1.3,3c1.11,1.11,2.59,1.32,3,1.3c0.4-0.02,1.89-0.24,3-1.3c1.11-1.11,1.32-2.59,1.3-3C22.28,7.59,22.06,6.11,21,5z"/></svg>`;
-                garden.appendChild(b);
-            });
+
+            // Burst Effect
+            for(let i=0; i<15; i++) {
+                setTimeout(spawnObject, i * 50);
+            }
+
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + id).classList.add('active');
         }
 
-        function hearts() {
-            setInterval(() => {
-                let h = document.createElement('div');
-                h.className = 'heart'; h.innerHTML = '💖';
-                h.style.left = Math.random()*100+'vw'; h.style.bottom = '-5vh';
-                h.style.fontSize = (Math.random()*20+15)+'px';
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 4000);
-            }, 600);
+        function spawnObject() {
+            const obj = document.createElement('div');
+            obj.className = 'floating-object';
+            obj.innerHTML = Math.random() > 0.5 ? '🌸' : '💖';
+            obj.style.left = Math.random() * 100 + 'vw';
+            obj.style.bottom = '-10vh';
+            obj.style.fontSize = Math.random() * 20 + 20 + 'px';
+            document.body.appendChild(obj);
+            setTimeout(() => obj.remove(), 6000);
         }
 
-        function step(el, val) {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(c => { if(c!==el) c.classList.add('fade'); });
-            el.classList.add('selected');
-
-            document.querySelectorAll('.bird').forEach(b => {
-                b.style.transform = `translate(${Math.random()*500-250}px, -100vh) scale(1.5)`;
-                b.style.opacity = '0';
-            });
-
-            setTimeout(() => {
-                document.getElementById('card-box').style.opacity = '0';
-                document.getElementById('h-text').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('card-box').style.display = 'none';
-                    let s2 = document.getElementById('screen2');
-                    s2.style.display = 'flex';
-                    document.getElementById('result').innerText = val;
-                    setTimeout(() => s2.style.opacity = '1', 100);
-                }, 800);
-            }, 1200);
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const icon = document.getElementById('musicIcon');
+            if(music.paused) { music.play(); icon.innerText = '⏸️'; }
+            else { music.pause(); icon.innerText = '🎵'; }
         }
 
-        window.onload = () => { setup(); hearts(); };
+        setInterval(spawnObject, 2000);
+        window.onresize = init;
     </script>
 </body>
 </html>
