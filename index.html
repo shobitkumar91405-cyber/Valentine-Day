@@ -1,320 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I'm So Sorry, Khushi! 😿💔</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            transition: background 2s ease;
-            background: linear-gradient(to bottom, #E6E6FA, #DDA0DD); /* Initial soft lavender-purple */
-        }
-        .night { background: linear-gradient(to bottom, #2E003E, #000000); } /* Override for night mode */
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            position: relative;
-        }
-        .card {
-            width: 90%;
-            max-width: 500px;
-            height: 80vh;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(138,43,226,0.5);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            cursor: pointer;
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .card:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(138,43,226,0.7); }
-        .card.closed .content { display: none; }
-        .card.open .teaser { display: none; }
-        .teaser {
-            font-size: 1.5em;
-            color: #8A2BE2;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .content {
-            animation: fadeIn 1s ease;
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .message {
-            font-size: 1.6em;
-            color: #DC143C;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            line-height: 1.5;
-        }
-        .gif, .photo {
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 0 20px rgba(138,43,226,0.5);
-        }
-        .bulbs {
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            right: 5%;
-            display: flex;
-            justify-content: space-around;
-            animation: colorChange 4s infinite;
-        }
-        .bulb {
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, #FFF, #8A2BE2);
-            border-radius: 50%;
-            box-shadow: 0 0 15px #8A2BE2;
-        }
-        @keyframes colorChange {
-            0% { background: radial-gradient(circle, #FFF, #8A2BE2); box-shadow: 0 0 15px #8A2BE2; }
-            25% { background: radial-gradient(circle, #FFF, #6495ED); box-shadow: 0 0 15px #6495ED; }
-            50% { background: radial-gradient(circle, #FFF, #DDA0DD); box-shadow: 0 0 15px #DDA0DD; }
-            75% { background: radial-gradient(circle, #FFF, #FF69B4); box-shadow: 0 0 15px #FF69B4; }
-            100% { background: radial-gradient(circle, #FFF, #8A2BE2); box-shadow: 0 0 15px #8A2BE2; }
-        }
-        .hearts {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .heart {
-            position: absolute;
-            color: #FF1493;
-            font-size: 2em;
-            animation: floatPulse 8s linear infinite;
-        }
-        @keyframes floatPulse {
-            0% { transform: translateY(100vh) rotate(0deg) scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: translateY(-100px) rotate(360deg) scale(1); }
-        }
-        .rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .drop {
-            position: absolute;
-            width: 2px;
-            height: 20px;
-            background: #87CEEB;
-            animation: fall 3s linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-100px); }
-            100% { transform: translateY(100vh); }
-        }
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #8A2BE2;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .credits {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 0.8em;
-            color: #FFF;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        .next-btn {
-            margin-top: 20px;
-            background: #FF69B4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2em;
-            transition: background 0.3s ease;
-        }
-        .next-btn:hover { background: #DC143C; }
-        audio { display: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You Rosheyy ❤️</title>
+<style>
+    /* --- CSS SETTINGS --- */
+    :root {
+        --primary: #ff3366;
+        --secondary: #ff99cc;
+        --bg-color: #ffe6f2;
+        --text-color: #4a1526;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--bg-color);
+        overflow-x: hidden;
+        transition: background-color 2s ease;
+        text-align: center;
+        /* Romantic Animation Theme Change */
+        animation: themeShift 10s infinite alternate;
+    }
+
+    @keyframes themeShift {
+        0% { background-color: #fff0f5; }
+        50% { background-color: #ffe4e1; }
+        100% { background-color: #fce4ec; }
+    }
+
+    /* Instagram Header */
+    .insta-header {
+        position: fixed;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        pointer-events: none; /* Allows clicking through */
+    }
+    .insta-tag {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 8px 20px;
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: bold;
+        color: #C13584;
+        text-decoration: none;
+        pointer-events: auto;
+        font-size: 0.9rem;
+    }
+    .insta-icon {
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    /* Floating Balloons Background */
+    .balloons-container {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    }
+    .balloon {
+        position: absolute;
+        bottom: -150px;
+        width: 60px;
+        height: 70px;
+        background: radial-gradient(circle at 10px 10px, #ff99cc, #ff3366);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        box-shadow: inset -5px -5px 10px rgba(0,0,0,0.1);
+        animation: floatUp 15s linear infinite;
+    }
+    .balloon::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 28px;
+        width: 2px;
+        height: 40px;
+        background: rgba(0,0,0,0.2);
+    }
+    
+    @keyframes floatUp {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(-120vh) rotate(20deg); opacity: 0.8; }
+    }
+
+    /* Main Content Container */
+    .container {
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* Page 1: Proposal */
+    #page1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    /* Photo Styling */
+    .photo-frame {
+        width: 280px;
+        height: 280px;
+        border: 5px solid white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        overflow: hidden;
+        background: #fff;
+        margin-bottom: 20px;
+        position: relative;
+    }
+    .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* Underline Animation (Active after Yes) */
+    .glow-line {
+        height: 4px;
+        width: 0%;
+        background: red;
+        margin: 10px auto;
+        transition: width 1s ease;
+        animation: rainbowBorder 2s infinite linear;
+        display: none;
+    }
+    @keyframes rainbowBorder {
+        0% { background: red; }
+        20% { background: orange; }
+        40% { background: yellow; }
+        60% { background: green; }
+        80% { background: blue; }
+        100% { background: violet; }
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: var(--text-color);
+        margin: 10px 0;
+        font-family: 'Brush Script MT', cursive;
+    }
+
+    /* Buttons */
+    .btn-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    button {
+        padding: 12px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    button:active { transform: scale(0.95); }
+
+    .btn-yes { background: var(--primary); color: white; }
+    .btn-no { background: #ddd; color: #555; }
+    .btn-next {
+        background: linear-gradient(45deg, #ff3366, #ff99cc);
+        color: white;
+        margin-top: 30px;
+        padding: 15px 40px;
+        font-size: 1.5rem;
+        display: none; /* Hidden Initially */
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .error-msg {
+        height: 30px;
+        margin-top: 15px;
+        color: #d32f2f;
+        font-weight: bold;
+        font-size: 1.1rem;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    /* Success Message */
+    .success-text {
+        display: none;
+        font-size: 2rem;
+        color: var(--primary);
+        font-weight: bold;
+        margin-top: 20px;
+        text-shadow: 2px 2px 0px #fff;
+    }
+
+    /* Page 2: Date Plan */
+    #page2 {
+        display: none; /* Hidden Initially */
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 50px;
+        width: 100%;
+    }
+
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 800px;
+        margin-top: 30px;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.9);
+        padding: 20px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        border: 2px solid var(--secondary);
+    }
+    .card:hover { transform: translateY(-10px); }
+    
+    .card-icon { font-size: 4rem; margin-bottom: 10px; display: block; }
+    .card h3 { color: var(--primary); margin: 10px 0; }
+    .card p { font-size: 1.1rem; line-height: 1.4; color: #333; }
+
+    /* Romantic Rain (Hearts) */
+    .rain-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+        display: none;
+    }
+    .heart-drop {
+        position: absolute;
+        top: -50px;
+        font-size: 24px;
+        animation: fallDown linear forwards;
+    }
+    @keyframes fallDown {
+        to { transform: translateY(110vh); opacity: 0; }
+    }
+
+    /* Canvas for Blast */
+    #confetti-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 20;
+    }
+
+</style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">🌙 Night / ☀️ Day</button>
-    <div class="credits">Made by sivasingh | Instagram: @smass1708</div>
-    <audio id="sorryMusic" loop autoplay>
-        <source src="https://www.soundjay.com/misc/sounds/soft-rain-01.wav" type="audio/wav"> <!-- Placeholder soft, reflective sound; replace with a free emotional song -->
+
+    <audio id="bgMusic" loop>
+        <source src="tere-liye.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Card 1: Welcome Apology -->
-    <div class="container" id="card1">
-        <div class="card closed" onclick="openCard(1)">
-            <div class="bulbs">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-            </div>
-            <div class="hearts" id="hearts1"></div>
-            <div class="rain" id="rain1"></div>
-            <div class="teaser">Tap to Open My Heartfelt Apology 💔😿</div>
-            <div class="content">
-                <h1 class="message">I'm So Sorry, Khushi! 😿💔</h1>
-                <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Crying Cat GIF" class="gif"> <!-- Crying cat GIF -->
-                <p class="message">Khushi, my dearest love, my heart aches like a kitten crying in the rain 😿. I never meant to hurt you, and every tear I imagine you shedding breaks me. Please know my regret is deeper than the ocean—let's heal this wound together. I love you more than words can say. 🌧️❤️</p>
-                <button class="next-btn" onclick="nextCard(1)">Next 😿</button>
-            </div>
-        </div>
+    <div class="insta-header">
+        <a href="https://instagram.com/smss1708" target="_blank" class="insta-tag">
+            <span class="insta-icon"></span> Follow @smss1708
+        </a>
     </div>
 
-    <!-- Card 2: Reason 1 -->
-    <div class="container" id="card2" style="display: none;">
-        <div class="card closed" onclick="openCard(2)">
-            <div class="bulbs">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
+    <div class="balloons-container">
+        </div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="rain-container" id="rainBox"></div>
+
+    <div class="container">
+        
+        <div id="page1">
+            <div class="photo-frame">
+                <img src="photo.jpg" onerror="this.src='https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400'" alt="Rossey">
+                <div class="glow-line" id="glowLine"></div>
             </div>
-            <div class="hearts" id="hearts2"></div>
-            <div class="rain" id="rain2"></div>
-            <div class="teaser">Tap for Reason 1 😿</div>
-            <div class="content">
-                <h2 class="message">Why I'm Sorry 😿</h2>
-                <img src="https://media.giphy.com/media/l4FGKbQG6x5QkJz6M/giphy.gif" alt="Sad Crying Cat GIF" class="gif"> <!-- Sad crying cat GIF -->
-                <p class="message">Khushi, I was foolish, like a scared little cat 😿 hiding in the shadows, too afraid to face my feelings. I let my pride win, and it cost us precious moments. My soul weeps for the pain I caused you—forgive my blindness, my love. I promise to see you clearly now. 😢🐱</p>
-                <button class="next-btn" onclick="nextCard(2)">Next 😿</button>
+
+            <h1 id="mainTitle">Do you love me? 🥺</h1>
+
+            <div class="btn-group" id="btnGroup">
+                <button class="btn-yes" id="yesBtn">YES 🥰</button>
+                <button class="btn-no" id="noBtn">NO 😢</button>
+            </div>
+
+            <div class="error-msg" id="errorText"></div>
+
+            <div class="success-text" id="finalMsg">
+                Finally she said Yes!<br>I Love You Rosheyy! ❤️
+            </div>
+
+            <button class="btn-next" id="nextBtn">Next: Our Date Plan ➡️</button>
+        </div>
+
+        <div id="page2">
+            <h1>Our Romantic Date Plan 🌹</h1>
+            <div class="cards-container">
+                <div class="card">
+                    <span class="card-icon">☕</span>
+                    <h3>Coffee Date</h3>
+                    <p>Starting with your favorite coffee. Just you, me, and endless talks looking into your eyes.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🚗</span>
+                    <h3>Long Drive</h3>
+                    <p>Windows down, romantic songs playing, holding hands, and a beautiful long drive.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🕯️</span>
+                    <h3>Candlelight Dinner</h3>
+                    <p>A cozy dinner under the dim lights. Celebrating us with delicious food and love.</p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🌌</span>
+                    <h3>Stargazing</h3>
+                    <p>Lying under the open sky, counting stars, and dreaming about our future together.</p>
+                </div>
             </div>
         </div>
+
     </div>
 
-    <!-- Card 3: Reason 2 -->
-    <div class="container" id="card3" style="display: none;">
-        <div class="card closed" onclick="openCard(3)">
-            <div class="bulbs">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-            </div>
-            <div class="hearts" id="hearts3"></div>
-            <div class="rain" id="rain3"></div>
-            <div class="teaser">Tap for Reason 2 😿</div>
-            <div class="content">
-                <h2 class="message">My Biggest Mistake 😿</h2>
-                <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Crying Kitten GIF" class="gif"> <!-- Crying kitten GIF -->
-                <p class="message">Oh Khushi, my biggest mistake was forgetting how fragile our bond is, like a kitten 😿 trembling in the cold. I took your love for granted, and now my heart is shattered. Every night, I cry thinking of your smile fading because of me. Please, let's mend this—your happiness is my everything. 💔🐾</p>
-                <button class="next-btn" onclick="nextCard(3)">Next 😿</button>
-            </div>
-        </div>
-    </div>
+<script>
+    /* --- JAVASCRIPT LOGIC --- */
 
-    <!-- Card 4: Promise -->
-    <div class="container" id="card4" style="display: none;">
-        <div class="card closed" onclick="openCard(4)">
-            <div class="bulbs">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-            </div>
-            <div class="hearts" id="hearts4"></div>
-            <div class="rain" id="rain4"></div>
-            <div class="teaser">Tap for My Promise 😿</div>
-            <div class="content">
-                <h2 class="message">I Promise to Change 😿</h2>
-                <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Hopeful Crying Cat GIF" class="gif"> <!-- Hopeful crying cat GIF -->
-                <p class="message">Khushi, from this moment, I'll be the cat 😿 that curls up by your side, loyal and loving. No more mistakes—I'll cherish every second with you, listen to your heart, and make you laugh again. My tears of regret will turn to tears of joy. I vow to be your forever protector. 🌟❤️</p>
-                <button class="next-btn" onclick="nextCard(4)">Next 😿</button>
-            </div>
-        </div>
-    </div>
+    // 1. BALLOON GENERATION
+    const balloonContainer = document.querySelector('.balloons-container');
+    const balloonTexts = ["I", "Love", "You", "Rosheyy"];
+    const balloonColors = ["#ff3366", "#ff99cc", "#ff66b2", "#ff0066"];
 
-    <!-- Card 5: Plea -->
-    <div class="container" id="card5" style="display: none;">
-        <div class="card closed" onclick="openCard(5)">
-            <div class="bulbs">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-            </div>
-            <div class="hearts" id="hearts5"></div>
-            <div class="rain" id="rain5"></div>
-            <div class="teaser">Tap for My Plea 😿</div>
-            <div class="content">
-                <h2 class="message">Please Forgive Me 😿</h2>
-                <img src="https://media.giphy.com/media/3o7TKz9bX9v8Z8Z8Z8/giphy.gif" alt="Begging Crying Cat GIF" class="gif"> <!-- Begging crying cat GIF -->
-                <p class="message">Khushi, please, with all my heart, forgive me 😿. Life without your warmth is unbearable—like a cat crying alone in the dark. I kneel before you, begging for your mercy. You're my light, my reason to smile. Give me a chance to prove my love anew. I can't live without you. 😭💕</p>
-                <button class="next-btn" onclick="nextCard(5)">Next 😿</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Card 6: Final Surprise -->
-    <div class="container" id="card6" style="display: none;">
-        <div class="card closed" onclick="openCard(6)">
-            <div class="bulbs">
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-                <div class="bulb"></div>
-            </div>
-            <div class="hearts" id="hearts6"></div>
-            <div class="rain" id="rain6"></div>
-            <div class="teaser">Tap for the Final Surprise 😿</div>
-            <div class="content">
-                <h2 class="message">Forever Yours 😿❤️</h2>
-                <img src="https://media.giphy.com/media/l4FGKbQG6x5QkJz6M/giphy.gif" alt="Happy Crying Cat GIF" class="gif"> <!-- Happy crying cat GIF -->
-                <p class="message">Khushi, let's start fresh, like kittens 😿 finding their way home. My tears of sorrow will become tears of happiness with you. I love you more than all the stars in the sky—will you forgive me and let our story continue? You're my everything, my forever. 💖🌈</p>
-                <button class="next-btn" onclick="finish()">Finish & Hug Me! 😿</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        let currentCard = 1;
-        let themeIndex = 0;
-        const themes = [
-            'linear-gradient(to bottom, #E6E6FA, #DDA0DD)', // Lavender-purple
-            'linear-gradient(to bottom, #6495ED, #87CEEB)', // Blue for sadness
-            'linear-gradient(to bottom, #FF69B4, #FFB6C1)', // Pink for hope
-            'linear-gradient(to bottom, #DDA0DD, #E6E6FA)'  // Back to start
-        ];
-
-        function toggleTheme() {
-            document.body.classList.toggle('night');
+    function createBalloons() {
+        for(let i=0; i<8; i++) {
+            let b = document.createElement('div');
+            b.classList.add('balloon');
+            b.innerText = balloonTexts[i % 4];
+            b.style.left = Math.random() * 90 + "%";
+            b.style.animationDuration = (15 + Math.random() * 10) + "s";
+            b.style.animationDelay = (Math.random() * 5) + "s";
+            b.style.background = `radial-gradient(circle at 10px 10px, #fff, ${balloonColors[i%4]})`;
+            balloonContainer.appendChild(b);
         }
+    }
+    createBalloons();
 
-        function openCard(cardNum) {
-            const card = document.query
+    // 2. INTERACTION LOGIC
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const errorText = document.getElementById('errorText');
+    const finalMsg = document.getElementById('finalMsg');
+    const btnGroup = document.getElementById('btnGroup');
+    const nextBtn = document.getElementById('nextBtn');
+    const glowLine = document.getElementById('glowLine');
+    const mainTitle = document.getElementById('mainTitle');
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const rainBox = document.getElementById('rainBox');
+    const music = document.getElementById('bgMusic');
+
+    // Messages for "No" button
+    const noMessages = [
+        "Jao na... 🥺",
+        "Dil todogi? 💔",
+        "Soch lo ek baar... 🙏",
+        "Ro dunga main... 😭",
+        "Maan jao na Rossey...",
+        "Please say Yes! ❤️"
+    ];
+    let noCount = 0;
+
+    // Fix Audio Autoplay on first click
+    document.body.addEventListener('click', () => {
+        music.play().catch(() => {});
+    }, { once: true });
+
+    // NO Button Click
+    noBtn.addEventListener('click', () => {
+        errorText.style.opacity = 0;
+        setTimeout(() => {
+            errorText.innerText = noMessages[noCount % noMessages.length];
+            errorText.style.opacity = 1;
+            noCount++;
+        }, 200);
+    });
+
+    // YES Button Click
+    yesBtn.addEventListener('click', () => {
+        // Hide initial buttons & title
+        btnGroup.style.display = 'none';
+        errorText.style.display = 'none';
+        mainTitle.style.display = 'none';
+        
+        // Show Success elements
+        finalMsg.style.display = 'block';
+        nextBtn.style.display = 'inline-block';
+        glowLine.style.display = 'block';
+        glowLine.style.width = '100%';
+
+        // Start Effects
+        startConfetti();
+        startRain();
+    });
+
+    // NEXT Button Click
+    nextBtn.addEventListener('click', () => {
+        page1.style.display = 'none';
+        page2.style.display = 'flex';
+        window.scrollTo(0, 0);
+    });
+
+    // 3. RAIN EFFECT (Hearts)
+    function startRain() {
+        rainBox.style.display = 'block';
+        const emojis = ['❤️', '🌹', '💋', '🥰'];
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-drop');
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+            rainBox.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 200);
+    }
+
+    // 4. CONFETTI BLAST (Custom Code - No External Library)
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    function startConfetti() {
+        for(let i=0; i<300; i++) {
+            particles.push({
+                x: canvas.width / 2,
+                y: canvas.height / 2,
+                vx: (Math.random() - 0.5) * 20,
+                vy: (Math.random() - 0.5) * 20 - 5,
+                color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                size: Math.random() * 10 + 5,
+                life: 100
+            });
+        }
+        animateConfetti();
+    }
+
+    function animateConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, index) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.5; // Gravity
+            p.life--;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            if(p.life <= 0) particles.splice(index, 1);
+        });
+        if(particles.length > 0) requestAnimationFrame(animateConfetti);
+    }
+
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+
+</script>
+</body>
+</html>
