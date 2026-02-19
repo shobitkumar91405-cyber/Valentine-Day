@@ -2,117 +2,108 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For You Ritimaa ❤️</title>
-
+<title>Special For Ritimaa 💖</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
-
 body{
-  height:100vh;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  transition:background 3s linear;
+    margin:0;
+    font-family:Arial, sans-serif;
+    overflow:hidden;
+    background: linear-gradient(45deg,#ff4e50,#f9d423,#24c6dc,#ff9a9e);
+    background-size:400% 400%;
+    animation:bg 10s infinite alternate;
+    text-align:center;
+}
+@keyframes bg{
+    0%{background-position:left;}
+    100%{background-position:right;}
 }
 
-/* Intro Screen */
-#intro{
-  text-align:center;
-  color:white;
+.container{
+    position:relative;
+    top:50px;
+    z-index:2;
 }
 
-#intro h1{
-  font-size:40px;
-  margin-bottom:30px;
+img{
+    width:300px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+h1{
+    font-size:28px;
+    margin-top:20px;
+    background: linear-gradient(90deg,red,yellow,blue,green,pink);
+    -webkit-background-clip:text;
+    color:transparent;
 }
 
 button{
-  padding:15px 35px;
-  font-size:18px;
-  border:none;
-  border-radius:30px;
-  background:#ff4081;
-  color:white;
-  cursor:pointer;
-  transition:0.3s;
+    padding:15px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:30px;
+    background:#ff4081;
+    color:white;
+    cursor:pointer;
+    margin-top:20px;
+    transition:0.3s;
 }
-
 button:hover{
-  transform:scale(1.1);
-}
-
-/* Video Fullscreen */
-#videoContainer{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  background:black;
+    background:#e91e63;
+    transform:scale(1.1);
 }
 
 video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+    display:none;
+    width:80%;
+    max-width:600px;
+    margin-top:20px;
+    border-radius:20px;
+    box-shadow:0 0 20px black;
+}
+
+/* Balloons */
+.balloon{
+    position:absolute;
+    bottom:-100px;
+    font-size:20px;
+    animation:float 10s linear infinite;
+}
+@keyframes float{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-110vh);}
 }
 </style>
 </head>
-
 <body>
 
-<div id="intro">
-  <h1>I have something for you Ritimaa ❤️</h1>
-  <button onclick="startVideo()">Click to Continue</button>
-</div>
-
-<div id="videoContainer">
-  <video id="myVideo" autoplay>
-    <source src="video1.mp4" type="video/mp4">
-  </video>
+<div class="container">
+    <img src="photo1.jpg" alt="Special Photo">
+    <h1>Hii Ritimaa, I have something special for you 💖</h1>
+    <button onclick="playVideo()">Click Here 🎁</button>
+    <video id="myVideo" src="video1.mp4"></video>
 </div>
 
 <script>
-
-const colors = [
-  "#ff9a9e",
-  "#fad0c4",
-  "#a18cd1",
-  "#fbc2eb",
-  "#ffecd2",
-  "#fcb69f",
-  "#ff6a88",
-  "#36d1dc"
-];
-
-let index = 0;
-
-function changeTheme(){
-  document.body.style.background = 
-    `linear-gradient(45deg, ${colors[index]}, ${colors[(index+1)%colors.length]})`;
-  index = (index+1) % colors.length;
+function playVideo(){
+    let video = document.getElementById("myVideo");
+    video.style.display="block";
+    video.play();
+    video.muted=false;
 }
 
-setInterval(changeTheme,3000);
-changeTheme();
-
-function startVideo(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("videoContainer").style.display="flex";
-  
-  let video = document.getElementById("myVideo");
-  video.play();
+/* Create Balloons */
+const names=["Ritimaa 💖","Sivasingh ❤️"];
+for(let i=0;i<25;i++){
+    let balloon=document.createElement("div");
+    balloon.className="balloon";
+    balloon.innerText=names[Math.floor(Math.random()*names.length)];
+    balloon.style.left=Math.random()*100+"vw";
+    balloon.style.color="hsl("+Math.random()*360+",100%,50%)";
+    balloon.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(balloon);
 }
-
 </script>
 
 </body>
