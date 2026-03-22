@@ -2,279 +2,258 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I'm Really Sorry, 🥲🥲... 💔→💗</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Great+Vibes&family=Cormorant+Garamond:wght@400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cutiee ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-deep: #0f001a;
-            --rose-gold: #e0b07e;
-            --soft-pink: #ffe4e9;
-            --berry: #c71585;
-            --text: #ffffff;
-            --sparkle-gold: #ffd700;
-            --heart-glow: #ff69b4;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        * { box-sizing: border-box; }
+
         body {
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(255,105,180,0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(224,176,126,0.15) 0%, transparent 50%),
-                #1a0b2e; /* Optimized background */
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--text);
-            overflow: hidden; margin: 0; user-select: none;
-            -webkit-font-smoothing: antialiased;
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* FIXED TOP FOLLOW TAG */
-        #follow { 
-            position: fixed;
+        /* BG GRADIENT LIKE SCREENSHOTS */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            position: relative;
+            background: radial-gradient(circle at center, #4a0e2e 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* TOP CREDIT */
+        .top-credit {
+            position: absolute;
             top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--soft-pink);
-            text-shadow: 0 0 12px rgba(255, 105, 180, 0.8), 0 2px 4px rgba(0,0,0,0.8);
-            white-space: nowrap;
-            animation: heartbeat 2s ease-in-out infinite;
+            width: 100%;
+            text-align: center;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
+            z-index: 100;
+            text-transform: uppercase;
         }
 
-        /* SLIDE LOGIC */
-        .slide {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
-            text-align: center; padding: 20px;
-            will-change: opacity;
+        /* SECTIONS */
+        .section {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
         }
-        .slide.active { opacity: 1; pointer-events: all; z-index: 50; }
-        
-        /* TEXT ANIMATIONS & CLEAR ROMANTIC COLORS */
-        h1, h2 { 
-            font-family: 'Playfair Display', serif; font-weight: 900; 
-            font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.1;
-            /* Glowing romantic text effect */
-            background: linear-gradient(45deg, var(--soft-pink), var(--rose-gold));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+
+        .section.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        /* GIF STYLING */
+        .gif-main {
+            width: 150px;
             margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255,100,150,0.5));
         }
-        
-        p { 
-            font-size: clamp(1.2rem, 3.5vw, 1.8rem); line-height: 1.7; 
-            max-width: 750px; margin: 0 auto 1.5rem;
-            color: var(--soft-pink);
-            font-weight: 600;
-            /* Strong dark shadow for crystal clear reading */
-            text-shadow: 0 3px 6px rgba(0,0,0,0.9), 0 0 10px rgba(255, 105, 180, 0.4);
-            opacity: 0; transform: translateY(20px); transition: all 1s ease;
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #ff8fa3;
+            margin-bottom: 10px;
         }
-        .slide.active p { opacity: 1; transform: translateY(0); }
+
+        .sub-text {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: #efefef;
+        }
 
         /* BUTTONS */
-        .lux-btn {
-            position: relative; overflow: hidden;
-            background: linear-gradient(135deg, var(--rose-gold), #ff8da1);
-            color: #1a001f; padding: 1rem 2.5rem; border-radius: 50px;
-            font-weight: 700; font-size: 1.2rem; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 2px solid rgba(255,255,255,0.3); outline: none; margin: 10px;
-            will-change: transform;
-        }
-        .lux-btn:hover { 
-            transform: scale(1.05) translateY(-3px); 
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.6);
+        .btn-pink {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            border: none;
+            padding: 12px 40px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 65, 108, 0.3);
         }
 
-        /* OPTIMIZED PARTICLES & ANIMATIONS */
-        .heart-rain, .love-wave, .float-emoji { position: fixed; pointer-events: none; will-change: transform, opacity; }
-        .heart-rain { font-size: 1.2rem; z-index: 5; animation: heartRain linear forwards; }
-        .love-wave { font-size: 2.5rem; z-index: 8; animation: loveWave linear forwards; }
-        .float-emoji { font-size: 2rem; z-index: 12; animation: floatUp ease-in-out forwards; }
-        .magic-sparkle { position: fixed; width: 6px; height: 6px; background: var(--sparkle-gold); border-radius: 50%; pointer-events: none; z-index: 15; box-shadow: 0 0 8px var(--sparkle-gold); }
-        .firework { position: fixed; pointer-events: none; z-index: 20; }
-        .firework-explosion { position: absolute; width: 5px; height: 5px; border-radius: 50%; }
+        /* PROGRESS BAR (Cuteness Meter) */
+        .progress-container {
+            width: 80%;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #ff416c;
+            transition: width 2s ease-in-out;
+        }
 
-        @keyframes heartRain {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        /* REVEAL BOXES */
+        .reveal-box {
+            background: rgba(255, 255, 255, 0.08);
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: 0.3s;
         }
-        @keyframes loveWave {
-            0% { transform: translateX(-20vw) scale(0.5); opacity: 0; }
-            50% { opacity: 0.8; transform: scale(1.1); }
-            100% { transform: translateX(120vw) scale(0.5); opacity: 0; }
+        .reveal-box .hidden-msg { display: none; font-style: italic; color: #ff8fa3; }
+
+        /* FLOATING HEARTS */
+        .heart-float {
+            position: absolute;
+            color: #ff416c;
+            font-size: 20px;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            z-index: 50;
         }
+
         @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
-        @keyframes heartbeat {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.1); }
-        }
-        @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        .sorry-text {
-            font-size: clamp(3.5rem, 8vw, 6.5rem); font-family: 'Dancing Script', cursive;
-            background: linear-gradient(45deg, var(--heart-glow), #ffa07a);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: beat 2s infinite;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.8));
-        }
-
-        #noBtn { transition: all 0.3s ease; position: relative; }
     </style>
 </head>
 <body>
 
-    <div id="follow">Follow 💗 - smss1708</div>
-    
-    <div id="heartRain" class="fixed inset-0 pointer-events-none z-10"></div>
-    <div id="fireworks" class="fixed inset-0 pointer-events-none z-20"></div>
-    <div id="loveWaves" class="fixed inset-0 pointer-events-none z-8"></div>
-    <div id="floatEmojis" class="fixed inset-0 pointer-events-none z-12"></div>
+    <div class="app-container">
+        <div class="top-credit">MADE BY - @smss1708</div>
 
-    <div id="slide1" class="slide active">
-        <h1>Hey Cutie... 🥺</h1>
-        <p>I know I can be a little stupid sometimes, and I end up making mistakes...</p>
-        <button onclick="nextSlide(2)" class="lux-btn">Next 👉</button>
-    </div>
-
-    <div id="slide2" class="slide">
-        <div class="sorry-text mb-6">I'm Really Sorry 💔</div>
-        <p>I never ever intended to hurt you. You are my absolute favorite person and my cutie...</p>
-        <p>Please forgive me, bestie... 😭</p>
-        <button onclick="nextSlide(3)" class="lux-btn">Yes, 👉👈... 💕</button>
-    </div>
-
-    <div id="slide3" class="slide">
-        <div class="mb-4" style="font-size: 8rem; animation: beat 1.5s infinite; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">💖</div>
-        <div class="sorry-text" style="font-size: 4rem;">Forgive me? 🥺</div>
-        <p>I would be so lost without my you ... Please agree? 😭💗</p>
-        
-        <div class="flex flex-col gap-4 mt-6 max-w-lg mx-auto w-full items-center">
-            <button onclick="ultimateForgiveness()" class="lux-btn text-xl py-4 px-8 w-72">YES! I FORGIVE YOU ✨</button>
-            <button id="noBtn" class="bg-red-500/90 p-4 rounded-full text-white font-bold border-2 border-white/50 w-64 cursor-pointer shadow-lg">No way! 😤</button>
+        <div class="section active" id="s1">
+            <img src="https://media.tenor.com/On7_S9X_tMgAAAAi/mochi-peach.gif" class="gif-main">
+            <h1>Hey cutiepie</h1>
+            <p class="sub-text">Do you even know how cute you are?</p>
+            <button class="btn-pink" onclick="startMeter()">let's check 🫣</button>
         </div>
-    </div>
 
-    <div id="slide4" class="slide">
-        <div class="mb-4" style="font-size: 8rem; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">🎉</div>
-        <h1 style="font-size: 3.5rem;">Thank You So Much! 🫂</h1>
-        <p>You are the best! Now give me a big, beautiful smile! 😊</p>
+        <div class="section" id="s2">
+            <h2 id="meterLabel">Measuring your cuteness... ⌛</h2>
+            <h1 id="percentText">0%</h1>
+            <div class="progress-container">
+                <div class="progress-fill" id="fill"></div>
+            </div>
+        </div>
+
+        <div class="section" id="s3">
+            <h2 style="font-family: 'Dancing Script'; font-size: 2rem; margin-bottom: 20px;">Tap each one to reveal</h2>
+            
+            <div class="reveal-box" onclick="reveal(this)">
+                <span class="label">❤️ Message 1</span>
+                <span class="hidden-msg">I'm sorry if I annoyed you even a little 🥺</span>
+            </div>
+            <div class="reveal-box" onclick="reveal(this)">
+                <span class="label">❤️ Message 2</span>
+                <span class="hidden-msg">I hate it when we are not talking... 💔</span>
+            </div>
+            <div class="reveal-box" onclick="reveal(this)">
+                <span class="label">❤️ Message 3</span>
+                <span class="hidden-msg">You are the most precious person to me! ✨</span>
+            </div>
+
+            <button class="btn-pink" id="finalBtn" style="display:none; margin-top:20px;" onclick="next(4)">One last thing...</button>
+        </div>
+
+        <div class="section" id="s4">
+            <h1 style="font-size: 2rem;">A little note for you</h1>
+            <img src="https://media.tenor.com/TgS_99v_mSgAAAAi/peach-goma.gif" class="gif-main">
+            <p style="line-height: 1.6;">
+                I'm really sorry, my love. I accidentally upset the most precious and adorable person in my life — <b>YOU</b>. 🎁<br><br>
+                Maaf kardo na? 🥺
+            </p>
+            <button class="btn-pink" onclick="location.reload()">Forgive Me? ❤️</button>
+        </div>
+
     </div>
 
     <script>
-        // SLIDE NAVIGATION
-        function nextSlide(slideNumber) {
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            document.getElementById(`slide${slideNumber}`).classList.add('active');
+        function next(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('s' + id).classList.add('active');
         }
 
-        // OPTIMIZED ANIMATIONS 
-        function startAnimations() {
-            const hContainer = document.getElementById('heartRain');
-            const eContainer = document.getElementById('floatEmojis');
+        function startMeter() {
+            next(2);
+            let fill = document.getElementById('fill');
+            let percent = document.getElementById('percentText');
+            let count = 0;
             
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.className = 'heart-rain';
-                heart.textContent = ['💖','💕','💗','💝'][Math.floor(Math.random()*4)];
-                heart.style.left = Math.random()*100 + 'vw';
-                heart.style.animationDuration = (5 + Math.random()*3) + 's';
-                hContainer.appendChild(heart);
-                setTimeout(()=>heart.remove(), 8000);
-            }, 600);
-
-            setInterval(() => {
-                const emoji = document.createElement('div');
-                emoji.className = 'float-emoji';
-                emoji.textContent = ['🌸','✨','🌟','🦋'][Math.floor(Math.random()*4)];
-                emoji.style.left = Math.random()*100 + 'vw';
-                emoji.style.animationDuration = (6 + Math.random()*4) + 's';
-                eContainer.appendChild(emoji);
-                setTimeout(()=>emoji.remove(), 10000);
-            }, 3000);
+            let interval = setInterval(() => {
+                count += 2;
+                fill.style.width = (count > 100 ? 100 : count) + '%';
+                percent.innerText = count + '%';
+                
+                if(count >= 116) {
+                    clearInterval(interval);
+                    document.getElementById('meterLabel').innerText = "Cuteness Overloaded! 😍";
+                    setTimeout(() => next(3), 1500);
+                }
+            }, 50);
         }
 
-        // THROTTLED MOUSEMOVE SPARKLES
-        let lastSparkle = 0;
-        document.addEventListener('mousemove', (e) => {
-            const now = Date.now();
-            if(now - lastSparkle > 80 && Math.random() < 0.6) { 
-                lastSparkle = now;
-                const sparkle = document.createElement('div');
-                sparkle.className = 'magic-sparkle';
-                sparkle.style.left = e.clientX + 'px';
-                sparkle.style.top = e.clientY + 'px';
-                document.body.appendChild(sparkle);
-                
-                sparkle.animate([
-                    { transform: 'scale(0)', opacity: 0 },
-                    { transform: 'scale(1.5)', opacity: 1 },
-                    { transform: 'scale(0)', opacity: 0 }
-                ], { duration: 1000 });
-                setTimeout(()=>sparkle.remove(), 1000);
+        let revealedCount = 0;
+        function reveal(el) {
+            if(el.querySelector('.hidden-msg').style.display !== 'block') {
+                el.querySelector('.label').style.display = 'none';
+                el.querySelector('.hidden-msg').style.display = 'block';
+                el.style.background = "rgba(255, 65, 108, 0.2)";
+                revealedCount++;
+                createHeart();
             }
-        });
-
-        // "NO" BUTTON TRICK
-        const noBtn = document.getElementById('noBtn');
-        noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40) - (window.innerWidth/2 - 100);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40) - (window.innerHeight/2 - 50);
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-        });
-
-        // FIREWORKS FOR "YES"
-        function createFirework(x, y) {
-            const container = document.getElementById('fireworks');
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            firework.style.left = x + 'px';
-            firework.style.top = y + 'px';
-            
-            for(let i = 0; i < 15; i++) { 
-                const particle = document.createElement('div');
-                particle.className = 'firework-explosion';
-                particle.style.background = ['#ff69b4', '#ffd700', '#ffb6c1'][Math.floor(Math.random()*3)];
-                
-                const angle = (i / 15) * Math.PI * 2;
-                particle.animate([
-                    { transform: 'translate(0, 0) scale(0)', opacity: 1 },
-                    { transform: `translate(${Math.cos(angle)*100}px, ${Math.sin(angle)*100}px) scale(1.5)`, opacity: 0 }
-                ], { duration: 1000, easing: 'ease-out' });
-                
-                firework.appendChild(particle);
+            if(revealedCount >= 3) {
+                document.getElementById('finalBtn').style.display = 'block';
             }
-            container.appendChild(firework);
-            setTimeout(()=>firework.remove(), 1000);
         }
 
-        function ultimateForgiveness() {
-            for(let i = 0; i < 8; i++) {
+        function createHeart() {
+            for(let i=0; i<10; i++) {
                 setTimeout(() => {
-                    createFirework(
-                        Math.random() * window.innerWidth, 
-                        Math.random() * window.innerHeight
-                    );
-                }, i * 200);
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.className = 'heart-float';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.bottom = '0';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 4000);
+                }, i * 100);
             }
-            setTimeout(() => nextSlide(4), 1500);
         }
-
-        // INIT
-        window.onload = startAnimations;
     </script>
 </body>
 </html>
