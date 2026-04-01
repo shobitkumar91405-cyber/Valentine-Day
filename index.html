@@ -2,250 +2,640 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For You Anuska ji 💗</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I am Sivasingh and I made this for you🥰🎁</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap');
-        
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            background: radial-gradient(circle at center, #1a001f 0%, #000000 100%);
             font-family: 'Poppins', sans-serif;
-            overflow: hidden; height: 100vh; width: 100vw;
-            color: #ffffff; user-select: none; touch-action: manipulation;
+            background: linear-gradient(135deg, #1a0f0b 0%, #2d1b12 50%, #0f0704 100%);
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
         }
 
-        /* Fixed Background Stars - Performance Optimized */
-        #stars-container { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-        .star { 
-            position: absolute; background: white; border-radius: 50%; 
-            animation: realTwinkle var(--dur) infinite ease-in-out;
-            will-change: opacity, transform;
-        }
-        @keyframes realTwinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.7); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        .header-tag {
-            position: fixed; top: 15px; width: 100%; text-align: center;
-            z-index: 100; font-family: 'Dancing Script', cursive;
-            color: #ffb3d9; font-size: 1.5rem;
-            text-shadow: 0 0 10px rgba(255,179,217,0.6);
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* Ultra-Smooth Transitions */
-        .slide {
-            display: none; position: fixed; inset: 0; width: 100%; height: 100%;
-            align-items: center; justify-content: center; flex-direction: column;
-            opacity: 0; z-index: 20; padding: 25px; text-align: center;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            transform: scale(0.98);
-        }
-        .slide.active { display: flex; opacity: 1; transform: scale(1); }
-
-        .cute-msg { 
-            font-family: 'Dancing Script', cursive; color: #ffffff; 
-            text-shadow: 0 0 15px #ff00cc, 3px 3px 6px rgba(0,0,0,1); 
-            font-size: clamp(2.2rem, 8vw, 3.2rem); 
-            margin-top: 15px; font-weight: 700; line-height: 1.2;
-        }
-        .sub-text { color: #ffffff; font-weight: 600; font-size: 1.15rem; margin-top: 10px; max-width: 320px; text-shadow: 1px 1px 5px #000; }
-        
-        .gif-frame { 
-            width: 250px; height: 250px; border-radius: 30px; 
-            border: 4px solid #ff00cc; box-shadow: 0 0 30px rgba(255, 0, 204, 0.5); 
-            object-fit: cover; background: #000;
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #ffd700 0%, rgba(255,215,0,0.3) 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
         }
 
-        .glow-btn { 
-            background: linear-gradient(45deg, #ff00cc, #ff69b4); 
-            padding: 14px 35px; border-radius: 50px; font-weight: 700; 
-            box-shadow: 0 0 20px rgba(255, 0, 204, 0.4); 
-            cursor: pointer; border: none; color: white; font-size: 1.1rem;
-            margin-top: 20px; transition: 0.2s;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
         }
-        .glow-btn:active { transform: scale(0.9); }
 
-        /* Solar System Animation (Re-Added) */
-        .solar-system { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
-        .orbit { position: absolute; border: 2px solid rgba(255,105,180,0.3); border-radius: 50%; animation: spin linear infinite; }
-        .orbit-1 { width: 180px; height: 180px; animation-duration: 6s; }
-        .orbit-2 { width: 260px; height: 260px; animation-duration: 10s; animation-direction: reverse; }
-        .planet { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 26px; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* Instagram Handle */
+        .instagram-handle {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: rgba(255,215,0,0.8);
+            font-weight: 300;
+            z-index: 1000;
+            font-family: 'Poppins', sans-serif;
+        }
 
-        /* Progress Bar */
-        .hold-container { width: 280px; height: 18px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; border: 2px solid white; }
-        #holdProgress { height: 100%; background: linear-gradient(90deg, #ff00cc, #ff69b4); width: 0%; transition: width 0.1s linear; }
+        /* Generic Screen */
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            z-index: 100;
+            transition: opacity 0.8s ease;
+        }
 
-        #videoLayer { display: none; position: fixed; inset: 0; background: black; z-index: 1000; align-items: center; justify-content: center; }
-        video { width: 100%; height: 100%; object-fit: contain; }
+        .screen.active {
+            opacity: 1;
+        }
+
+        .screen.hidden {
+            display: none !important;
+        }
+
+        /* Continue Button */
+        .continue-btn {
+            position: absolute;
+            bottom: 50px;
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #1a0f0b;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(255,215,0,0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .continue-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 45px rgba(255,215,0,0.6);
+        }
+
+        /* PAGE 1 - Intro */
+        .page1 .mouse-container {
+            position: absolute;
+            left: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            height: 220px;
+        }
+
+        .page1 .mouse {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #f4d03f, #f39c12);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: relative;
+            animation: mouseBounce 2s ease-in-out infinite;
+            box-shadow: 0 20px 40px rgba(244,208,63,0.4);
+        }
+
+        .page1 .mouse::before {
+            content: '';
+            position: absolute;
+            width: 65%;
+            height: 55%;
+            background: linear-gradient(145deg, #e67e22, #d68910);
+            border-radius: 50%;
+            top: 18%;
+            left: 18%;
+        }
+
+        .page1 .mouse::after {
+            content: '🐭';
+            position: absolute;
+            font-size: 45px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .page1 .intro-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(3rem, 8vw, 7rem);
+            color: #ffd700;
+            text-shadow: 0 0 40px rgba(255,215,0,0.9);
+            margin-left: 280px;
+            animation: glow 2s ease-in-out infinite alternate;
+            z-index: 10;
+        }
+
+        @keyframes mouseBounce {
+            0%, 100% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-65%) scale(1.08); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 25px rgba(255,215,0,0.9), 0 0 40px rgba(255,215,0,0.7); }
+            to { text-shadow: 0 0 40px rgba(255,215,0,1), 0 0 60px rgba(255,215,0,0.9); }
+        }
+
+        /* PAGE 2 - Countdown */
+        .page2 {
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-size: clamp(10rem, 30vw, 25rem);
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 60px rgba(255,215,0,1);
+            opacity: 0;
+            transform: scale(0.3);
+            margin-bottom: 2rem;
+        }
+
+        .countdown-title {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .ring {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 4px solid rgba(255,215,0,0.4);
+            border-radius: 50%;
+            animation: ringExpand 1.2s ease-out forwards;
+        }
+
+        @keyframes ringExpand {
+            0% { transform: scale(0.2); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* PAGE 3 - Gifts */
+        .page3 .gifts-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255,215,0,0.8);
+            margin-bottom: 4rem;
+            font-weight: 700;
+        }
+
+        .gifts-container {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gift-box {
+            width: 140px;
+            height: 160px;
+            background: linear-gradient(145deg, #8B4513, #A0522D, #D2691E);
+            border-radius: 20px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .gift-box:hover:not(.opened) {
+            transform: translateY(-20px) scale(1.15) rotate(5deg);
+            box-shadow: 0 30px 60px rgba(255,215,0,0.5);
+        }
+
+        .gift-box::before {
+            content: '🎁';
+            position: absolute;
+            font-size: 3.5rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .gift-box.opened {
+            background: linear-gradient(145deg, #555, #777);
+            cursor: not-allowed;
+            transform: scale(0.9);
+        }
+
+        .gift-box.opened::before {
+            content: '😅';
+            font-size: 4rem;
+        }
+
+        /* PAGE 4 - Loading */
+        .page4 {
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .spinner-container {
+            position: relative;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255,215,0,0.3);
+            border-top: 5px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1.2s linear infinite;
+        }
+
+        .spinner-text {
+            font-size: 1.5rem;
+            color: #ffd700;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* PAGE 5 - Nothing Here */
+        .page5 .nothing-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255,215,0,0.8);
+            margin-bottom: 2rem;
+        }
+
+        .page5 .nothing-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* PAGE 6 - Final Reveal */
+        .page6 .final-title {
+            font-size: clamp(4rem, 12vw, 8rem);
+            color: #ff6b6b;
+            text-shadow: 0 0 50px rgba(255,107,107,0.9);
+            font-weight: 900;
+            animation: shakeBig 0.8s ease-in-out infinite;
+            margin-bottom: 2rem;
+        }
+
+        .page6 .final-subtitle {
+            font-size: 2rem;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255,215,0,0.8);
+        }
+
+        @keyframes shakeBig {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            20% { transform: translateX(-15px) rotate(-2deg); }
+            40% { transform: translateX(15px) rotate(2deg); }
+            60% { transform: translateX(-10px) rotate(-1deg); }
+            80% { transform: translateX(10px) rotate(1deg); }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            animation: confettiFall 4s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg) scale(0); 
+                opacity: 1; 
+            }
+            50% { 
+                opacity: 1; 
+                transform: rotate(180deg) scale(1); 
+            }
+            100% { 
+                transform: translateY(100vh) rotate(720deg) scale(0.5); 
+                opacity: 0; 
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .gifts-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .page1 .mouse-container {
+                left: 5%;
+                width: 180px;
+                height: 180px;
+            }
+            
+            .page1 .intro-text {
+                margin-left: 220px;
+                font-size: clamp(2.5rem, 7vw, 5rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page1 .mouse-container {
+                position: relative;
+                left: 0;
+                margin-bottom: 2rem;
+            }
+            
+            .page1 .intro-text {
+                margin-left: 0;
+                text-align: center;
+            }
+            
+            .gifts-container {
+                gap: 1.5rem;
+            }
+            
+            .gift-box {
+                width: 120px;
+                height: 140px;
+            }
+            
+            .continue-btn {
+                bottom: 30px;
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Instagram Handle -->
+    <div class="instagram-handle">@smss1708</div>
 
-    <div class="header-tag">INST - @SMSS1708 💗</div>
-    <audio id="bgMusic" loop src="tere-liye.mp3" preload="auto"></audio>
-    <div id="stars-container"></div>
-
-    <div id="slide1" class="slide active">
-        <img src="gif1.gif" class="gif-frame">
-        <h1 class="cute-msg">Hey Anuska! ✨</h1>
-        <p class="sub-text">We just met, but my heart already knew it was you!</p>
-        <button onclick="startApp()" class="glow-btn">Touch My Heart 🥺</button>
-    </div>
-
-    <div id="slide2" class="slide">
-        <img src="gif2.gif" class="gif-frame">
-        <h1 class="cute-msg">How are you so cute?</h1>
-        <p class="sub-text">Seriously, your smile is the highlight of my day!</p>
-        <button onclick="next()" class="glow-btn">See More 💕</button>
-    </div>
-
-    <div id="slide3" class="slide">
-        <img src="gif3.gif" class="gif-frame">
-        <h1 class="cute-msg">Our Vibe is Rare! 😌</h1>
-        <p class="sub-text">Talking to you feels like time has completely stopped.</p>
-        <button onclick="next()" class="glow-btn">Next Step ✨</button>
-    </div>
-
-    <div id="slide4" class="slide">
-        <div class="text-8xl mb-6 transition-transform duration-300" id="pulseHeart">💖</div>
-        <h1 class="text-2xl font-bold">How much do I adore you?</h1>
-        <div class="hold-container"><div id="holdProgress"></div></div>
-        <button id="holdBtn" class="glow-btn select-none">PRESS & HOLD TO FEEL</button>
-    </div>
-
-    <div id="slide5" class="slide">
-        <img src="gif4.gif" class="gif-frame">
-        <h1 class="cute-msg">You're One in a Billion! 💎</h1>
-        <p class="sub-text">It's only been a short time, but the feeling is magical.</p>
-        <button onclick="next()" class="glow-btn">Continue...</button>
-    </div>
-
-    <div id="slide6" class="slide">
-        <div class="solar-system">
-            <div class="orbit orbit-1"><span class="planet">💗</span></div>
-            <div class="orbit orbit-2"><span class="planet">⭐</span></div>
-            <div class="text-6xl">🌍</div>
+    <!-- PAGE 1: Cute Intro -->
+    <div class="screen page1 active" data-page="1">
+        <div class="mouse-container">
+            <div class="mouse"></div>
         </div>
-        <h1 class="cute-msg mt-10">My Whole Universe!</h1>
-        <p class="sub-text">Everything seems better when you're around.</p>
-        <button onclick="next()" class="glow-btn">Keep Going 🚀</button>
+        <div class="intro-text">This is for you ❤️</div>
+        <button class="continue-btn" onclick="nextPage()">Continue →</button>
     </div>
 
-    <div id="slide7" class="slide">
-        <img src="gif5.gif" class="gif-frame">
-        <h1 class="cute-msg">Don't ever leave! 🥺</h1>
-        <p class="sub-text">I've never met anyone as sweet and special as you.</p>
-        <button onclick="next()" class="glow-btn">Wait for it...</button>
+    <!-- PAGE 2: Countdown -->
+    <div class="screen page2 hidden" data-page="2">
+        <div class="countdown-title">Get Ready...</div>
+        <div class="countdown-number" id="countdownNum">3</div>
+        <div class="ring"></div>
+        <button class="continue-btn" onclick="nextPage()" id="countdownBtn" style="display: none;">Continue →</button>
     </div>
 
-    <div id="slide8" class="slide">
-        <h1 class="cute-msg">You're my Brightest Star! ⭐</h1>
-        <p class="sub-text">In a sky full of stars, my eyes only search for you.</p>
-        <button onclick="next()" class="glow-btn">Just a bit more ✨</button>
-    </div>
-
-    <div id="slide9" class="slide">
-        <img src="gif6.gif" class="gif-frame">
-        <h1 class="cute-msg">Anuska Will You Be My Friend? ❤️</h1>
-        <div id="btnContainer" class="flex flex-wrap justify-center gap-3 mt-4">
-            <button onclick="next()" class="glow-btn">YES! 😍</button>
-            <button id="noBtn" onclick="trapNo()" class="px-8 py-3 bg-gray-800 rounded-full text-gray-400 mt-5">No 🥺</button>
+    <!-- PAGE 3: Gift Selection -->
+    <div class="screen page3 hidden" data-page="3">
+        <div class="gifts-title">Choose your gift 🎁</div>
+        <div class="gifts-container">
+            <div class="gift-box" data-gift="1"></div>
+            <div class="gift-box" data-gift="2"></div>
+            <div class="gift-box" data-gift="3"></div>
         </div>
+        <button class="continue-btn" onclick="nextPage()" id="giftsBtn" style="display: none;">I've checked all! →</button>
     </div>
 
-    <div id="slide10" class="slide">
-        <img src="gif7.gif" class="gif-frame">
-        <h1 class="cute-msg">Yaaay! My Heart is Happy! 🥳</h1>
-        <p class="sub-text">I promise to keep that beautiful smile on your face!</p>
-        <button onclick="playSurprise()" class="glow-btn animate-bounce">A FINAL SURPRISE 🎁</button>
+    <!-- PAGE 4: Loading -->
+    <div class="screen page4 hidden" data-page="4">
+        <div class="spinner-container">
+            <div class="spinner"></div>
+            <div class="spinner-text">Opening gift...</div>
+        </div>
+        <button class="continue-btn" onclick="handleGiftResult()" id="loadingBtn" style="display: none;">Continue →</button>
     </div>
 
-    <div id="videoLayer">
-        <video id="vPlayer" playsinline src="video1.mp4"></video>
+    <!-- PAGE 5: Nothing Here -->
+    <div class="screen page5 hidden" data-page="5">
+        <div class="nothing-title">Nothing here 😅</div>
+        <div class="nothing-subtitle">Try another gift box!</div>
+        <button class="continue-btn" onclick="backToGifts()">← Back to Gifts</button>
+    </div>
+
+    <!-- PAGE 6: Final April Fool -->
+    <div class="screen page6 hidden" data-page="6">
+        <div class="final-title">APRIL FOOL 😂</div>
+        <div class="final-subtitle">You got pranked! Happy April 1st! 🎉</div>
     </div>
 
     <script>
-        let step = 1;
-        const music = document.getElementById('bgMusic');
+        // Global state
+        let currentPage = 1;
+        let openedGifts = 0;
+        const totalGifts = 3;
+        let isProcessingGift = false;
 
-        // Fast Star Generation
-        const starContainer = document.getElementById('stars-container');
-        const frag = document.createDocumentFragment();
-        for(let i=0; i<100; i++) {
-            const s = document.createElement('div');
-            s.className = 'star';
-            const size = Math.random() * 2 + 1 + 'px';
-            s.style.width = size; s.style.height = size;
-            s.style.left = Math.random() * 100 + 'vw';
-            s.style.top = Math.random() * 100 + 'vh';
-            s.style.setProperty('--dur', (Math.random() * 2 + 1) + 's');
-            frag.appendChild(s);
-        }
-        starContainer.appendChild(frag);
-
-        function startApp() { music.play().catch(e => console.log(e)); next(); }
-
-        function next() {
-            const current = document.getElementById('slide' + step);
-            const nextS = document.getElementById('slide' + (step + 1));
-            if(current) {
-                current.classList.remove('active');
-                setTimeout(() => { current.style.display = 'none'; }, 400);
-            }
-            if(nextS) {
-                step++;
-                nextS.style.display = 'flex';
-                void nextS.offsetWidth; // Force Reflow for instant animation
-                nextS.classList.add('active');
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 60; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particlesContainer.appendChild(particle);
             }
         }
 
-        function trapNo() {
-            const container = document.getElementById('btnContainer');
-            document.getElementById('noBtn').style.display = 'none';
-            for(let i=0; i<5; i++) {
-                const b = document.createElement('button');
-                b.className = "glow-btn"; b.innerHTML = "YES! 💖";
-                b.onclick = next; container.appendChild(b);
+        // Show specific page
+        function showPage(pageNum) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+                screen.classList.add('hidden');
+            });
+            
+            const targetScreen = document.querySelector(`[data-page="${pageNum}"]`);
+            targetScreen.classList.remove('hidden');
+            setTimeout(() => targetScreen.classList.add('active'), 50);
+            
+            currentPage = pageNum;
+        }
+
+        // Next page function
+        function nextPage() {
+            if (currentPage < 6) {
+                showPage(currentPage + 1);
             }
         }
 
-        // Hold Logic
-        let hVal = 0, hInt;
-        const hBtn = document.getElementById('holdBtn'), 
-              hProg = document.getElementById('holdProgress'), 
-              pHeart = document.getElementById('pulseHeart');
-        
-        const startH = (e) => { 
-            e.preventDefault(); 
-            pHeart.style.transform = 'scale(1.5)';
-            hInt = setInterval(() => { 
-                hVal += 2.5; 
-                hProg.style.width = hVal + '%'; 
-                if(hVal >= 100) { clearInterval(hInt); next(); } 
-            }, 30); 
-        };
-        const endH = () => { clearInterval(hInt); hVal = 0; hProg.style.width = '0%'; pHeart.style.transform = 'scale(1)'; };
-        
-        hBtn.addEventListener('touchstart', startH);
-        hBtn.addEventListener('mousedown', startH);
-        window.addEventListener('touchend', endH);
-        window.addEventListener('mouseup', endH);
-
-        function playSurprise() {
-            music.pause();
-            const layer = document.getElementById('videoLayer');
-            layer.style.display = 'flex';
-            const v = document.getElementById('vPlayer');
-            v.play();
-            v.onended = () => location.reload();
+        // Back to gifts
+        function backToGifts() {
+            showPage(3);
         }
+
+        // Handle gift result
+        function handleGiftResult() {
+            if (openedGifts < totalGifts) {
+                showPage(5); // Nothing here
+            } else {
+                showPage(6); // Final reveal
+                startConfetti();
+            }
+        }
+
+        // Countdown logic
+        function startCountdown() {
+            let count = 3;
+            const countdownNum = document.getElementById('countdownNum');
+            const ring = document.querySelector('.ring');
+            const countdownBtn = document.getElementById('countdownBtn');
+            
+            const countdownInterval = setInterval(() => {
+                countdownNum.textContent = count;
+                countdownNum.style.opacity = '0';
+                countdownNum.style.transform = 'scale(0.3)';
+                
+                ring.style.opacity = '1';
+                ring.style.transform = 'scale(0.2)';
+                
+                setTimeout(() => {
+                    countdownNum.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                    countdownNum.style.opacity = '1';
+                    countdownNum.style.transform = 'scale(1)';
+                }, 150);
+
+                count--;
+                
+                if (count < 0) {
+                    clearInterval(countdownInterval);
+                    setTimeout(() => {
+                        countdownBtn.style.display = 'block';
+                    }, 1000);
+                }
+            }, 1200);
+        }
+
+        // Gift box interactions
+        document.querySelectorAll('.gift-box').forEach(box => {
+            box.addEventListener('click', function(e) {
+                if (this.classList.contains('opened') || isProcessingGift) return;
+                
+                isProcessingGift = true;
+                this.classList.add('opened');
+                openedGifts++;
+                
+                document.getElementById('giftsBtn').style.display = openedGifts === totalGifts ? 'block' : 'none';
+                
+                showPage(4); // Show loading
+                
+                setTimeout(() => {
+                    document.getElementById('loadingBtn').style.display = 'block';
+                    isProcessingGift = false;
+                }, 2000);
+            });
+        });
+
+        // Confetti explosion
+        function startConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7'];
+            
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 5000);
+                }, i * 30);
+            }
+        }
+
+        // Auto-start countdown when page 2 loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            // Start countdown after page 2 becomes active
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const target = mutation.target;
+                        if (target.classList.contains('active') && target.dataset.page === '2') {
+                            startCountdown();
+                        }
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.screen').forEach(screen => {
+                observer.observe(screen, { attributes: true });
+            });
+        });
+
+        // Prevent double-clicks on mobile
+        let lastClick = 0;
+        document.addEventListener('click', function(e) {
+            const now = new Date().getTime();
+            if (now - lastClick < 300) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            lastClick = now;
+        }, true);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const continueBtns = document.querySelectorAll('.continue-btn:not([style*="display: none"])');
+                if (continueBtns.length > 0) {
+                    continueBtns[0].click();
+                }
+            }
+        });
     </script>
 </body>
 </html>
