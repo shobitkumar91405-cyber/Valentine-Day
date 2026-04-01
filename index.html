@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Urvi - Betul MP 💖</title>
+    <title>For You Anuska ji 💗</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap');
@@ -17,7 +17,7 @@
             color: #ffffff; user-select: none; touch-action: manipulation;
         }
 
-        /* Stars Background */
+        /* Fixed Background Stars - Performance Optimized */
         #stars-container { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
         .star { 
             position: absolute; background: white; border-radius: 50%; 
@@ -32,162 +32,219 @@
         .header-tag {
             position: fixed; top: 15px; width: 100%; text-align: center;
             z-index: 100; font-family: 'Dancing Script', cursive;
-            color: #ffb3d9; font-size: 1.8rem;
-            text-shadow: 0 0 15px rgba(255,179,217,0.8);
+            color: #ffb3d9; font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(255,179,217,0.6);
         }
 
-        /* Slide Logic */
+        /* Ultra-Smooth Transitions */
         .slide {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            display: none; align-items: center; justify-content: center; 
-            flex-direction: column; padding: 20px; text-align: center;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; transform: translateY(20px);
+            display: none; position: fixed; inset: 0; width: 100%; height: 100%;
+            align-items: center; justify-content: center; flex-direction: column;
+            opacity: 0; z-index: 20; padding: 25px; text-align: center;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: scale(0.98);
         }
-        .slide.active { 
-            display: flex; opacity: 1; transform: translateY(0); 
-            z-index: 20;
-        }
+        .slide.active { display: flex; opacity: 1; transform: scale(1); }
 
-        .hero-title { 
+        .cute-msg { 
             font-family: 'Dancing Script', cursive; color: #ffffff; 
-            text-shadow: 0 0 20px #ff00cc; 
-            font-size: clamp(2.5rem, 10vw, 4.5rem); 
-            margin: 10px 0; font-weight: 700;
+            text-shadow: 0 0 15px #ff00cc, 3px 3px 6px rgba(0,0,0,1); 
+            font-size: clamp(2.2rem, 8vw, 3.2rem); 
+            margin-top: 15px; font-weight: 700; line-height: 1.2;
         }
-
-        .profile-pic {
-            width: 180px; height: 180px; border-radius: 50%; 
-            border: 5px solid #ff00cc; box-shadow: 0 0 30px rgba(255, 0, 204, 0.5); 
-            object-fit: cover; margin-bottom: 20px; 
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .intro-card {
-            background: rgba(255, 255, 255, 0.05); 
-            padding: 25px; border-radius: 20px;
-            border: 1px solid rgba(255, 0, 204, 0.3); 
-            backdrop-filter: blur(10px);
-            max-width: 400px; width: 90%;
+        .sub-text { color: #ffffff; font-weight: 600; font-size: 1.15rem; margin-top: 10px; max-width: 320px; text-shadow: 1px 1px 5px #000; }
+        
+        .gif-frame { 
+            width: 250px; height: 250px; border-radius: 30px; 
+            border: 4px solid #ff00cc; box-shadow: 0 0 30px rgba(255, 0, 204, 0.5); 
+            object-fit: cover; background: #000;
         }
 
         .glow-btn { 
             background: linear-gradient(45deg, #ff00cc, #ff69b4); 
-            padding: 12px 35px; border-radius: 50px; font-weight: 600; 
+            padding: 14px 35px; border-radius: 50px; font-weight: 700; 
             box-shadow: 0 0 20px rgba(255, 0, 204, 0.4); 
             cursor: pointer; border: none; color: white; font-size: 1.1rem;
-            margin-top: 25px; transition: 0.3s;
+            margin-top: 20px; transition: 0.2s;
         }
-        .glow-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px #ff00cc; }
+        .glow-btn:active { transform: scale(0.9); }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .stat-item { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 12px; }
-        .stat-number { color: #ff69b4; font-weight: bold; font-size: 1.2rem; display: block; }
-        .stat-label { font-size: 0.8rem; opacity: 0.8; }
+        /* Solar System Animation (Re-Added) */
+        .solar-system { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
+        .orbit { position: absolute; border: 2px solid rgba(255,105,180,0.3); border-radius: 50%; animation: spin linear infinite; }
+        .orbit-1 { width: 180px; height: 180px; animation-duration: 6s; }
+        .orbit-2 { width: 260px; height: 260px; animation-duration: 10s; animation-direction: reverse; }
+        .planet { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 26px; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .emoji-float { font-size: 50px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        /* Progress Bar */
+        .hold-container { width: 280px; height: 18px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; border: 2px solid white; }
+        #holdProgress { height: 100%; background: linear-gradient(90deg, #ff00cc, #ff69b4); width: 0%; transition: width 0.1s linear; }
+
+        #videoLayer { display: none; position: fixed; inset: 0; background: black; z-index: 1000; align-items: center; justify-content: center; }
+        video { width: 100%; height: 100%; object-fit: contain; }
     </style>
 </head>
 <body>
 
-    <div class="header-tag">Made by SIVASINGH🧞‍♀️ INSTA📷 - @smss1708✨</div>
-    <audio id="bgMusic" loop src="tere-liye.mp3"></audio>
+    <div class="header-tag">INST - @SMSS1708 💗</div>
+    <audio id="bgMusic" loop src="tere-liye.mp3" preload="auto"></audio>
     <div id="stars-container"></div>
 
     <div id="slide1" class="slide active">
-        <img src="photo1.jpg" class="profile-pic" alt="Urvi">
-        <h1 class="hero-title">I'm Urvi</h1>
-        <div class="intro-card">
-            <p class="text-pink-300 font-bold text-xl">From Betul, MP ✨</p>
-            <div class="stats-grid">
-                <div class="stat-item"><span class="stat-number">14</span><span class="stat-label">Age</span></div>
-                <div class="stat-item"><span class="stat-number">10th</span><span class="stat-label">Class</span></div>
-                <div class="stat-item"><span class="stat-number">💖</span><span class="stat-label">Dreamer</span></div>
-            </div>
-        </div>
-        <button onclick="nextSlide(); playMusic();" class="glow-btn">Explore My Story 🚀</button>
+        <img src="gif1.gif" class="gif-frame">
+        <h1 class="cute-msg">Hey Anuska! ✨</h1>
+        <p class="sub-text">We just met, but my heart already knew it was you!</p>
+        <button onclick="startApp()" class="glow-btn">Touch My Heart 🥺</button>
     </div>
 
     <div id="slide2" class="slide">
-        <div class="emoji-float">💃</div>
-        <h1 class="hero-title">About Me</h1>
-        <div class="intro-card">
-            <p class="text-lg leading-relaxed">
-                A simple girl with big dreams. <br>
-                I love <b>Dancing</b>, <b>Art</b>, and meeting new people. 
-                Always trying to learn something new!
-            </p>
-        </div>
-        <button onclick="nextSlide()" class="glow-btn">Next Page ➡️</button>
+        <img src="gif2.gif" class="gif-frame">
+        <h1 class="cute-msg">How are you so cute?</h1>
+        <p class="sub-text">Seriously, your smile is the highlight of my day!</p>
+        <button onclick="next()" class="glow-btn">See More 💕</button>
     </div>
 
     <div id="slide3" class="slide">
-        <div class="emoji-float">🌸</div>
-        <h1 class="hero-title">My Faves</h1>
-        <div class="intro-card text-left px-8">
-            <p>🎨 <b>Color:</b> Pink</p>
-            <p>🎵 <b>Hobby:</b> Making Reels</p>
-            <p>📚 <b>Status:</b> Topper</p>
-            <p>⭐ <b>Goal:</b> Content Creator</p>
-        </div>
-        <button onclick="nextSlide()" class="glow-btn">Say Hi! 🥰</button>
+        <img src="gif3.gif" class="gif-frame">
+        <h1 class="cute-msg">Our Vibe is Rare! 😌</h1>
+        <p class="sub-text">Talking to you feels like time has completely stopped.</p>
+        <button onclick="next()" class="glow-btn">Next Step ✨</button>
     </div>
 
     <div id="slide4" class="slide">
-        <div class="emoji-float">💌</div>
-        <h1 class="hero-title">Let's Connect</h1>
-        <div class="intro-card">
-            <p class="text-xl mb-4">Thanks for visiting! ❤️</p>
-            <div class="flex flex-col gap-3">
-                <a href="#" class="glow-btn" style="margin-top:0">Instagram 📱</a>
-                <button onclick="restart()" class="text-pink-300 underline mt-2">Go to Start</button>
-            </div>
+        <div class="text-8xl mb-6 transition-transform duration-300" id="pulseHeart">💖</div>
+        <h1 class="text-2xl font-bold">How much do I adore you?</h1>
+        <div class="hold-container"><div id="holdProgress"></div></div>
+        <button id="holdBtn" class="glow-btn select-none">PRESS & HOLD TO FEEL</button>
+    </div>
+
+    <div id="slide5" class="slide">
+        <img src="gif4.gif" class="gif-frame">
+        <h1 class="cute-msg">You're One in a Billion! 💎</h1>
+        <p class="sub-text">It's only been a short time, but the feeling is magical.</p>
+        <button onclick="next()" class="glow-btn">Continue...</button>
+    </div>
+
+    <div id="slide6" class="slide">
+        <div class="solar-system">
+            <div class="orbit orbit-1"><span class="planet">💗</span></div>
+            <div class="orbit orbit-2"><span class="planet">⭐</span></div>
+            <div class="text-6xl">🌍</div>
+        </div>
+        <h1 class="cute-msg mt-10">My Whole Universe!</h1>
+        <p class="sub-text">Everything seems better when you're around.</p>
+        <button onclick="next()" class="glow-btn">Keep Going 🚀</button>
+    </div>
+
+    <div id="slide7" class="slide">
+        <img src="gif5.gif" class="gif-frame">
+        <h1 class="cute-msg">Don't ever leave! 🥺</h1>
+        <p class="sub-text">I've never met anyone as sweet and special as you.</p>
+        <button onclick="next()" class="glow-btn">Wait for it...</button>
+    </div>
+
+    <div id="slide8" class="slide">
+        <h1 class="cute-msg">You're my Brightest Star! ⭐</h1>
+        <p class="sub-text">In a sky full of stars, my eyes only search for you.</p>
+        <button onclick="next()" class="glow-btn">Just a bit more ✨</button>
+    </div>
+
+    <div id="slide9" class="slide">
+        <img src="gif6.gif" class="gif-frame">
+        <h1 class="cute-msg">Anuska Will You Be My Friend? ❤️</h1>
+        <div id="btnContainer" class="flex flex-wrap justify-center gap-3 mt-4">
+            <button onclick="next()" class="glow-btn">YES! 😍</button>
+            <button id="noBtn" onclick="trapNo()" class="px-8 py-3 bg-gray-800 rounded-full text-gray-400 mt-5">No 🥺</button>
         </div>
     </div>
 
+    <div id="slide10" class="slide">
+        <img src="gif7.gif" class="gif-frame">
+        <h1 class="cute-msg">Yaaay! My Heart is Happy! 🥳</h1>
+        <p class="sub-text">I promise to keep that beautiful smile on your face!</p>
+        <button onclick="playSurprise()" class="glow-btn animate-bounce">A FINAL SURPRISE 🎁</button>
+    </div>
+
+    <div id="videoLayer">
+        <video id="vPlayer" playsinline src="video1.mp4"></video>
+    </div>
+
     <script>
-        // Star Background Generation
-        const container = document.getElementById('stars-container');
-        for (let i = 0; i < 100; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = star.style.height = Math.random() * 3 + 'px';
-            star.style.setProperty('--dur', Math.random() * 3 + 2 + 's');
-            container.appendChild(star);
+        let step = 1;
+        const music = document.getElementById('bgMusic');
+
+        // Fast Star Generation
+        const starContainer = document.getElementById('stars-container');
+        const frag = document.createDocumentFragment();
+        for(let i=0; i<100; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const size = Math.random() * 2 + 1 + 'px';
+            s.style.width = size; s.style.height = size;
+            s.style.left = Math.random() * 100 + 'vw';
+            s.style.top = Math.random() * 100 + 'vh';
+            s.style.setProperty('--dur', (Math.random() * 2 + 1) + 's');
+            frag.appendChild(s);
+        }
+        starContainer.appendChild(frag);
+
+        function startApp() { music.play().catch(e => console.log(e)); next(); }
+
+        function next() {
+            const current = document.getElementById('slide' + step);
+            const nextS = document.getElementById('slide' + (step + 1));
+            if(current) {
+                current.classList.remove('active');
+                setTimeout(() => { current.style.display = 'none'; }, 400);
+            }
+            if(nextS) {
+                step++;
+                nextS.style.display = 'flex';
+                void nextS.offsetWidth; // Force Reflow for instant animation
+                nextS.classList.add('active');
+            }
         }
 
-        // Slide Navigation Logic
-        let current = 1;
-        const totalSlides = 4;
-
-        function nextSlide() {
-            const currentEl = document.getElementById(`slide${current}`);
-            currentEl.classList.remove('active');
-            
-            current = current < totalSlides ? current + 1 : 1;
-            
-            const nextEl = document.getElementById(`slide${current}`);
-            setTimeout(() => {
-                nextEl.classList.add('active');
-            }, 50);
+        function trapNo() {
+            const container = document.getElementById('btnContainer');
+            document.getElementById('noBtn').style.display = 'none';
+            for(let i=0; i<5; i++) {
+                const b = document.createElement('button');
+                b.className = "glow-btn"; b.innerHTML = "YES! 💖";
+                b.onclick = next; container.appendChild(b);
+            }
         }
 
-        function restart() {
-            document.getElementById(`slide${current}`).classList.remove('active');
-            current = 1;
-            document.getElementById('slide1').classList.add('active');
-        }
+        // Hold Logic
+        let hVal = 0, hInt;
+        const hBtn = document.getElementById('holdBtn'), 
+              hProg = document.getElementById('holdProgress'), 
+              pHeart = document.getElementById('pulseHeart');
+        
+        const startH = (e) => { 
+            e.preventDefault(); 
+            pHeart.style.transform = 'scale(1.5)';
+            hInt = setInterval(() => { 
+                hVal += 2.5; 
+                hProg.style.width = hVal + '%'; 
+                if(hVal >= 100) { clearInterval(hInt); next(); } 
+            }, 30); 
+        };
+        const endH = () => { clearInterval(hInt); hVal = 0; hProg.style.width = '0%'; pHeart.style.transform = 'scale(1)'; };
+        
+        hBtn.addEventListener('touchstart', startH);
+        hBtn.addEventListener('mousedown', startH);
+        window.addEventListener('touchend', endH);
+        window.addEventListener('mouseup', endH);
 
-        function playMusic() {
-            const music = document.getElementById('bgMusic');
-            music.play().catch(() => console.log("Music click required"));
+        function playSurprise() {
+            music.pause();
+            const layer = document.getElementById('videoLayer');
+            layer.style.display = 'flex';
+            const v = document.getElementById('vPlayer');
+            v.play();
+            v.onended = () => location.reload();
         }
     </script>
 </body>
