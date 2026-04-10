@@ -3,53 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Someone Special ✨</title>
+    <title>Good Morning, Baby ☀️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fceabb 0%, #f8b500 50%, #f06292 100%);
-            color: #4a4a4a;
+            /* White Romantic Theme: Soft pearls and white silk vibes */
+            background: radial-gradient(circle, #ffffff 0%, #f7f7f7 100%);
+            color: #333;
             overflow-x: hidden;
         }
 
-        /* Glowing Insta ID at Top */
+        /* Hard Glowing Insta ID */
         .insta-tag {
             position: fixed;
-            top: 10px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 2000;
-            font-weight: bold;
+            font-weight: 900;
             color: #fff;
-            text-shadow: 0 0 10px #fff, 0 0 20px #ff0055, 0 0 30px #ff0055;
-            animation: glow 1.5s ease-in-out infinite alternate;
-            font-size: 18px;
-            letter-spacing: 1px;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #fff, 0 0 20px #ff0055; }
-            to { text-shadow: 0 0 20px #fff, 0 0 30px #ff0055, 0 0 40px #ff0055; }
+            /* Hard Glow Effect */
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0055, 0 0 30px #ff0055, 0 0 40px #ff0055;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .header {
-            position: fixed; top: 40px; width: 100%; z-index: 1000;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
-            padding: 10px; text-align: center;
-            font-family: 'Dancing Script', cursive; font-size: 24px;
-            color: #d81b60; border-bottom: 1px solid rgba(255,255,255,0.3);
+            position: fixed; top: 50px; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px);
+            padding: 12px; text-align: center;
+            font-family: 'Dancing Script', cursive; font-size: 26px;
+            color: #ff0055; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
+        /* White Petals/Hearts falling */
         .petals-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
-        .petal { position: absolute; background: #ffc0cb; border-radius: 150% 0 150% 0; animation: floatPetal 10s linear infinite; opacity: 0.7; }
+        .petal { position: absolute; background: rgba(255, 182, 193, 0.4); border-radius: 50%; animation: floatPetal 8s linear infinite; }
         
         @keyframes floatPetal {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(110vh) translateX(50px) rotate(360deg); opacity: 0; }
         }
 
         .page { 
@@ -57,46 +55,49 @@
             justify-content: center; align-items: center; text-align: center; 
             padding: 20px; position: relative; z-index: 10; 
         }
-        .page.active { display: flex; animation: zoomIn 0.6s ease-out; }
+        .page.active { display: flex; animation: fadeIn 0.8s ease-in-out; }
         
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* Elegant White Frames */
         .photo-frame { 
             width: 280px; height: 350px; background-size: cover; 
-            background-position: center; border-radius: 30px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin-bottom: 25px; 
-            border: 8px solid white; transform: rotate(-2deg);
+            background-position: center; border-radius: 15px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-bottom: 30px; 
+            border: 10px solid #fff; outline: 1px solid #eee;
         }
 
+        /* Hard Glow Text for Good Morning Messages */
         .message { 
-            font-family: 'Dancing Script', cursive; font-size: 30px; 
-            color: #880e4f; line-height: 1.3; max-width: 85%;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+            font-family: 'Dancing Script', cursive; font-size: 32px; 
+            color: #fff; 
+            text-shadow: 0 0 5px #ff4d94, 0 0 10px #ff4d94, 0 0 20px #ff4d94;
+            line-height: 1.4; max-width: 90%;
+            font-weight: bold;
         }
 
         .scratch-card { 
             position: relative; width: 280px; height: 380px; 
             background: white; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 5px solid #fff;
         }
-        .scratch-canvas { position: absolute; top: 0; left: 0; z-index: 20; touch-action: none; cursor: crosshair; }
-        .hidden-content { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #fff5f8; }
+        .scratch-canvas { position: absolute; top: 0; left: 0; z-index: 20; touch-action: none; }
 
-        .nav-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 20px; }
+        .nav-bar { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; gap: 30px; }
         .btn { 
-            background: #d81b60; color: white; border: none; padding: 12px 25px; 
-            border-radius: 50px; cursor: pointer; font-weight: bold;
-            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3); transition: 0.3s;
+            background: #fff; color: #ff0055; border: 2px solid #ff0055; padding: 10px 25px; 
+            border-radius: 50px; cursor: pointer; font-weight: bold; font-family: 'Poppins';
+            transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 0, 85, 0.2);
         }
-        .btn:active { transform: scale(0.9); }
+        .btn:hover { background: #ff0055; color: #fff; }
 
-        .music-toggle { position: fixed; top: 100px; right: 20px; z-index: 1000; background: white; border: none; padding: 12px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .music-toggle { position: fixed; top: 110px; right: 20px; z-index: 1000; background: white; border: none; padding: 12px; border-radius: 50%; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 20px; cursor: pointer;}
     </style>
 </head>
 <body onclick="startMusicOnce()">
 
     <div class="insta-tag">insta - @smss1708</div>
-    <div class="header">Made with Sparkle ✨</div>
+    <div class="header">Made by SIVASINGH☕✨</div>
     <div class="petals-container" id="petals"></div>
 
     <button class="music-toggle" onclick="toggleMusic(event)">🎵</button>
@@ -105,65 +106,65 @@
     </audio>
 
     <div class="page active" data-page="1">
-        <div class="photo-frame" style="background-image: url('photo1.jpg'); transform: rotate(2deg);"></div>
-        <div class="message">Hi Cutie... Just wanted to brighten up your day! ☀️💖</div>
+        <div class="photo-frame" style="background-image: url('photo1.jpg');"></div>
+        <div class="message">Good Morning, Beautiful! 🌸<br>Hope you slept well.</div>
     </div>
 
     <div class="page" data-page="2">
         <div class="photo-frame" style="background-image: url('photo2.jpg');"></div>
-        <div class="message">You have this magical way of making me smile effortlessly. 😊✨</div>
+        <div class="message">The sun is up, but you're still the brightest thing in my life. ☀️</div>
     </div>
 
     <div class="page" data-page="3">
-        <div class="photo-frame" style="background-image: url('photo3.jpg'); transform: rotate(-2deg);"></div>
-        <div class="message">Every time I see you, life feels a little more beautiful. 🌸💫</div>
+        <div class="photo-frame" style="background-image: url('photo3.jpg');"></div>
+        <div class="message">Sending you a virtual hug and a morning kiss! 💋✨</div>
     </div>
 
     <div class="page" data-page="4">
         <div class="photo-frame" style="background-image: url('photo4.jpg');"></div>
-        <div class="message">I was just thinking about how lucky I am to know you. 🍀💓</div>
+        <div class="message">I hope your coffee is as sweet as your smile today. ☕💗</div>
     </div>
 
     <div class="page" data-page="5">
-        <div class="photo-frame" style="background-image: url('photo5.jpg'); transform: rotate(3deg);"></div>
-        <div class="message">Your energy is so pure, don't ever let the world change that. ✨🌻</div>
+        <div class="photo-frame" style="background-image: url('photo5.jpg');"></div>
+        <div class="message">Just a reminder: You are loved, you are special, and you are mine. 🔒💖</div>
     </div>
 
     <div class="page" data-page="6">
         <div class="photo-frame" style="background-image: url('photo6.jpg');"></div>
-        <div class="message">I promise to always be there to cheer you up. 🥂🙌</div>
+        <div class="message">Go out there and kill it today! I’m your #1 fan. 👸🙌</div>
     </div>
 
     <div class="page" data-page="7">
-        <div class="photo-frame" style="background-image: url('photo7.jpg'); transform: rotate(-3deg);"></div>
-        <div class="message">You’re a rare gem, and I truly value our bond. 💎💕</div>
+        <div class="photo-frame" style="background-image: url('photo7.jpg');"></div>
+        <div class="message">Every morning is a blessing because I have you. 💎💕</div>
     </div>
 
     <div class="page" data-page="8">
         <div class="photo-frame" style="background-image: url('photo8.jpg');"></div>
-        <div class="message">You're not just special... you're my absolute favorite. 🍬✨</div>
+        <div class="message">I can’t wait to see you later. Have the best day! 🍬✨</div>
     </div>
 
     <div class="page" data-page="9">
-        <div class="message" style="font-size: 35px;">Ready for a little secret? 🎁👇</div>
+        <div class="message" style="font-size: 38px;">One more thing before you start your day... 🎁👇</div>
     </div>
 
     <div class="page" data-page="10">
         <div class="scratch-card" id="scratchCard">
-            <div class="hidden-content">
+            <div class="hidden-content" style="width:100%; height:100%;">
                 <div style="background-image: url('photo10.jpg'); width:100%; height:100%; background-size:cover;"></div>
             </div>
             <canvas class="scratch-canvas" id="canvas"></canvas>
         </div>
         <div id="finalText" style="display:none; margin-top:20px;" class="message">
-            You are the best thing that ever happened to me! 💖♾️
+            You make every morning worth waking up for! ♾️💖
         </div>
-        <p id="hint" style="color: #d81b60; margin-top:10px;">Scratch the card baby! ✨</p>
+        <p id="hint" style="color: #ff0055; margin-top:10px; font-weight: bold;">Scratch for a surprise, baby! ✨</p>
     </div>
 
     <div class="nav-bar">
-        <button class="btn" onclick="changePage(-1)">Prev</button>
-        <button class="btn" onclick="changePage(1)">Next</button>
+        <button class="btn" onclick="changePage(-1)">← Back</button>
+        <button class="btn" onclick="changePage(1)">Next →</button>
     </div>
 
     <script>
@@ -172,16 +173,15 @@
         const music = document.getElementById('bgMusic');
         let musicStarted = false;
 
-        // Auto-start music on first interaction
         function startMusicOnce() {
             if (!musicStarted) {
-                music.play().catch(e => console.log("Audio play deferred"));
+                music.play().catch(e => console.log("Audio waiting for user"));
                 musicStarted = true;
             }
         }
 
         function changePage(step) {
-            startMusicOnce(); // Ensure music starts when navigating
+            startMusicOnce();
             if(current + step >= 1 && current + step <= total) {
                 current += step;
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -191,19 +191,20 @@
         }
 
         function toggleMusic(event) {
-            event.stopPropagation(); // Prevents double firing from body click
+            event.stopPropagation();
             music.paused ? music.play() : music.pause();
         }
 
         function createPetals() {
             const container = document.getElementById('petals');
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<25; i++) {
                 const petal = document.createElement('div');
                 petal.className = 'petal';
                 petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.width = Math.random() * 15 + 10 + 'px';
-                petal.style.height = petal.style.width;
-                petal.style.animationDelay = Math.random() * 10 + 's';
+                const size = Math.random() * 10 + 10 + 'px';
+                petal.style.width = size;
+                petal.style.height = size;
+                petal.style.animationDelay = Math.random() * 8 + 's';
                 container.appendChild(petal);
             }
         }
@@ -215,12 +216,13 @@
             canvas.width = card.offsetWidth;
             canvas.height = card.offsetHeight;
 
-            ctx.fillStyle = '#f48fb1';
+            // Scratch cover - White/Silver theme
+            ctx.fillStyle = '#e0e0e0';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px Poppins';
+            ctx.fillStyle = '#ff0055';
+            ctx.font = 'bold 18px Poppins';
             ctx.textAlign = 'center';
-            ctx.fillText('Scratch for Surprise ✨', canvas.width/2, canvas.height/2);
+            ctx.fillText('SCRATCH TO REVEAL ❤️', canvas.width/2, canvas.height/2);
 
             let painting = false;
             function start() { painting = true; }
@@ -234,7 +236,7 @@
                 const y = clientY - rect.top;
                 ctx.globalCompositeOperation = 'destination-out';
                 ctx.beginPath();
-                ctx.arc(x, y, 30, 0, Math.PI*2);
+                ctx.arc(x, y, 35, 0, Math.PI*2);
                 ctx.fill();
             }
 
@@ -242,10 +244,14 @@
                 const pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                 let trans = 0;
                 for(let i=3; i<pixels.length; i+=4) if(pixels[i] === 0) trans++;
-                if(trans > pixels.length/8) {
-                    canvas.style.display = 'none';
-                    document.getElementById('finalText').style.display = 'block';
-                    document.getElementById('hint').style.display = 'none';
+                if(trans > pixels.length/6) {
+                    canvas.style.transition = 'opacity 0.5s';
+                    canvas.style.opacity = '0';
+                    setTimeout(() => {
+                        canvas.style.display = 'none';
+                        document.getElementById('finalText').style.display = 'block';
+                        document.getElementById('hint').style.display = 'none';
+                    }, 500);
                 }
             }
 
